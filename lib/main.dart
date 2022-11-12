@@ -10,11 +10,11 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  runApp(const GetMaterialApp(home: AccountBookApp()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class AccountBookApp extends StatelessWidget {
+  const AccountBookApp({super.key});
 
   // This widget is the root of your application.
   @override
