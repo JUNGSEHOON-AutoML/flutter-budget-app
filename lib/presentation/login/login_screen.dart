@@ -1,9 +1,7 @@
 import 'package:account_book/presentation/history/history_screen.dart';
 import 'package:account_book/presentation/login/google_auth_helper.dart';
 import 'package:account_book/style.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -23,7 +21,7 @@ class LoginScreen extends StatelessWidget {
                 GoogleAuthHelper().loginAsGoogle(
                     context: context,
                     onSuccess: () => {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => HistoryScreen()))
