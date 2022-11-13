@@ -6,24 +6,25 @@ enum DbColumn { uid, recordId, categoryId, type, paymentId, price, title, date }
 class HistoryDataSource extends GetxController {
   final _database = FirebaseDatabase.instance;
 
-  Future<String?> addHistory({required String uid,
-    required int categoryId,
-    required String type,
-    required int paymentId,
-    required int price,
-    required String date,
-    required String title}) async {
+  Future<String?> addHistory(
+      {required String uid,
+      required int categoryId,
+      required String type,
+      required int paymentId,
+      required int price,
+      required String date,
+      required String title}) async {
     final ref = _database.ref("history/$uid");
     final pushRef = ref.push();
 
     await pushRef.set({
-        DbColumn.uid.name: uid,
-        DbColumn.categoryId.name: categoryId,
-        DbColumn.type.name: type,
-        DbColumn.paymentId.name: paymentId,
-        DbColumn.date.name: date,
-        DbColumn.price.name: price,
-        DbColumn.title.name: title
+      DbColumn.uid.name: uid,
+      DbColumn.categoryId.name: categoryId,
+      DbColumn.type.name: type,
+      DbColumn.paymentId.name: paymentId,
+      DbColumn.date.name: date,
+      DbColumn.price.name: price,
+      DbColumn.title.name: title
     });
 
     return pushRef.key;
@@ -38,43 +39,44 @@ class HistoryDataSource extends GetxController {
     final ref = _database.ref("history/$uid").orderByChild(DbColumn.date.name);
     late final Iterable<DataSnapshot> list;
     ref.onValue.listen((event) {
-       list = event.snapshot.children;
+      list = event.snapshot.children;
     });
     return list;
   }
 
-  void updateHistory({required String uid,
-    required String recordId,
-    int? categoryId,
-    String? date,
-    String? type,
-    int? paymentId,
-    int? price,
-    String? title}) {
+  void updateHistory(
+      {required String uid,
+      required String recordId,
+      int? categoryId,
+      String? date,
+      String? type,
+      int? paymentId,
+      int? price,
+      String? title}) {
     var map = <String, Object>{};
 
     if (categoryId != null) {
-      map.update(DbColumn.categoryId.name, (value) => categoryId);
+      map[DbColumn.categoryId.name] = categoryId;
     }
 
     if (type != null) {
-      map.update(DbColumn.type.name, (value) => type);
+      map[DbColumn.type.name] = type;
     }
 
     if (paymentId != null) {
-      map.update(DbColumn.paymentId.name, (value) => paymentId);
+      map[DbColumn.paymentId.name] = paymentId;
     }
 
     if (price != null) {
-      map.update(DbColumn.price.name, (value) => price);
+      map[DbColumn.price.name] = price;
     }
 
     if (title != null) {
-      map.update(DbColumn.title.name, (value) => title);
+      map[DbColumn.title.name] = title;
     }
 
     if (date != null) {
-      map.update(DbColumn.date.name, (value) => date);
+      map[DbColumn.date.name] = date;
     }
 
     final ref = _database.ref("history/$uid/$recordId");
