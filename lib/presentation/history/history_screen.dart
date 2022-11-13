@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../domain/model/me_controller.dart';
 
 class HistoryScreen extends StatelessWidget {
@@ -12,7 +11,7 @@ class HistoryScreen extends StatelessWidget {
 
     return Scaffold(
         body: Center(child: GetBuilder<MeController>(builder: (meController) {
-            return Text("${meController.me.displayName} 로그인 성공");
+      return Text("${meController.me.displayName} 로그인 성공");
     })));
   }
 }
