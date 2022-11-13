@@ -19,12 +19,7 @@ class LoginScreen extends StatelessWidget {
               const GoogleAuthHelper().loginAsGoogle(
                   context: context,
                   meController: meController,
-                  onSuccess: () => {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HistoryScreen()))
-                      },
+                  onSuccess: () => {Get.offAndToNamed('/history')},
                   onFailure: () => {print("Failed to login")});
             },
             child: Column(mainAxisSize: MainAxisSize.min, children: [
