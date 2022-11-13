@@ -32,7 +32,7 @@ class HistoryDataSource extends GetxController {
 
   void deleteHistory({required String uid, required String recordId}) async {
     final ref = _database.ref("history/$uid/$recordId");
-    ref.update({});
+    ref.set(null);
   }
 
   Future<Iterable<DataSnapshot>> getHistory({required String uid}) async {
