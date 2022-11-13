@@ -9,12 +9,13 @@ enum RecordType { income, spend }
  * name: 내역 이름
  * price: 가격
  * category: 분류 (이름, 색상)
- * date: 연월일, 시간
+ * date: YYYY-MM-DD
  */
 class Record {
+  late final String id;
   late final RecordType type;
-  late final String name;
-  late final Int price;
+  late final String title;
+  late final int price;
   late final Category category;
-  late final DateTime date;
+  late final String date;
 }
