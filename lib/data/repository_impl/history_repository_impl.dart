@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 class HistoryRepositoryImpl extends GetxController
     implements HistoryRepository {
-  final datasourceImpl = Get.put(HistoryDataSource());
+  final _datasourceImpl = Get.put(HistoryDataSource());
 
   @override
   Future<String?> addHistory(
@@ -16,7 +16,7 @@ class HistoryRepositoryImpl extends GetxController
       required int price,
       required String date,
       required String title}) {
-    return datasourceImpl.addHistory(
+    return _datasourceImpl.addHistory(
         uid: uid,
         categoryId: categoryId,
         type: type,
@@ -28,12 +28,12 @@ class HistoryRepositoryImpl extends GetxController
 
   @override
   void deleteHistory({required String uid, required String recordId}) {
-    return datasourceImpl.deleteHistory(uid: uid, recordId: recordId);
+    return _datasourceImpl.deleteHistory(uid: uid, recordId: recordId);
   }
 
   @override
   Future<Iterable<DataSnapshot>> getHistory({required String uid}) {
-    return datasourceImpl.getHistory(uid: uid);
+    return _datasourceImpl.getHistory(uid: uid);
   }
 
   @override
@@ -46,7 +46,7 @@ class HistoryRepositoryImpl extends GetxController
       int? paymentId,
       int? price,
       String? title}) {
-    return datasourceImpl.updateHistory(
+    return _datasourceImpl.updateHistory(
         uid: uid,
         recordId: recordId,
         categoryId: categoryId,

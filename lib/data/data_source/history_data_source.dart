@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 enum DbColumn { uid, recordId, categoryId, type, paymentId, price, title, date }
 
 class HistoryDataSource extends GetxController {
-  final database = FirebaseDatabase.instance;
+  final _database = FirebaseDatabase.instance;
 
   Future<String?> addHistory({required String uid,
     required int categoryId,
@@ -13,7 +13,7 @@ class HistoryDataSource extends GetxController {
     required int price,
     required String date,
     required String title}) async {
-    final ref = database.ref("history/$uid");
+    final ref = _database.ref("history/$uid");
     final pushRef = ref.push();
 
     await pushRef.set({
@@ -30,12 +30,12 @@ class HistoryDataSource extends GetxController {
   }
 
   void deleteHistory({required String uid, required String recordId}) async {
-    final ref = database.ref("history/$uid/$recordId");
+    final ref = _database.ref("history/$uid/$recordId");
     ref.update({});
   }
 
   Future<Iterable<DataSnapshot>> getHistory({required String uid}) async {
-    final ref = database.ref("history/$uid").orderByChild(DbColumn.date.name);
+    final ref = _database.ref("history/$uid").orderByChild(DbColumn.date.name);
     late final Iterable<DataSnapshot> list;
     ref.onValue.listen((event) {
        list = event.snapshot.children;
@@ -77,7 +77,7 @@ class HistoryDataSource extends GetxController {
       map.update(DbColumn.date.name, (value) => date);
     }
 
-    final ref = database.ref("history/$uid/$recordId");
+    final ref = _database.ref("history/$uid/$recordId");
     ref.update(map);
   }
 }

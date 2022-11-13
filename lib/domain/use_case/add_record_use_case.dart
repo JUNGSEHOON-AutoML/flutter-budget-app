@@ -6,8 +6,8 @@ import 'package:account_book/domain/model/record.dart';
 import 'package:get/get.dart';
 
 class AddRecordUseCase extends GetxController {
-  final repository = Get.put(HistoryRepositoryImpl());
-  final meController = Get.put(MeController());
+  final _repository = Get.put(HistoryRepositoryImpl());
+  final _meController = Get.put(MeController());
 
   Future<void> invoke(
       {required Category category,
@@ -16,8 +16,8 @@ class AddRecordUseCase extends GetxController {
       required int price,
       required String date,
       required String title}) async {
-    var newKey = await repository.addHistory(
-        uid: meController.me.uid,
+    var newKey = await _repository.addHistory(
+        uid: _meController.me.uid,
         categoryId: category.id,
         type: type.name,
         paymentId: payment.id,
