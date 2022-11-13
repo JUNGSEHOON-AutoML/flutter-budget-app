@@ -17,7 +17,6 @@ class HistoryDataSource extends GetxController {
     final pushRef = ref.push();
 
     await pushRef.set({
-      {
         DbColumn.uid.name: uid,
         DbColumn.categoryId.name: categoryId,
         DbColumn.type.name: type,
@@ -25,7 +24,6 @@ class HistoryDataSource extends GetxController {
         DbColumn.date.name: date,
         DbColumn.price.name: price,
         DbColumn.title.name: title
-      }
     });
 
     return pushRef.key;
