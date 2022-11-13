@@ -9,14 +9,14 @@ class AddRecordUseCase extends GetxController {
   final repository = Get.put(HistoryRepositoryImpl());
   final meController = Get.put(MeController());
 
-  void invoke(
+  Future<void> invoke(
       {required Category category,
       required RecordType type,
       required Payment payment,
       required int price,
       required String date,
-      required String title}) {
-    repository.addHistory(
+      required String title}) async {
+    var newKey = await repository.addHistory(
         uid: meController.me.uid,
         categoryId: category.id,
         type: type.name,
@@ -24,5 +24,7 @@ class AddRecordUseCase extends GetxController {
         price: price,
         date: date,
         title: title);
+
+    // TODO newKey로 List에 넣어주기..
   }
 }
