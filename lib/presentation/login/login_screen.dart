@@ -1,4 +1,3 @@
-import 'package:account_book/presentation/history/history_screen.dart';
 import 'package:account_book/presentation/login/google_auth_helper.dart';
 import 'package:account_book/style.dart';
 import 'package:flutter/material.dart';
