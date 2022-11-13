@@ -1,5 +1,5 @@
 class HistoryRepository {
-  void getHistory({required String uid}) {}
+  void getHistory({required String uid, required Function onSuccess}) {}
 
   void addHistory(
       {required String uid,

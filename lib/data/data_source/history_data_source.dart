@@ -1,5 +1,8 @@
+import 'package:account_book/domain/model/record.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
+
+import '../../domain/model/history_controller.dart';
 
 enum DbColumn { uid, recordId, categoryId, type, paymentId, price, title, date }
 
@@ -35,13 +38,12 @@ class HistoryDataSource extends GetxController {
     ref.set(null);
   }
 
-  Future<Iterable<DataSnapshot>> getHistory({required String uid}) async {
+  void getHistory({required String uid, required Function onSuccess}) {
     final ref = _database.ref("history/$uid").orderByChild(DbColumn.date.name);
-    late final Iterable<DataSnapshot> list;
+
     ref.onValue.listen((event) {
-      list = event.snapshot.children;
+      onSuccess(event);
     });
-    return list;
   }
 
   void updateHistory(

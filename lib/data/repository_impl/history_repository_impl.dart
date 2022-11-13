@@ -32,8 +32,8 @@ class HistoryRepositoryImpl extends GetxController
   }
 
   @override
-  Future<Iterable<DataSnapshot>> getHistory({required String uid}) {
-    return _datasourceImpl.getHistory(uid: uid);
+  void getHistory({required String uid, required Function onSuccess}) {
+    return _datasourceImpl.getHistory(uid: uid, onSuccess: onSuccess);
   }
 
   @override
