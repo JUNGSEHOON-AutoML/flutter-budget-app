@@ -1,18 +1,18 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:get/get.dart';
 
 enum DbColumn { uid, recordId, categoryId, type, paymentId, price, title, date }
 
-class HistoryDataSource {
+class HistoryDataSource extends GetxController {
   final database = FirebaseDatabase.instance;
 
-  Future<String?> addHistory(
-      {required String uid,
-      required int categoryId,
-      required String type,
-      required int paymentId,
-      required int price,
-      required String date,
-      required String title}) async {
+  Future<String?> addHistory({required String uid,
+    required int categoryId,
+    required String type,
+    required int paymentId,
+    required int price,
+    required String date,
+    required String title}) async {
     final ref = database.ref("history/$uid");
     final pushRef = ref.push();
 
@@ -31,27 +31,28 @@ class HistoryDataSource {
     return pushRef.key;
   }
 
-  Future<void> deleteHistory(
-      {required String uid, required String recordId}) async {
+  void deleteHistory({required String uid, required String recordId}) async {
     final ref = database.ref("history/$uid/$recordId");
-    await ref.update({});
+    ref.update({});
   }
 
-  Future<void> getHistory({required String uid}) async {
+  Future<Iterable<DataSnapshot>> getHistory({required String uid}) async {
     final ref = database.ref("history/$uid").orderByChild(DbColumn.date.name);
-
-    ref.onChildAdded.listen((event) {});
+    late final Iterable<DataSnapshot> list;
+    ref.onValue.listen((event) {
+       list = event.snapshot.children;
+    });
+    return list;
   }
 
-  void updateHistory(
-      {required String uid,
-      required String recordId,
-      int? categoryId,
-      String? date,
-      String? type,
-      int? paymentId,
-      int? price,
-      String? title}) {
+  void updateHistory({required String uid,
+    required String recordId,
+    int? categoryId,
+    String? date,
+    String? type,
+    int? paymentId,
+    int? price,
+    String? title}) {
     var map = <String, Object>{};
 
     if (categoryId != null) {
