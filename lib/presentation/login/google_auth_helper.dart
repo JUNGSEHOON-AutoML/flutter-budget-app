@@ -1,7 +1,7 @@
+import 'package:account_book/di/me_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import '../../domain/model/me_controller.dart';
 
 class GoogleAuthHelper {
   const GoogleAuthHelper();
