@@ -1,5 +1,5 @@
-import 'package:account_book/data/repository_impl/history_repository_impl.dart';
-import 'package:account_book/domain/model/me_controller.dart';
+import 'package:account_book/data/repository_impl/history_remote_repository_impl.dart';
+import 'package:account_book/di/me_controller.dart';
 import 'package:get/get.dart';
 
 class DeleteRecordUseCase extends GetxController {

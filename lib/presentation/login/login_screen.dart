@@ -1,8 +1,8 @@
+import 'package:account_book/di/me_controller.dart';
 import 'package:account_book/presentation/login/google_auth_helper.dart';
 import 'package:account_book/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../domain/model/me_controller.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);

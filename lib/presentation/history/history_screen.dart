@@ -1,7 +1,7 @@
+import 'package:account_book/di/me_controller.dart';
 import 'package:account_book/domain/use_case/get_history_use_case.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../domain/model/me_controller.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({Key? key}) : super(key: key);
