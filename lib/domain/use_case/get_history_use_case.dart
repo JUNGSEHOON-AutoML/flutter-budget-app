@@ -15,30 +15,41 @@ class GetHistoryUseCase extends GetxController {
   final _historyController = Get.put(HistoryController());
 
   void invoke() async {
-    _historyController.history["test"] = [];
-
     _repository.getHistory(
         uid: _meController.me.uid,
         onSuccess: (DatabaseEvent event) {
           for (final child in event.snapshot.children) {
             final hashMap = child.value as LinkedHashMap<Object?, Object?>;
-            final newRecord = Record();
+            final newRecord =
+                _rawDataToRecord(key: child.key!, hashMap: hashMap);
 
-            newRecord.id = child.key!;
+            final dateToken = newRecord.date.split("-");
+            final dateKey = "${dateToken[0]}-${dateToken[1]}";
 
-            if (hashMap[DbColumn.type.name] == RecordType.income.name) {
-              newRecord.type = RecordType.income;
-            } else {
-              newRecord.type = RecordType.spend;
+            if (!_historyController.history.containsKey(dateKey)) {
+              _historyController.history[dateKey] = [];
             }
-            newRecord.title = hashMap[DbColumn.title.name] as String;
-            newRecord.price = hashMap[DbColumn.price.name] as int;
-            newRecord.category = Category();
-            newRecord.date = hashMap[DbColumn.date.name] as String;
-
-            _historyController.history["test"]?.add(newRecord);
+            _historyController.history[dateKey]!.add(newRecord);
           }
-          print("Test");
         });
+  }
+
+  Record _rawDataToRecord(
+      {required String key, required LinkedHashMap hashMap}) {
+    final newRecord = Record();
+
+    newRecord.id = key;
+
+    if (hashMap[DbColumn.type.name] == RecordType.income.name) {
+      newRecord.type = RecordType.income;
+    } else {
+      newRecord.type = RecordType.spend;
+    }
+    newRecord.title = hashMap[DbColumn.title.name] as String;
+    newRecord.price = hashMap[DbColumn.price.name] as int;
+    newRecord.category = Category();
+    newRecord.date = hashMap[DbColumn.date.name] as String;
+
+    return newRecord;
   }
 }
