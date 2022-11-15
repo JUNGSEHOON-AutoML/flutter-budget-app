@@ -1,5 +1,5 @@
 import 'package:account_book/data/data_source/history_remote_data_source.dart';
-import 'package:account_book/domain/repository/history_remote_repository.dart';
+import 'package:account_book/domain/repository/history_repository.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 

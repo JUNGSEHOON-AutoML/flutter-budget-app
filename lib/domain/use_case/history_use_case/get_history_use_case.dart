@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:account_book/data/data_source/history_remote_data_source.dart';
-import 'package:account_book/data/repository_impl/history_remote_repository_impl.dart';
+import 'package:account_book/data/repository_impl/history_repository_impl.dart';
 import 'package:account_book/di/me_controller.dart';
 import 'package:account_book/domain/model/category.dart';
 import 'package:account_book/di/history_controller.dart';
