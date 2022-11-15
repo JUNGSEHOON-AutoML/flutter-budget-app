@@ -24,7 +24,5 @@ class AddRecordUseCase extends GetxController {
         price: price,
         date: date,
         title: title);
-
-    // TODO newKey로 List에 넣어주기..
   }
 }
