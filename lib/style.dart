@@ -40,4 +40,6 @@ class AppColor extends Color {
   static const blue3 = Color(0xff4CA1DE);
   static const blue4 = Color(0xff48C2E9);
   static const blue5 = Color(0xff6ED5EB);
+
+  static const unknown = Color(0xff8C8C8C);
 }
