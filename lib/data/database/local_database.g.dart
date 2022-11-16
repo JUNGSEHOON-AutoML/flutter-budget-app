@@ -87,7 +87,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `CategoryEntity` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `type` TEXT NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `CategoryEntity` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `type` TEXT NOT NULL, `colorId` INTEGER NOT NULL, PRIMARY KEY (`id`))');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `PaymentEntity` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY (`id`))');
 
@@ -147,8 +147,8 @@ class _$PaymentDao extends PaymentDao {
   final DeletionAdapter<PaymentEntity> _paymentEntityDeletionAdapter;
 
   @override
-  Stream<PaymentEntity?> getPayments() {
-    return _queryAdapter.queryStream('SELECT * FROM Payment',
+  Stream<List<PaymentEntity?>> getPayments() {
+    return _queryAdapter.queryListStream('SELECT * FROM Payment',
         mapper: (Map<String, Object?> row) =>
             PaymentEntity(row['id'] as int, row['name'] as String),
         queryableName: 'PaymentEntity',
@@ -184,7 +184,8 @@ class _$CategoryDao extends CategoryDao {
             (CategoryEntity item) => <String, Object?>{
                   'id': item.id,
                   'name': item.name,
-                  'type': item.type
+                  'type': item.type,
+                  'colorId': item.colorId
                 },
             changeListener),
         _categoryEntityUpdateAdapter = UpdateAdapter(
@@ -194,7 +195,8 @@ class _$CategoryDao extends CategoryDao {
             (CategoryEntity item) => <String, Object?>{
                   'id': item.id,
                   'name': item.name,
-                  'type': item.type
+                  'type': item.type,
+                  'colorId': item.colorId
                 },
             changeListener),
         _categoryEntityDeletionAdapter = DeletionAdapter(
@@ -204,7 +206,8 @@ class _$CategoryDao extends CategoryDao {
             (CategoryEntity item) => <String, Object?>{
                   'id': item.id,
                   'name': item.name,
-                  'type': item.type
+                  'type': item.type,
+                  'colorId': item.colorId
                 },
             changeListener);
 
@@ -221,10 +224,13 @@ class _$CategoryDao extends CategoryDao {
   final DeletionAdapter<CategoryEntity> _categoryEntityDeletionAdapter;
 
   @override
-  Stream<CategoryEntity?> getCategories() {
-    return _queryAdapter.queryStream('SELECT * FROM Category',
+  Stream<List<CategoryEntity?>> getCategories() {
+    return _queryAdapter.queryListStream('SELECT * FROM Category',
         mapper: (Map<String, Object?> row) => CategoryEntity(
-            row['id'] as int, row['name'] as String, row['type'] as String),
+            row['id'] as int,
+            row['name'] as String,
+            row['type'] as String,
+            row['colorId'] as int),
         queryableName: 'CategoryEntity',
         isView: false);
   }

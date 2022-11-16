@@ -49,6 +49,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '68873148567',
     projectId: 'inkyeongbook',
     authDomain: 'inkyeongbook.firebaseapp.com',
+    databaseURL: 'https://inkyeongbook-default-rtdb.firebaseio.com',
     storageBucket: 'inkyeongbook.appspot.com',
   );
 
@@ -57,6 +58,7 @@ class DefaultFirebaseOptions {
     appId: '1:68873148567:android:45ebbfaa9ae6658a80b1d2',
     messagingSenderId: '68873148567',
     projectId: 'inkyeongbook',
+    databaseURL: 'https://inkyeongbook-default-rtdb.firebaseio.com',
     storageBucket: 'inkyeongbook.appspot.com',
   );
 
@@ -65,7 +67,9 @@ class DefaultFirebaseOptions {
     appId: '1:68873148567:ios:1d68782e201d203580b1d2',
     messagingSenderId: '68873148567',
     projectId: 'inkyeongbook',
+    databaseURL: 'https://inkyeongbook-default-rtdb.firebaseio.com',
     storageBucket: 'inkyeongbook.appspot.com',
+    androidClientId: '68873148567-tf7hh3gfbpjq2820l0idaoaepbpr0r7q.apps.googleusercontent.com',
     iosClientId: '68873148567-2m2kng87brgg4h10elvbkkrp5ge02ntr.apps.googleusercontent.com',
     iosBundleId: 'com.inkyeong.accountBook',
   );
@@ -75,7 +79,9 @@ class DefaultFirebaseOptions {
     appId: '1:68873148567:ios:1d68782e201d203580b1d2',
     messagingSenderId: '68873148567',
     projectId: 'inkyeongbook',
+    databaseURL: 'https://inkyeongbook-default-rtdb.firebaseio.com',
     storageBucket: 'inkyeongbook.appspot.com',
+    androidClientId: '68873148567-tf7hh3gfbpjq2820l0idaoaepbpr0r7q.apps.googleusercontent.com',
     iosClientId: '68873148567-2m2kng87brgg4h10elvbkkrp5ge02ntr.apps.googleusercontent.com',
     iosBundleId: 'com.inkyeong.accountBook',
   );

@@ -4,7 +4,7 @@ import 'package:floor/floor.dart';
 @dao
 abstract class CategoryDao {
   @Query('SELECT * FROM Category')
-  Stream<CategoryEntity?> getCategories();
+  Stream<List<CategoryEntity?>> getCategories();
 
   @insert
   Future<void> insertCategories(List<CategoryEntity> categoryEntities);
