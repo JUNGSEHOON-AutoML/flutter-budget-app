@@ -1,18 +1,17 @@
 import 'package:account_book/data/entity/PaymentEntity.dart';
-import 'package:account_book/domain/model/payment.dart';
 import 'package:floor/floor.dart';
 
 @dao
 abstract class PaymentDao {
   @Query('SELECT * FROM Payment')
-  Stream<Payment?> getPayments();
+  Stream<PaymentEntity?> getPayments();
 
   @insert
-  Future<void> insertPayment(PaymentEntity paymentEntity);
+  Future<void> insertPayment(List<PaymentEntity> paymentEntities);
 
   @update
-  Future<void> updatePayment(PaymentEntity paymentEntity);
+  Future<void> updatePayment(List<PaymentEntity> paymentEntities);
 
-  @Query('DELETE FROM Payment WHERE id = :paymentId')
-  Future<void> deletePayment({required int paymentId});
+  @delete
+  Future<void> deletePayment(List<PaymentEntity> paymentEntities);
 }

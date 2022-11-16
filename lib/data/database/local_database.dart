@@ -3,6 +3,7 @@ import 'package:account_book/data/dao/CategoryDao.dart';
 import 'package:account_book/data/dao/PaymentDao.dart';
 import 'package:account_book/data/entity/CategoryEntity.dart';
 import 'package:account_book/data/entity/PaymentEntity.dart';
+import 'package:account_book/domain/model/payment.dart';
 import 'package:floor/floor.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 

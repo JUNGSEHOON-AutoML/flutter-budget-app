@@ -112,18 +112,27 @@ class _$PaymentDao extends PaymentDao {
   _$PaymentDao(
     this.database,
     this.changeListener,
-  )   : _queryAdapter = QueryAdapter(database),
+  )   : _queryAdapter = QueryAdapter(database, changeListener),
         _paymentEntityInsertionAdapter = InsertionAdapter(
             database,
             'PaymentEntity',
             (PaymentEntity item) =>
-                <String, Object?>{'id': item.id, 'name': item.name}),
+                <String, Object?>{'id': item.id, 'name': item.name},
+            changeListener),
         _paymentEntityUpdateAdapter = UpdateAdapter(
             database,
             'PaymentEntity',
             ['id'],
             (PaymentEntity item) =>
-                <String, Object?>{'id': item.id, 'name': item.name});
+                <String, Object?>{'id': item.id, 'name': item.name},
+            changeListener),
+        _paymentEntityDeletionAdapter = DeletionAdapter(
+            database,
+            'PaymentEntity',
+            ['id'],
+            (PaymentEntity item) =>
+                <String, Object?>{'id': item.id, 'name': item.name},
+            changeListener);
 
   final sqflite.DatabaseExecutor database;
 
@@ -135,27 +144,32 @@ class _$PaymentDao extends PaymentDao {
 
   final UpdateAdapter<PaymentEntity> _paymentEntityUpdateAdapter;
 
+  final DeletionAdapter<PaymentEntity> _paymentEntityDeletionAdapter;
+
   @override
-  Stream<Payment?> getPayments() {
-    await _queryAdapter.queryNoReturn('SELECT * FROM Payment');
+  Stream<PaymentEntity?> getPayments() {
+    return _queryAdapter.queryStream('SELECT * FROM Payment',
+        mapper: (Map<String, Object?> row) =>
+            PaymentEntity(row['id'] as int, row['name'] as String),
+        queryableName: 'PaymentEntity',
+        isView: false);
   }
 
   @override
-  Future<void> deletePayment(int paymentId) async {
-    await _queryAdapter.queryNoReturn('DELETE FROM Payment WHERE id = ?1',
-        arguments: [paymentId]);
+  Future<void> insertPayment(List<PaymentEntity> paymentEntities) async {
+    await _paymentEntityInsertionAdapter.insertList(
+        paymentEntities, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> insertPayment(PaymentEntity paymentEntity) async {
-    await _paymentEntityInsertionAdapter.insert(
-        paymentEntity, OnConflictStrategy.abort);
+  Future<void> updatePayment(List<PaymentEntity> paymentEntities) async {
+    await _paymentEntityUpdateAdapter.updateList(
+        paymentEntities, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> updatePayment(PaymentEntity paymentEntity) async {
-    await _paymentEntityUpdateAdapter.update(
-        paymentEntity, OnConflictStrategy.abort);
+  Future<void> deletePayment(List<PaymentEntity> paymentEntities) async {
+    await _paymentEntityDeletionAdapter.deleteList(paymentEntities);
   }
 }
 
@@ -163,7 +177,7 @@ class _$CategoryDao extends CategoryDao {
   _$CategoryDao(
     this.database,
     this.changeListener,
-  )   : _queryAdapter = QueryAdapter(database),
+  )   : _queryAdapter = QueryAdapter(database, changeListener),
         _categoryEntityInsertionAdapter = InsertionAdapter(
             database,
             'CategoryEntity',
@@ -171,7 +185,8 @@ class _$CategoryDao extends CategoryDao {
                   'id': item.id,
                   'name': item.name,
                   'type': item.type
-                }),
+                },
+            changeListener),
         _categoryEntityUpdateAdapter = UpdateAdapter(
             database,
             'CategoryEntity',
@@ -180,7 +195,18 @@ class _$CategoryDao extends CategoryDao {
                   'id': item.id,
                   'name': item.name,
                   'type': item.type
-                });
+                },
+            changeListener),
+        _categoryEntityDeletionAdapter = DeletionAdapter(
+            database,
+            'CategoryEntity',
+            ['id'],
+            (CategoryEntity item) => <String, Object?>{
+                  'id': item.id,
+                  'name': item.name,
+                  'type': item.type
+                },
+            changeListener);
 
   final sqflite.DatabaseExecutor database;
 
@@ -192,26 +218,31 @@ class _$CategoryDao extends CategoryDao {
 
   final UpdateAdapter<CategoryEntity> _categoryEntityUpdateAdapter;
 
+  final DeletionAdapter<CategoryEntity> _categoryEntityDeletionAdapter;
+
   @override
-  Stream<Payment?> getPayments() {
-    await _queryAdapter.queryNoReturn('SELECT * FROM Category');
+  Stream<CategoryEntity?> getCategories() {
+    return _queryAdapter.queryStream('SELECT * FROM Category',
+        mapper: (Map<String, Object?> row) => CategoryEntity(
+            row['id'] as int, row['name'] as String, row['type'] as String),
+        queryableName: 'CategoryEntity',
+        isView: false);
   }
 
   @override
-  Future<void> deletePayment(int categoryId) async {
-    await _queryAdapter.queryNoReturn('DELETE FROM Category WHERE id = ?1',
-        arguments: [categoryId]);
+  Future<void> insertCategories(List<CategoryEntity> categoryEntities) async {
+    await _categoryEntityInsertionAdapter.insertList(
+        categoryEntities, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> insertPayment(CategoryEntity categoryEntity) async {
-    await _categoryEntityInsertionAdapter.insert(
-        categoryEntity, OnConflictStrategy.abort);
+  Future<void> updateCategories(List<CategoryEntity> categoryEntities) async {
+    await _categoryEntityUpdateAdapter.updateList(
+        categoryEntities, OnConflictStrategy.abort);
   }
 
   @override
-  Future<void> updatePayment(CategoryEntity categoryEntity) async {
-    await _categoryEntityUpdateAdapter.update(
-        categoryEntity, OnConflictStrategy.abort);
+  Future<void> deleteCategories(List<CategoryEntity> categoryEntities) async {
+    await _categoryEntityDeletionAdapter.deleteList(categoryEntities);
   }
 }
