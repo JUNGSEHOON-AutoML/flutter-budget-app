@@ -1,6 +1,8 @@
 import 'package:account_book/data/data_source/properties_local_data_source.dart';
 import 'package:account_book/data/entity/CategoryEntity.dart';
+import 'package:account_book/data/entity/PaymentEntity.dart';
 import 'package:account_book/domain/model/category.dart';
+import 'package:account_book/domain/model/payment.dart';
 import 'package:account_book/domain/repository/properties_local_repository.dart';
 import 'package:get/get.dart';
 
@@ -15,8 +17,9 @@ class PropertiesLocalRepositoryImpl extends GetxService
   }
 
   @override
-  void addPayment({required String name, required int colorId}) {
-    // TODO: implement addPayment
+  Future<void> addPayment({required List<Payment> payments}) {
+    return _dataSource.addPayment(
+        payments: payments.map((e) => e.toEntity()).toList());
   }
 
   @override
@@ -26,8 +29,9 @@ class PropertiesLocalRepositoryImpl extends GetxService
   }
 
   @override
-  void deletePayment({required int paymentId}) {
-    // TODO: implement deletePayment
+  Future<void> deletePayment({required List<Payment> payments}) {
+    return _dataSource.deletePayment(
+        payments: payments.map((e) => e.toEntity()).toList());
   }
 
   @override
@@ -36,8 +40,8 @@ class PropertiesLocalRepositoryImpl extends GetxService
   }
 
   @override
-  void getPayment() {
-    // TODO: implement getPayment
+  Future<Stream<List<PaymentEntity?>>> getPayments() {
+    return _dataSource.getPayments();
   }
 
   @override
@@ -47,7 +51,8 @@ class PropertiesLocalRepositoryImpl extends GetxService
   }
 
   @override
-  void updatePayment({required int paymentId, String? name, int? colorId}) {
-    // TODO: implement updatePayment
+  Future<void> updatePayment({required List<Payment> payments}) {
+    return _dataSource.updatePayment(
+        payments: payments.map((e) => e.toEntity()).toList());
   }
 }
