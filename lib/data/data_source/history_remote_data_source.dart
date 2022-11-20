@@ -1,12 +1,10 @@
-import 'package:account_book/domain/model/record.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 
-import '../../di/history_controller.dart';
 
 enum DbColumn { uid, recordId, categoryId, type, paymentId, price, title, date }
 
-class HistoryDataSource extends GetxController {
+class HistoryDataSource extends GetxService {
   final _database = FirebaseDatabase.instance;
 
   Future<String?> addHistory(

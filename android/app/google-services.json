@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "68873148567",
+    "firebase_url": "https://inkyeongbook-default-rtdb.firebaseio.com",
     "project_id": "inkyeongbook",
     "storage_bucket": "inkyeongbook.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "68873148567-tf7hh3gfbpjq2820l0idaoaepbpr0r7q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.in_kyeong.account_book",
+            "certificate_hash": "c2031de4a23f201117f449b6949f19bba6349238"
+          }
+        },
         {
           "client_id": "68873148567-idc9mbgge3pojp6giip00ki761ku8mgr.apps.googleusercontent.com",
           "client_type": 3
@@ -29,6 +38,13 @@
             {
               "client_id": "68873148567-idc9mbgge3pojp6giip00ki761ku8mgr.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "68873148567-2m2kng87brgg4h10elvbkkrp5ge02ntr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.inkyeong.accountBook"
+              }
             }
           ]
         }
