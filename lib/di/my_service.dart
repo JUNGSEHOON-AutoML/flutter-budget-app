@@ -13,14 +13,16 @@ class MyService extends GetxService {
 
   late final User me;
   late final AppDatabase localDatabase;
-  final history = <String, List<Record>>{};
+
+  final history = <String, List<Record>>{}.obs;
+
   final _colors = <RecordType, Map<int, Color>>{
     RecordType.spend: {-1: AppColor.unknown},
     RecordType.income: {-1: AppColor.unknown}
   };
 
-  final categories = <int, Category>{};
-  final payments = <int, Payment>{};
+  final categories = <int, Category>{}.obs;
+  final payments = <int, Payment>{}.obs;
 
   static Future<void> init() async {
     await MyService.to._initLocalDB();
