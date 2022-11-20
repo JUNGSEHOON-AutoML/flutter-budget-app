@@ -1,5 +1,5 @@
-import 'dart:ffi';
 import 'package:account_book/domain/model/category.dart';
+import 'package:account_book/domain/model/payment.dart';
 
 enum RecordType { income, spend }
 
@@ -18,4 +18,5 @@ class Record {
   late final int price;
   late final Category category;
   late final String date;
+  late final Payment? payment;
 }

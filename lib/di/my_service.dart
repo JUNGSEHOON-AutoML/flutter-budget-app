@@ -108,4 +108,20 @@ class MyService extends GetxService {
     }
     return -1;
   }
+
+  Category getCategoryById({required int id}) {
+    if (categories.containsKey(id)) {
+      return categories[id]!;
+    } else {
+      return categories[-1]!;
+    }
+  }
+
+  Payment getPaymentById({required int id}) {
+    if (payments.containsKey(id)) {
+      return payments[id]!;
+    } else {
+      return payments[-1]!;
+    }
+  }
 }

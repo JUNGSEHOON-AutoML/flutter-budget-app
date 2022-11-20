@@ -23,11 +23,10 @@ class GetHistoryUseCase extends GetxService {
             final dateToken = newRecord.date.split("-");
             final dateKey = "${dateToken[0]}-${dateToken[1]}";
 
-            //TODO : 수정
-/*            if (!_historyController.history.containsKey(dateKey)) {
-              _historyController.history[dateKey] = [];
+            if (!MyService.to.history.containsKey(dateKey)) {
+              MyService.to.history[dateKey] = [];
             }
-            _historyController.history[dateKey]!.add(newRecord);*/
+            MyService.to.history[dateKey]!.add(newRecord);
           }
         });
   }
@@ -45,7 +44,13 @@ class GetHistoryUseCase extends GetxService {
     }
     newRecord.title = hashMap[DbColumn.title.name] as String;
     newRecord.price = hashMap[DbColumn.price.name] as int;
-    newRecord.category = Category();
+
+    final categoryId = hashMap[DbColumn.categoryId.name] as int;
+    newRecord.category = MyService.to.getCategoryById(id: categoryId);
+
+    final paymentId = hashMap[DbColumn.paymentId.name] as int;
+    newRecord.payment = MyService.to.getPaymentById(id: paymentId);
+
     newRecord.date = hashMap[DbColumn.date.name] as String;
 
     return newRecord;
