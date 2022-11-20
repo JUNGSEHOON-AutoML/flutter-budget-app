@@ -15,7 +15,6 @@ class LoginScreen extends GetView<MyService> {
                 onPressed: () {
                   const GoogleAuthHelper().loginAsGoogle(
                       context: context,
-                      myService: MyService.to,
                       onSuccess: () => {Get.offAndToNamed('/history')},
                       onFailure: () => {print("Failed to login")});
                 },
