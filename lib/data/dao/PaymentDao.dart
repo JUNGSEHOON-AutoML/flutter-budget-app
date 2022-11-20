@@ -3,7 +3,7 @@ import 'package:floor/floor.dart';
 
 @dao
 abstract class PaymentDao {
-  @Query('SELECT * FROM Payment')
+  @Query('SELECT * FROM PaymentEntity')
   Stream<List<PaymentEntity?>> getPayments();
 
   @insert

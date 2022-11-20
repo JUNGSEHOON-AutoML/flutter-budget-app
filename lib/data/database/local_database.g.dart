@@ -87,9 +87,9 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `CategoryEntity` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `type` TEXT NOT NULL, `colorId` INTEGER NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `CategoryEntity` (`id` INTEGER, `name` TEXT NOT NULL, `type` TEXT NOT NULL, `colorId` INTEGER NOT NULL, PRIMARY KEY (`id`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `PaymentEntity` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `PaymentEntity` (`id` INTEGER, `name` TEXT NOT NULL, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -148,9 +148,9 @@ class _$PaymentDao extends PaymentDao {
 
   @override
   Stream<List<PaymentEntity?>> getPayments() {
-    return _queryAdapter.queryListStream('SELECT * FROM Payment',
+    return _queryAdapter.queryListStream('SELECT * FROM PaymentEntity',
         mapper: (Map<String, Object?> row) =>
-            PaymentEntity(row['id'] as int, row['name'] as String),
+            PaymentEntity(row['id'] as int?, row['name'] as String),
         queryableName: 'PaymentEntity',
         isView: false);
   }
@@ -225,9 +225,9 @@ class _$CategoryDao extends CategoryDao {
 
   @override
   Stream<List<CategoryEntity?>> getCategories() {
-    return _queryAdapter.queryListStream('SELECT * FROM Category',
+    return _queryAdapter.queryListStream('SELECT * FROM CategoryEntity',
         mapper: (Map<String, Object?> row) => CategoryEntity(
-            row['id'] as int,
+            row['id'] as int?,
             row['name'] as String,
             row['type'] as String,
             row['colorId'] as int),
