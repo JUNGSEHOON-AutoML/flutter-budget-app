@@ -1,16 +1,17 @@
 import 'package:account_book/data/data_source/properties_local_data_source.dart';
 import 'package:account_book/data/entity/CategoryEntity.dart';
+import 'package:account_book/domain/model/category.dart';
 import 'package:account_book/domain/repository/properties_local_repository.dart';
 import 'package:get/get.dart';
 
-class PropertiesLocalRepositoryImpl extends GetxController
+class PropertiesLocalRepositoryImpl extends GetxService
     implements PropertiesRepository {
   final _dataSource = Get.put(PropertiesLocalDataSource());
 
   @override
-  void addCategory(
-      {required String name, required String type, required int colorId}) {
-    // TODO
+  Future<void> addCategory({required List<Category> categories}) {
+    return _dataSource.addCategory(
+        categories: categories.map((e) => e.toEntity()).toList());
   }
 
   @override
@@ -19,8 +20,9 @@ class PropertiesLocalRepositoryImpl extends GetxController
   }
 
   @override
-  void deleteCategory({required int categoryId}) {
-    // TODO: implement deleteCategory
+  Future<void> deleteCategory({required List<Category> categories}) {
+    return _dataSource.deleteCategory(
+        categories: categories.map((e) => e.toEntity()).toList());
   }
 
   @override
@@ -39,9 +41,9 @@ class PropertiesLocalRepositoryImpl extends GetxController
   }
 
   @override
-  void updateCategory(
-      {required int categoryId, String? name, String? type, int? colorId}) {
-    // TODO: implement updateCategory
+  Future<void> updateCategory({required List<Category> categories}) {
+    return _dataSource.updateCategory(
+        categories: categories.map((e) => e.toEntity()).toList());
   }
 
   @override

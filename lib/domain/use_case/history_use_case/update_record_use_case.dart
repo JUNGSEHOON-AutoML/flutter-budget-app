@@ -1,10 +1,9 @@
 import 'package:account_book/data/repository_impl/history_repository_impl.dart';
-import 'package:account_book/di/me_controller.dart';
+import 'package:account_book/di/my_service.dart';
 import 'package:get/get.dart';
 
-class UpdateRecordUseCase extends GetxController {
+class UpdateRecordUseCase extends GetxService {
   final _repository = Get.put(HistoryRepositoryImpl());
-  final _meController = Get.put(MeController());
 
   void invoke(
       {required String recordId,
@@ -15,7 +14,7 @@ class UpdateRecordUseCase extends GetxController {
       int? price,
       String? title}) {
     _repository.updateHistory(
-        uid: _meController.me.uid,
+        uid: MyService.to.me.uid,
         recordId: recordId,
         categoryId: categoryId,
         type: type,

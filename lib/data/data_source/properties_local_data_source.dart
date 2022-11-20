@@ -1,31 +1,50 @@
 import 'package:account_book/data/entity/CategoryEntity.dart';
-import 'package:account_book/di/category_controller.dart';
-import 'package:account_book/di/floor_controller.dart';
-import 'package:account_book/di/payment_controller.dart';
+import 'package:account_book/data/entity/PaymentEntity.dart';
+import 'package:account_book/di/my_service.dart';
 import 'package:get/get.dart';
 
-class PropertiesLocalDataSource extends GetxController {
-  final _databaseController = Get.put(FloorController());
+class PropertiesLocalDataSource extends GetxService {
+  final _databaseController = MyService.to;
 
   Future<Stream<List<CategoryEntity?>>> getCategories() async {
-    final test = await _databaseController.database;
-    final a = test.categoryDao.getCategories();
-    return a;
+    final database = _databaseController.localDatabase;
+    return database.categoryDao.getCategories();
   }
 
-  void addCategory(
-      {required String name, required String type, required int colorId}) {}
+  Future<void> addCategory({required List<CategoryEntity> categories}) async {
+    final database = await _databaseController.localDatabase;
+    database.categoryDao.insertCategories(categories);
+  }
 
-  void updateCategory(
-      {required int categoryId, String? name, String? type, int? colorId}) {}
+  Future<void> updateCategory(
+      {required List<CategoryEntity> categories}) async {
+    final database = await _databaseController.localDatabase;
+    database.categoryDao.updateCategories(categories);
+  }
 
-  void deleteCategory({required int categoryId}) {}
+  Future<void> deleteCategory(
+      {required List<CategoryEntity> categories}) async {
+    final database = await _databaseController.localDatabase;
+    database.categoryDao.deleteCategories(categories);
+  }
 
-  void getPayment() {}
+  Future<Stream<List<PaymentEntity?>>> getPayments() async {
+    final database = await _databaseController.localDatabase;
+    return database.paymentDao.getPayments();
+  }
 
-  void addPayment({required String name, required int colorId}) {}
+  Future<void> addPayment({required List<PaymentEntity> payments}) async {
+    final database = await _databaseController.localDatabase;
+    database.paymentDao.insertPayment(payments);
+  }
 
-  void updatePayment({required int paymentId, String? name, int? colorId}) {}
+  Future<void> updatePayment({required List<PaymentEntity> payments}) async {
+    final database = await _databaseController.localDatabase;
+    database.paymentDao.updatePayment(payments);
+  }
 
-  void deletePayment({required int paymentId}) {}
+  Future<void> deletePayment({required List<PaymentEntity> payments}) async {
+    final database = await _databaseController.localDatabase;
+    database.paymentDao.deletePayment(payments);
+  }
 }

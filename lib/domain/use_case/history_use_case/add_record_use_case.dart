@@ -1,13 +1,12 @@
 import 'package:account_book/data/repository_impl/history_repository_impl.dart';
-import 'package:account_book/di/me_controller.dart';
+import 'package:account_book/di/my_service.dart';
 import 'package:account_book/domain/model/category.dart';
 import 'package:account_book/domain/model/payment.dart';
 import 'package:account_book/domain/model/record.dart';
 import 'package:get/get.dart';
 
-class AddRecordUseCase extends GetxController {
+class AddRecordUseCase extends GetxService {
   final _repository = Get.put(HistoryRepositoryImpl());
-  final _meController = Get.put(MeController());
 
   Future<void> invoke(
       {required Category category,
@@ -17,7 +16,7 @@ class AddRecordUseCase extends GetxController {
       required String date,
       required String title}) async {
     var newKey = await _repository.addHistory(
-        uid: _meController.me.uid,
+        uid: MyService.to.me.uid,
         categoryId: category.id,
         type: type.name,
         paymentId: payment.id,

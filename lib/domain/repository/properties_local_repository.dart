@@ -1,13 +1,15 @@
+import 'package:account_book/domain/model/category.dart';
+
 class PropertiesRepository {
   void getCategories() {}
 
   void addCategory(
-      {required String name, required String type, required int colorId}) {}
+      {required List<Category> categories}) {}
 
   void updateCategory(
-      {required int categoryId, String? name, String? type, int? colorId}) {}
+      {required List<Category> categories}) {}
 
-  void deleteCategory({required int categoryId}) {}
+  void deleteCategory({required List<Category> categories}) {}
 
   void getPayment() {}
 

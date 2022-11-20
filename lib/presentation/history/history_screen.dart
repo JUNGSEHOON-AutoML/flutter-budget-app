@@ -1,5 +1,8 @@
-import 'package:account_book/di/me_controller.dart';
-import 'package:account_book/domain/use_case/properties_use_case/get_categories_use_case.dart';
+import 'package:account_book/di/my_service.dart';
+import 'package:account_book/domain/model/category.dart';
+import 'package:account_book/domain/model/record.dart';
+import 'package:account_book/domain/use_case/properties_use_case/add_category_use_case.dart';
+import 'package:account_book/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,14 +11,16 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(MeController());
-    final test = Get.put(GetCategoriesUseCase());
-
-    test.invoke();
+    final test = Get.put(AddCategoryUseCase());
+    final tc = Category();
+    tc.id = 0;
+    tc.name = "testcategory";
+    tc.type = RecordType.income;
+    tc.color = AppColor.pink1;
+    test.invoke(tc);
 
     return Scaffold(
-        body: Center(child: GetBuilder<MeController>(builder: (meController) {
-      return Text("${meController.me.displayName} 로그인 성공");
-    })));
+        body: Text("${MyService.to.me.displayName} 로그인 성공")
+    );
   }
 }

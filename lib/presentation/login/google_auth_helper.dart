@@ -1,4 +1,4 @@
-import 'package:account_book/di/me_controller.dart';
+import 'package:account_book/di/my_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -7,7 +7,7 @@ class GoogleAuthHelper {
   const GoogleAuthHelper();
 
   Future<void> loginAsGoogle({required BuildContext context,
-    required MeController meController,
+    required MyService myService,
     required Function onSuccess,
     required Function onFailure}) async {
     // Trigger the authentication flow
@@ -29,7 +29,7 @@ class GoogleAuthHelper {
       await FirebaseAuth.instance.signInWithCredential(credential);
 
       if (resultCredential.user != null) {
-        meController.me = resultCredential.user!;
+        myService.me = resultCredential.user!;
         onSuccess();
       } else {
         onFailure();
