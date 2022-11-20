@@ -5,6 +5,6 @@ class Payment {
   late final String name;
 
   PaymentEntity toEntity() {
-    return PaymentEntity(id, name);
+    return PaymentEntity(null, name);
   }
 }

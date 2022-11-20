@@ -11,7 +11,7 @@ class Category {
   late final RecordType type;
 
   CategoryEntity toEntity() {
-    return CategoryEntity(id, name, type.name,
+    return CategoryEntity(null, name, type.name,
         MyService.to.getIdByColor(type: type, color: color));
   }
 }

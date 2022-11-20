@@ -2,12 +2,11 @@ import 'package:account_book/di/my_service.dart';
 import 'package:account_book/domain/model/category.dart';
 import 'package:account_book/domain/model/record.dart';
 import 'package:floor/floor.dart';
-import 'package:get/get.dart';
 
 @entity
 class CategoryEntity {
   @primaryKey
-  late final int id;
+  final int? id;
   late final String name;
   late final String type;
   late final int colorId;
@@ -16,7 +15,11 @@ class CategoryEntity {
 
   Category toModel() {
     final newCategory = Category();
-    newCategory.id = id;
+    if (id == null) {
+      newCategory.id = -1;
+    } else {
+      newCategory.id = id!;
+    }
     newCategory.name = name;
     newCategory.type = RecordType.income;
     if (type == RecordType.spend.name) {
