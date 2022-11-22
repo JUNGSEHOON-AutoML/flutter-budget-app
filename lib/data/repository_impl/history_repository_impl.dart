@@ -1,9 +1,9 @@
 import 'package:account_book/data/data_source/history_remote_data_source.dart';
 import 'package:account_book/domain/repository/history_repository.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 
-class HistoryRepositoryImpl extends GetxService
-    implements HistoryRepository {
+class HistoryRepositoryImpl extends GetxService implements HistoryRepository {
   final _datasourceImpl = Get.put(HistoryDataSource());
 
   @override
@@ -31,8 +31,9 @@ class HistoryRepositoryImpl extends GetxService
   }
 
   @override
-  void getHistory({required String uid, required Function onSuccess}) {
-    return _datasourceImpl.getHistory(uid: uid, onSuccess: onSuccess);
+  Future<Stream<DatabaseEvent>> getHistory(
+      {required String uid}) {
+    return _datasourceImpl.getHistory(uid: uid);
   }
 
   @override

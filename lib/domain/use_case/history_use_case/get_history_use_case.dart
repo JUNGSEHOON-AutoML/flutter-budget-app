@@ -11,9 +11,8 @@ class GetHistoryUseCase extends GetxService {
   final _repository = Get.put(HistoryRepositoryImpl());
 
   void invoke() async {
-    _repository.getHistory(
-        uid: MyService.to.me.uid,
-        onSuccess: (DatabaseEvent event) {
+    final stream = _repository.getHistory(uid: MyService.to.me.uid);
+    stream.then((value) => value.listen((event) {
           for (final child in event.snapshot.children) {
             final hashMap = child.value as LinkedHashMap<Object?, Object?>;
             final newRecord =
@@ -27,7 +26,7 @@ class GetHistoryUseCase extends GetxService {
             }
             MyService.to.history[dateKey]!.add(newRecord);
           }
-        });
+        }));
   }
 
   Record _rawDataToRecord(

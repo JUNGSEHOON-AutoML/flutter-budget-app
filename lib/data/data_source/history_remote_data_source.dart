@@ -1,7 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 
-
 enum DbColumn { uid, recordId, categoryId, type, paymentId, price, title, date }
 
 class HistoryDataSource extends GetxService {
@@ -31,17 +30,15 @@ class HistoryDataSource extends GetxService {
     return pushRef.key;
   }
 
-  void deleteHistory({required String uid, required String recordId}) async {
+  void deleteHistory({required String uid, required String recordId}) {
     final ref = _database.ref("history/$uid/$recordId");
     ref.set(null);
   }
 
-  void getHistory({required String uid, required Function onSuccess}) {
+  Future<Stream<DatabaseEvent>> getHistory({required String uid}) async {
     final ref = _database.ref("history/$uid").orderByChild(DbColumn.date.name);
 
-    ref.onValue.listen((event) {
-      onSuccess(event);
-    });
+    return ref.onValue;
   }
 
   void updateHistory(
