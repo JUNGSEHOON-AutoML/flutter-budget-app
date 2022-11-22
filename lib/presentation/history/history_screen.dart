@@ -23,7 +23,7 @@ class HistoryScreen extends StatelessWidget {
         List.generate(MyService.to.history[nowYM]!.length, (index) => index)
             .toList();
     List groupList = [];
-    for (int k = 1; k <= lastDate; k++) {
+    for (int k = lastDate; k >= 1; k--) {
       if (k < 10) {
         List group = MyService.to.history[nowYM]!
             .where((data) => data.date == nowYM + '-0' + k.toString())
