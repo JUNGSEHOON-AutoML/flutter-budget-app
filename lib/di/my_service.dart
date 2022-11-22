@@ -31,6 +31,35 @@ class MyService extends GetxService {
     MyService.to._initPayment();
   }
 
+  void makeDummies() {
+    final record1 = Record();
+    record1.id = "1";
+    record1.payment = Payment();
+    record1.payment!.id = 1;
+    record1.payment!.name = "카카오카드";
+    record1.category = Category();
+    record1.category.id = 1;
+    record1.category.name = "경조사비";
+    record1.category.color = AppColor.pink2;
+    record1.type = RecordType.spend;
+    record1.date = "2022-11-03";
+    record1.price = 5000;
+    record1.title = "정세훈 생일 선물";
+
+    final record2 = Record();
+    record2.id = "2";
+    record2.category = Category();
+    record2.category.id = 2;
+    record2.category.name = "급여";
+    record2.category.color = AppColor.olive5;
+    record2.type = RecordType.income;
+    record2.date = "2022-11-06";
+    record2.price = 25000;
+    record2.title = "아르바이트 급여";
+
+    history["2022-11"] = [record1, record2];
+  }
+
   Future<void> _initLocalDB() async {
     localDatabase =
         await $FloorAppDatabase.databaseBuilder('app_database.db').build();
