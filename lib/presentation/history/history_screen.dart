@@ -22,49 +22,53 @@ class HistoryScreen extends StatelessWidget {
     final items =
         List.generate(MyService.to.history[nowYM]!.length, (index) => index)
             .toList();
-
+    List groupList = [];
     for (int k = 1; k <= lastDate; k++) {
       if (k < 10) {
         List group = MyService.to.history[nowYM]!
             .where((data) => data.date == nowYM + '-0' + k.toString())
             .toList();
         if (group.length > 0) {
-          print(k);
+          groupList.add(group);
         }
       } else {
         List group = MyService.to.history[nowYM]!
             .where((data) => data.date == nowYM + '-' + k.toString())
             .toList();
         if (group.length > 0) {
-          print(k);
+          groupList.add(group);
         }
       }
     }
 
     return Scaffold(
-        appBar: AppBar(
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: () {},
-            ),
-            const Text('2022년 11월'),
-            IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: () {},
-            ),
-          ],
-        ),
-        body: Column(
-          children: [
-            const Text("11월 3일 월"),
-            ListView(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                children:
-                    items.map((i) => listTileViewAllType(nowYM, i)).toList()),
-          ],
-        ));
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {},
+          ),
+          const Text('2022년 11월'),
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {},
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Column(
+            children: [
+              ListView(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  children:
+                      groupList.map((e) => listTileViewAllType(e, nowYM, e![0].date)).toList()),
+            ],
+          ),
+        ],
+      )
+    );
   }
 }
 
@@ -72,12 +76,25 @@ Row ymdListAllType(String nowYMD, String nowYM, int now, int length) {
   return Row();
 }
 
-ListTile listTileViewAllType(String nowYM, int now) {
-  if (MyService.to.history[nowYM]![now].type == RecordType.spend) {
-    String cardName = MyService.to.history[nowYM]![now].payment!.name;
-    String categoryName = MyService.to.history[nowYM]![now].category.name;
-    String title = MyService.to.history[nowYM]![now].title;
-    String price = MyService.to.history[nowYM]![now].price.toString();
+Column listTileViewAllType(List k, String nowYM, String date) {
+  return Column(
+    children: [
+      Text("${date}"),
+      ListView(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          children: k.map((e) => ymdList(e)).toList()),
+    ],
+  );
+
+}
+
+ListTile ymdList(Record e) {
+  if (e.type == RecordType.spend) {
+    String cardName = e.payment!.name;
+    String categoryName = e.category.name;
+    String title = e.title;
+    String price = e.price.toString();
     return ListTile(
       title: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -114,10 +131,10 @@ ListTile listTileViewAllType(String nowYM, int now) {
       ),
       onTap: () {},
     );
-  } else if (MyService.to.history[nowYM]![now].type == RecordType.income) {
-    String categoryName = MyService.to.history[nowYM]![now].category.name;
-    String title = MyService.to.history[nowYM]![now].title;
-    String price = MyService.to.history[nowYM]![now].price.toString();
+  } else if (e.type == RecordType.income) {
+    String categoryName = e.category.name;
+    String title = e.title;
+    String price = e.price.toString();
     return ListTile(
       title: Padding(
         padding: const EdgeInsets.all(16.0),
