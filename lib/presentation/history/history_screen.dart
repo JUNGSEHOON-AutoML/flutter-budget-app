@@ -18,8 +18,8 @@ const List<Widget> toggle = <Widget>[
 ];
 
 class _HistoryScreenState extends State<HistoryScreen> {
-
   final List<bool> _selected = <bool>[true, true];
+
   @override
   Widget build(BuildContext context) {
     final test = Get.put(GetCategoriesUseCase());
@@ -49,7 +49,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
         }
       }
     }
-
 
     return Scaffold(
       appBar: AppBar(
@@ -95,7 +94,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   children: groupList
-                      .map((e) => dateListTileAllType(e, e![0].date))
+                      .map((e) => dateListTileAllType(e, e![0].date, _selected))
                       .toList()),
             ],
           ),
@@ -109,7 +108,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 }
 
-Column dateListTileAllType(List k, String date) {
+Column dateListTileAllType(List k, String date, List<bool> _selected) {
   var d = DateTime.parse(date);
   return Column(
     children: [
@@ -117,13 +116,13 @@ Column dateListTileAllType(List k, String date) {
       ListView(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
-          children: k.map((e) => ymdList(e)).toList()),
+          children: k.map((e) => ymdList(e, _selected)).toList()),
     ],
   );
 }
 
-ListTile ymdList(Record e) {
-  if (e.type == RecordType.spend) {
+ListTile ymdList(Record e, _selected) {
+  if (e.type == RecordType.spend && _selected[1] == true) {
     String cardName = e.payment!.name;
     String categoryName = e.category.name;
     String title = e.title;
@@ -164,7 +163,8 @@ ListTile ymdList(Record e) {
       ),
       onTap: () {},
     );
-  } else if (e.type == RecordType.income) {
+  }
+  else if (e.type == RecordType.income && _selected[0] == true) {
     String categoryName = e.category.name;
     String title = e.title;
     String price = e.price.toString();
