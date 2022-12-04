@@ -5,9 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class HistoryScreen extends StatelessWidget {
+class HistoryScreen extends StatefulWidget {
   const HistoryScreen({Key? key}) : super(key: key);
 
+  @override
+  State<HistoryScreen> createState() => _HistoryScreenState();
+}
+
+const List<Widget> toggle = <Widget>[
+  Text('수입'),
+  Text('지출'),
+];
+
+class _HistoryScreenState extends State<HistoryScreen> {
+
+  final List<bool> _selected = <bool>[true, true];
   @override
   Widget build(BuildContext context) {
     final test = Get.put(GetCategoriesUseCase());
@@ -38,33 +50,61 @@ class HistoryScreen extends StatelessWidget {
       }
     }
 
+
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text('2022년 11월'),
-        elevation: 0.0,
-        leading:  IconButton(
-          icon: const Icon(Icons.chevron_left),
-          onPressed: () {},
-        ),
-        actions: [IconButton(
-          icon: const Icon(Icons.chevron_right),
-          onPressed: () {},
-        )]
-      ),
+          centerTitle: true,
+          title: const Text('2022년 11월'),
+          elevation: 0.0,
+          leading: IconButton(
+            icon: const Icon(Icons.chevron_left),
+            onPressed: () {},
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.chevron_right),
+              onPressed: () {},
+            )
+          ]),
       body: Column(
         children: [
           Column(
             children: [
+              SizedBox(height: 30),
+              ToggleButtons(
+                onPressed: (int index) {
+                  // All buttons are selectable.
+                  setState(() {
+                    _selected[index] = !_selected[index];
+                  });
+                },
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                selectedBorderColor: Colors.green[700],
+                selectedColor: Colors.black,
+                fillColor: Colors.green[200],
+                color: Colors.green[400],
+                constraints: const BoxConstraints(
+                  minHeight: 40.0,
+                  minWidth: 190.0,
+                ),
+                isSelected: _selected,
+                children: toggle,
+              ),
+              SizedBox(height: 30),
               ListView(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
-                  children:
-                      groupList.map((e) => dateListTileAllType(e, e![0].date)).toList()),
+                  children: groupList
+                      .map((e) => dateListTileAllType(e, e![0].date))
+                      .toList()),
             ],
           ),
         ],
-      )
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
@@ -80,7 +120,6 @@ Column dateListTileAllType(List k, String date) {
           children: k.map((e) => ymdList(e)).toList()),
     ],
   );
-
 }
 
 ListTile ymdList(Record e) {
