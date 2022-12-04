@@ -19,9 +19,6 @@ class HistoryScreen extends StatelessWidget {
         int.parse(DateFormat('dd').format(DateTime(2022, 11 + 1, 0)));
     MyService.to.makeDummies();
 
-    final items =
-        List.generate(MyService.to.history[nowYM]!.length, (index) => index)
-            .toList();
     List groupList = [];
     for (int k = lastDate; k >= 1; k--) {
       if (k < 10) {
@@ -43,17 +40,17 @@ class HistoryScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {},
-          ),
-          const Text('2022년 11월'),
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {},
-          ),
-        ],
+        centerTitle: true,
+        title: const Text('2022년 11월'),
+        elevation: 0.0,
+        leading:  IconButton(
+          icon: const Icon(Icons.chevron_left),
+          onPressed: () {},
+        ),
+        actions: [IconButton(
+          icon: const Icon(Icons.chevron_right),
+          onPressed: () {},
+        )]
       ),
       body: Column(
         children: [
@@ -63,7 +60,7 @@ class HistoryScreen extends StatelessWidget {
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   children:
-                      groupList.map((e) => listTileViewAllType(e, nowYM, e![0].date)).toList()),
+                      groupList.map((e) => dateListTileAllType(e, e![0].date)).toList()),
             ],
           ),
         ],
@@ -72,14 +69,11 @@ class HistoryScreen extends StatelessWidget {
   }
 }
 
-Row ymdListAllType(String nowYMD, String nowYM, int now, int length) {
-  return Row();
-}
-
-Column listTileViewAllType(List k, String nowYM, String date) {
+Column dateListTileAllType(List k, String date) {
+  var d = DateTime.parse(date);
   return Column(
     children: [
-      Text("${date}"),
+      Text(DateFormat('MM월 dd일 EEEEE').format(d)),
       ListView(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
