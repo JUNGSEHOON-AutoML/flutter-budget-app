@@ -110,15 +110,28 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
 Column dateListTileAllType(List k, String date, List<bool> _selected) {
   var d = DateTime.parse(date);
-  return Column(
-    children: [
-      Text(DateFormat('MM월 dd일 EEEEE').format(d)),
-      ListView(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          children: k.map((e) => ymdList(e, _selected)).toList()),
-    ],
-  );
+
+  for (int i = 0; i < k.length; i++) {
+    if (k[i].type == RecordType.spend && _selected[1] == false) {
+      k.remove(k[i]);
+    }
+    if (k[i].type == RecordType.income && _selected[0] == false) {
+      k.remove(k[i]);
+    }
+  }
+  if (k.length == 0) {
+    return Column();
+  } else {
+    return Column(
+      children: [
+        Text(DateFormat('MM월 dd일 EEEEE').format(d)),
+        ListView(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            children: k.map((e) => ymdList(e, _selected)).toList()),
+      ],
+    );
+  }
 }
 
 ListTile ymdList(Record e, _selected) {
@@ -163,8 +176,7 @@ ListTile ymdList(Record e, _selected) {
       ),
       onTap: () {},
     );
-  }
-  else if (e.type == RecordType.income && _selected[0] == true) {
+  } else if (e.type == RecordType.income && _selected[0] == true) {
     String categoryName = e.category.name;
     String title = e.title;
     String price = e.price.toString();
@@ -201,6 +213,7 @@ ListTile ymdList(Record e, _selected) {
       onTap: () {},
     );
   } else {
+    print("!!");
     return ListTile();
   }
 }
