@@ -1,3 +1,4 @@
+import 'package:account_book/presentation/canlendar/view/calendar_main.dart';
 import 'package:account_book/presentation/history/history_screen.dart';
 import 'package:account_book/presentation/setting/setting_screen.dart';
 import 'package:flutter/widgets.dart';
@@ -8,10 +9,10 @@ class MainService extends GetxService {
 
   var currentIndex = 0.obs;
 
-  final pages = <String>['/history', '/history', '/history', '/settings'];
+  final pages = <String>['/history', '/calendar', '/history', '/settings'];
   final pageObjects = <Widget>[
     const HistoryScreen(),
-    const HistoryScreen(),
+    const Calendar_Main(),
     const HistoryScreen(),
     const SettingScreen()
   ];

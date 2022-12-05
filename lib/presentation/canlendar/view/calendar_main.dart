@@ -1,4 +1,5 @@
 import 'package:account_book/domain/model/record.dart';
+import 'package:account_book/style.dart';
 import 'package:date_utils/date_utils.dart' as dt;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,9 @@ class _Calendar_MainState extends State<Calendar_Main> {
   //삽입 데이터 list
   List data_list = List.generate(42, (_) => []);
   var start_count;
+  var monthIncome;
+  var monthSpend;
+  var monthSum;
 
   //현재 화면 달,년도
   var this_month;
@@ -34,6 +38,9 @@ class _Calendar_MainState extends State<Calendar_Main> {
   void initState() {
     date_list = [];
     data_list = List.generate(42, (_) => []);
+    monthIncome = 0;
+    monthSum = 0;
+    monthSpend = 0;
     get_datetime();
     get_date_list();
     super.initState();
@@ -78,6 +85,9 @@ class _Calendar_MainState extends State<Calendar_Main> {
     date_list = [];
     data_list = List.generate(42, (_) => []);
     int count = 0;
+    monthIncome = 0;
+    monthSum = 0;
+    monthSpend = 0;
     setState(() {
       if (this_month - 1 == 0) {
         this_year = this_year - 1;
@@ -111,6 +121,9 @@ class _Calendar_MainState extends State<Calendar_Main> {
     date_list = [];
     data_list = List.generate(42, (_) => []);
     int count = 0;
+    monthIncome = 0;
+    monthSum = 0;
+    monthSpend = 0;
     setState(() {
       if (this_month + 1 == 13) {
         this_year = this_year + 1;
@@ -180,7 +193,7 @@ class _Calendar_MainState extends State<Calendar_Main> {
       }
     }
 
-    for (int g=0; g<groupList.length; g++) {
+    for (int g = 0; g < groupList.length; g++) {
       print(groupList[g][0].date);
       var d = DateTime.parse(groupList[g][0].date);
       int day = int.parse(DateFormat('dd').format(d));
@@ -195,13 +208,18 @@ class _Calendar_MainState extends State<Calendar_Main> {
       if (groupList[g][0].type == RecordType.income) {
         data_list[index][0] += groupList[g][0].price;
         data_list[index][1] += groupList[g][0].price;
+        monthIncome += groupList[g][0].price;
+        monthSum += groupList[g][0].price;
       } else {
         data_list[index][0] -= groupList[g][0].price;
         data_list[index][2] -= groupList[g][0].price;
+        monthSpend += groupList[g][0].price;
+        monthSum -= groupList[g][0].price;
       }
 
       // RecordType.spend
     }
+    print(monthSum.toString() + monthIncome.toString() + monthSpend.toString());
 
     return Scaffold(
         appBar: AppBar(
@@ -322,106 +340,126 @@ class _Calendar_MainState extends State<Calendar_Main> {
                     children: [
                       date_list.length == 42
                           ? date_list[6] == "31"
-                          ? Container()
+                              ? Container()
+                              : Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Day_Widget(
+                                        size, date_list[0], data_list[0]),
+                                    Day_Widget(
+                                        size, date_list[1], data_list[1]),
+                                    Day_Widget(
+                                        size, date_list[2], data_list[2]),
+                                    Day_Widget(
+                                        size, date_list[3], data_list[3]),
+                                    Day_Widget(
+                                        size, date_list[4], data_list[4]),
+                                    Day_Widget(
+                                        size, date_list[5], data_list[5]),
+                                    Day_Widget(
+                                        size, date_list[6], data_list[6]),
+                                  ],
+                                )
                           : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Day_Widget(size, date_list[0], data_list[0]),
+                                Day_Widget(size, date_list[1], data_list[1]),
+                                Day_Widget(size, date_list[2], data_list[2]),
+                                Day_Widget(size, date_list[3], data_list[3]),
+                                Day_Widget(size, date_list[4], data_list[4]),
+                                Day_Widget(size, date_list[5], data_list[5]),
+                                Day_Widget(size, date_list[6], data_list[6]),
+                              ],
+                            ),
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Day_Widget(size,date_list[0],data_list[0]),
-                          Day_Widget(size,date_list[1],data_list[1]),
-                          Day_Widget(size,date_list[2],data_list[2]),
-                          Day_Widget(size,date_list[3],data_list[3]),
-                          Day_Widget(size,date_list[4],data_list[4]),
-                          Day_Widget(size,date_list[5],data_list[5]),
-                          Day_Widget(size,date_list[6],data_list[6]),
-                        ],
-                      )
-                          : Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Day_Widget(size,date_list[0],data_list[0]),
-                          Day_Widget(size,date_list[1],data_list[1]),
-                          Day_Widget(size,date_list[2],data_list[2]),
-                          Day_Widget(size,date_list[3],data_list[3]),
-                          Day_Widget(size,date_list[4],data_list[4]),
-                          Day_Widget(size,date_list[5],data_list[5]),
-                          Day_Widget(size,date_list[6],data_list[6]),
+                          Day_Widget(size, date_list[7], data_list[7]),
+                          Day_Widget(size, date_list[8], data_list[8]),
+                          Day_Widget(size, date_list[9], data_list[9]),
+                          Day_Widget(size, date_list[10], data_list[10]),
+                          Day_Widget(size, date_list[11], data_list[11]),
+                          Day_Widget(size, date_list[12], data_list[12]),
+                          Day_Widget(size, date_list[13], data_list[13]),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Day_Widget(size,date_list[7],data_list[7]),
-                          Day_Widget(size,date_list[8],data_list[8]),
-                          Day_Widget(size,date_list[9],data_list[9]),
-                          Day_Widget(size,date_list[10],data_list[10]),
-                          Day_Widget(size,date_list[11],data_list[11]),
-                          Day_Widget(size,date_list[12],data_list[12]),
-                          Day_Widget(size,date_list[13],data_list[13]),
+                          Day_Widget(size, date_list[14], data_list[14]),
+                          Day_Widget(size, date_list[15], data_list[15]),
+                          Day_Widget(size, date_list[16], data_list[16]),
+                          Day_Widget(size, date_list[17], data_list[17]),
+                          Day_Widget(size, date_list[18], data_list[18]),
+                          Day_Widget(size, date_list[19], data_list[19]),
+                          Day_Widget(size, date_list[20], data_list[20]),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Day_Widget(size,date_list[14],data_list[14]),
-                          Day_Widget(size,date_list[15],data_list[15]),
-                          Day_Widget(size,date_list[16],data_list[16]),
-                          Day_Widget(size,date_list[17],data_list[17]),
-                          Day_Widget(size,date_list[18],data_list[18]),
-                          Day_Widget(size,date_list[19],data_list[19]),
-                          Day_Widget(size,date_list[20],data_list[20]),
+                          Day_Widget(size, date_list[21], data_list[21]),
+                          Day_Widget(size, date_list[22], data_list[22]),
+                          Day_Widget(size, date_list[23], data_list[23]),
+                          Day_Widget(size, date_list[24], data_list[24]),
+                          Day_Widget(size, date_list[25], data_list[25]),
+                          Day_Widget(size, date_list[26], data_list[26]),
+                          Day_Widget(size, date_list[27], data_list[27]),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Day_Widget(size,date_list[21],data_list[21]),
-                          Day_Widget(size,date_list[22],data_list[22]),
-                          Day_Widget(size,date_list[23],data_list[23]),
-                          Day_Widget(size,date_list[24],data_list[24]),
-                          Day_Widget(size,date_list[25],data_list[25]),
-                          Day_Widget(size,date_list[26],data_list[26]),
-                          Day_Widget(size,date_list[27],data_list[27]),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Day_Widget(size,date_list[28],data_list[28]),
-                          Day_Widget(size,date_list[29],data_list[29]),
-                          Day_Widget(size,date_list[30],data_list[30]),
-                          Day_Widget(size,date_list[31],data_list[31]),
-                          Day_Widget(size,date_list[32],data_list[32]),
-                          Day_Widget(size,date_list[33],data_list[33]),
-                          Day_Widget(size,date_list[34],data_list[34]),
+                          Day_Widget(size, date_list[28], data_list[28]),
+                          Day_Widget(size, date_list[29], data_list[29]),
+                          Day_Widget(size, date_list[30], data_list[30]),
+                          Day_Widget(size, date_list[31], data_list[31]),
+                          Day_Widget(size, date_list[32], data_list[32]),
+                          Day_Widget(size, date_list[33], data_list[33]),
+                          Day_Widget(size, date_list[34], data_list[34]),
                         ],
                       ),
                       date_list.length == 42
                           ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Day_Widget(size,date_list[35],data_list[35]),
-                          Day_Widget(size,date_list[36],data_list[36]),
-                          Day_Widget(size,date_list[37],data_list[37]),
-                          Day_Widget(size,date_list[38],data_list[38]),
-                          Day_Widget(size,date_list[39],data_list[39]),
-                          Day_Widget(size,date_list[40],data_list[40]),
-                          Day_Widget(size,date_list[41],data_list[41]),
-                        ],
-                      )
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Day_Widget(size, date_list[35], data_list[35]),
+                                Day_Widget(size, date_list[36], data_list[36]),
+                                Day_Widget(size, date_list[37], data_list[37]),
+                                Day_Widget(size, date_list[38], data_list[38]),
+                                Day_Widget(size, date_list[39], data_list[39]),
+                                Day_Widget(size, date_list[40], data_list[40]),
+                                Day_Widget(size, date_list[41], data_list[41]),
+                              ],
+                            )
                           : Container(
-                        height: size.height * 0.1,
-                      ),
-
-
-
+                              height: size.height * 0.1,
+                            ),
                     ],
                   ),
                   Container(
                       margin: EdgeInsets.only(top: 0),
-                      child: Text(
-                        "수입: 지출: 총합:",
-                        style: TextStyle(
-                            fontSize: 19, fontWeight: FontWeight.bold),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            "수입:${monthIncome}",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold, color: AppColor.purple1),
+                          ),
+                          Text(
+                            "지출:${monthSpend}",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold, color: AppColor.red1),
+                          ),
+                          Text(
+                            "총합:${monthSum}",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold, color: AppColor.blue4),
+                          ),
+                        ],
                       ))
                 ],
               ),
