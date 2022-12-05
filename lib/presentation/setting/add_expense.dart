@@ -939,8 +939,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: ElevatedButton(
                         onPressed: () {
                           if (_expenseKey.currentState!.validate()) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Processing Data')),
+                            Get.snackbar(
+                              '추가완료!',
+                              '지출 카테고리가 추가되었습니다.',
+                              backgroundColor: Colors.white,
                             );
                           }
                           final expense = new Category();
