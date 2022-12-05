@@ -8,7 +8,7 @@ class Category {
   late final int id;
   late final String name;
   late final Color color;
-  late final RecordType type;
+  var type = RecordType.income;
 
   CategoryEntity toEntity() {
     return CategoryEntity(null, name, type.name,

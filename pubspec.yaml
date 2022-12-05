@@ -45,6 +45,7 @@ dependencies:
   firebase_database: ^10.0.5
   fl_chart: ^0.55.2
   fluttertoast: ^8.1.1
+  dropdown_button2: ^1.9.2
 
 dev_dependencies:
   flutter_test:
