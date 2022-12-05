@@ -7,33 +7,14 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import '../../domain/model/record.dart';
 
-class SettingScreen extends StatelessWidget {
-  const SettingScreen({Key? key}) : super(key:key);
+class SettingScreen extends StatefulWidget {
+  const SettingScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-        ),
-        primarySwatch: Colors.indigo,
-        fontFamily: 'Cabin',
-      ),
-      home: const MyHomePage(),
-    );
-  }
+  State<SettingScreen> createState() => _SettingScreenState();
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class _SettingScreenState extends State<SettingScreen> {
   final _midController = TextEditingController();
   final dummylist1=[];
   final dummy1=Payment();
