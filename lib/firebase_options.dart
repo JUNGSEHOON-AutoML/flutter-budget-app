@@ -17,15 +17,24 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,16 +52,6 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAccKuVFgtO1QyqVka8M6v9fXxIiaCrnAQ',
-    appId: '1:68873148567:web:507392b48092c0ae80b1d2',
-    messagingSenderId: '68873148567',
-    projectId: 'inkyeongbook',
-    authDomain: 'inkyeongbook.firebaseapp.com',
-    databaseURL: 'https://inkyeongbook-default-rtdb.firebaseio.com',
-    storageBucket: 'inkyeongbook.appspot.com',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCfPU-FYaJC_mZt-U3viQCqddsnUmftM2M',
     appId: '1:68873148567:android:45ebbfaa9ae6658a80b1d2',
@@ -60,29 +59,5 @@ class DefaultFirebaseOptions {
     projectId: 'inkyeongbook',
     databaseURL: 'https://inkyeongbook-default-rtdb.firebaseio.com',
     storageBucket: 'inkyeongbook.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCXzO9eOe5-zK_bxaR7VELNWWD5Nvm-ByQ',
-    appId: '1:68873148567:ios:1d68782e201d203580b1d2',
-    messagingSenderId: '68873148567',
-    projectId: 'inkyeongbook',
-    databaseURL: 'https://inkyeongbook-default-rtdb.firebaseio.com',
-    storageBucket: 'inkyeongbook.appspot.com',
-    androidClientId: '68873148567-tf7hh3gfbpjq2820l0idaoaepbpr0r7q.apps.googleusercontent.com',
-    iosClientId: '68873148567-2m2kng87brgg4h10elvbkkrp5ge02ntr.apps.googleusercontent.com',
-    iosBundleId: 'com.inkyeong.accountBook',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCXzO9eOe5-zK_bxaR7VELNWWD5Nvm-ByQ',
-    appId: '1:68873148567:ios:1d68782e201d203580b1d2',
-    messagingSenderId: '68873148567',
-    projectId: 'inkyeongbook',
-    databaseURL: 'https://inkyeongbook-default-rtdb.firebaseio.com',
-    storageBucket: 'inkyeongbook.appspot.com',
-    androidClientId: '68873148567-tf7hh3gfbpjq2820l0idaoaepbpr0r7q.apps.googleusercontent.com',
-    iosClientId: '68873148567-2m2kng87brgg4h10elvbkkrp5ge02ntr.apps.googleusercontent.com',
-    iosBundleId: 'com.inkyeong.accountBook',
   );
 }

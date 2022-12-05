@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "68873148567-e2bjm8p4r5g48vm64u1pr7stktjfgj04.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.in_kyeong.account_book",
+            "certificate_hash": "e90e1ee3c1286057db94ad37a282176ba8f245aa"
+          }
+        },
+        {
           "client_id": "68873148567-tf7hh3gfbpjq2820l0idaoaepbpr0r7q.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

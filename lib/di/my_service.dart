@@ -16,6 +16,9 @@ class MyService extends GetxService {
 
   final history = <String, List<Record>>{}.obs;
 
+  var currentYear = 2022;
+  var currentMonth = 12;
+
   final _colors = <RecordType, Map<int, Color>>{
     RecordType.spend: {-1: AppColor.unknown},
     RecordType.income: {-1: AppColor.unknown}
@@ -57,12 +60,24 @@ class MyService extends GetxService {
     record2.price = 25000;
     record2.title = "아르바이트 급여";
 
+    final record3 = Record();
+    record3.id = "3";
+    record3.category = Category();
+    record3.category.id = 3;
+    record3.category.name = "급여";
+    record3.category.color = AppColor.olive5;
+    record3.type = RecordType.income;
+    record3.date = "2022-09-06";
+    record3.price = 25000;
+    record3.title = "아르바이트 급여";
+
     history["2022-11"] = [record1, record2];
+    history["2022-09"] = [record3];
   }
 
   Future<void> _initLocalDB() async {
     localDatabase =
-        await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+    await $FloorAppDatabase.databaseBuilder('app_database.db').build();
   }
 
   void _initCategory() {
