@@ -30,13 +30,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
       nowYM = "${MyService.to.currentYear}-0${MyService.to.currentMonth}";
     }
     int lastDate =
-        int.parse(DateFormat('dd').format(DateTime(2022, 11 + 1, 0)));
+    int.parse(DateFormat('dd').format(DateTime(2022, 11 + 1, 0)));
     MyService.to.makeDummies();
 
     List groupList = [];
-    print(MyService.to.history["2022-11"]);
-    print(MyService.to.history["2022-11"]);
-    print(MyService.to.history["2022-11"]);
 
     const List<Widget> toggle = <Widget>[
       Text('수입'),
@@ -135,7 +132,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   shrinkWrap: true,
                   children: groupList
                       .map((e) => dateListTileAllType(
-                          e, e![0].date, _selected, deleteRecordUseCase))
+                      e, e![0].date, _selected, deleteRecordUseCase))
                       .toList()),
             ],
           ),
@@ -230,8 +227,8 @@ Column dateListTileAllType(List<Record> k, String date, List<bool> _selected,
             shrinkWrap: true,
             children: k
                 .map((e) => ymdList(e, _selected, (recordId) {
-                      deleteRecordUseCase.invoke(recordId: recordId);
-                    }))
+              deleteRecordUseCase.invoke(recordId: recordId);
+            }))
                 .toList()),
         Divider(color: AppColor.purple1, thickness: 1.2),
       ],
