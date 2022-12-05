@@ -2,7 +2,6 @@ import 'package:account_book/domain/use_case/properties_use_case/delete_category
 import 'package:flutter/cupertino.dart';
 import 'package:account_book/style.dart';
 import 'package:flutter/material.dart';
-import 'package:fast_color_picker/fast_color_picker.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
