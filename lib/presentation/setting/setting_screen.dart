@@ -70,7 +70,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
 
                 CupertinoButton(onPressed: (){
-                  Get.toNamed("/addaccount");
+                  Get.toNamed("/addAccount");
                   setState(() {
                     // dummy1.name='결제수단';
                     dummylist1.add(dummy1);
@@ -96,7 +96,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   style: TextStyle(fontSize: 18)
                 ),
           CupertinoButton(onPressed: (){
-            Get.toNamed("/addexpense");
+            Get.toNamed("/addExpense");
             dummy2.name='지출1';
             setState(() {
 
@@ -124,7 +124,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     style: TextStyle(fontSize: 18)
                 ),
                 CupertinoButton(onPressed: (){
-                  Get.toNamed("/addincome");
+                  Get.toNamed("/addIncome");
                   dummy3.name='수입1';
                   dummy3.color=AppColor.purple1;
                   dummy3.type=RecordType.income;
