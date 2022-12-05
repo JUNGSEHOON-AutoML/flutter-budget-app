@@ -92,8 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   TextFormField(
                     decoration: const InputDecoration(
-                      prefix: Text('이름'),
-                      labelText: '입력하세요',
+                      labelText: '이름',
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -939,8 +938,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: ElevatedButton(
                         onPressed: () {
                           if (_expenseKey.currentState!.validate()) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Processing Data')),
+                            Get.snackbar(
+                              '추가완료!',
+                              '지출 카테고리가 추가되었습니다.',
+                              backgroundColor: Colors.white,
                             );
                           }
                           final expense = new Category();
