@@ -34,7 +34,7 @@ class AccountBookApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
       ),
       initialRoute: "/login",
       getPages: [
