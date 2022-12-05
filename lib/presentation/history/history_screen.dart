@@ -35,14 +35,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
       Text('지출'),
     ];
 
-    // for (int n = 0; n < MyService.to.history[nowYM]!.length; n++) {
-    //   if (MyService.to.history[nowYM]![n].type == RecordType.spend) {
-    //     spend +=MyService.to.history[nowYM]![n].price;
-    //   } else if (MyService.to.history[nowYM]![n].type == RecordType.income) {
-    //     income += MyService.to.history[nowYM]![n].price;
-    //   }
-    // }
-
     for (int k = lastDate; k >= 1; k--) {
       if (k < 10) {
         List group = MyService.to.history[nowYM]!
@@ -92,14 +84,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 selectedColor: Colors.white,
                 fillColor: AppColor.purple1,
                 color: AppColor.purple1,
+                textStyle: const TextStyle(
+                  fontSize: 20,
+                ),
                 constraints: const BoxConstraints(
                   minHeight: 40.0,
-                  minWidth: 190.0,
+                  minWidth: 180.0,
                 ),
                 isSelected: _selected,
                 children: toggle,
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 20),
               ListView(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
@@ -120,6 +115,22 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
 Column dateListTileAllType(List<Record> k, String date, List<bool> _selected) {
   var d = DateTime.parse(date);
+  String ee = DateFormat('EEEEE').format(d).toString();
+  if (ee == "Monday") {
+    ee = "월";
+  } else if (ee == "Tuesday") {
+    ee = "화";
+  } else if (ee == "Wednesday") {
+    ee = "수";
+  } else if (ee == "Thursday") {
+    ee = "목";
+  } else if (ee == "Friday") {
+    ee = "금";
+  } else if (ee == "Saturday") {
+    ee = "토";
+  } else if (ee == "Sunday") {
+    ee = "일";
+  }
   int dayIncome = 0;
   int daySpend = 0;
 
@@ -136,25 +147,44 @@ Column dateListTileAllType(List<Record> k, String date, List<bool> _selected) {
       k.remove(k[i]);
     }
   }
-  print(dayIncome);
-  print(daySpend);
+
   if (k.length == 0) {
     return Column();
   } else {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(DateFormat('MM월 dd일 EEEEE').format(d)),
-            Row(
-              children: [
-                Text('수입 ' + dayIncome.toString()),
-                SizedBox(width: 20),
-                Text('지출 ' + daySpend.toString()),
-              ],
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.only(left: 25, right: 25),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                DateFormat('MM월 dd일  ').format(d) + ee,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: AppColor.brightpurple,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Row(
+                children: [
+                  Text(
+                    '수입 ' + dayIncome.toString(),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: AppColor.brightpurple,
+                    ),
+                  ),
+                  SizedBox(width: 20),
+                  Text('지출 ' + daySpend.toString(),
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppColor.brightpurple,
+                      )),
+                ],
+              ),
+            ],
+          ),
         ),
         ListView(
             scrollDirection: Axis.vertical,
@@ -172,22 +202,34 @@ ListTile ymdList(Record e, _selected) {
     String categoryName = e.category.name;
     String title = e.title;
     String price = e.price.toString();
+    Color tagColor = e.category.color;
     return ListTile(
       title: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
-            Divider(color: AppColor.brightpurple, thickness: 1.2),
+            // Divider(color: AppColor.brightpurple, thickness: 1.2),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "${categoryName}",
-                  style: TextStyle(fontSize: 20),
+                Container(
+                  child: Text(
+                    "${categoryName}",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  decoration: BoxDecoration(
+                    color: tagColor,
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                  ),
+                  width: 130.0,
                 ),
                 Text(
                   "${cardName}",
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 17, color: AppColor.purple0),
                 ),
               ],
             ),
@@ -196,35 +238,59 @@ ListTile ymdList(Record e, _selected) {
               children: [
                 Text(
                   "${title}",
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: AppColor.purple0,
+                      fontWeight: FontWeight.bold),
                 ),
                 Text(
                   "-${price}원",
-                  style: TextStyle(fontSize: 20, color: Colors.red),
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: AppColor.red1,
+                      fontWeight: FontWeight.bold),
                 )
               ],
             ),
           ],
         ),
       ),
-      onTap: () {},
+      onTap: () {
+        print("text button is clicked");
+      },
+      onLongPress: () {
+        print("text button is long clicked");
+      },
     );
   } else if (e.type == RecordType.income && _selected[0] == true) {
     String categoryName = e.category.name;
     String title = e.title;
     String price = e.price.toString();
+    Color tagColor = e.category.color;
     return ListTile(
       title: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Divider(color: AppColor.brightpurple, thickness: 1.2),
+            // Divider(color: AppColor.brightpurple, thickness: 1.2),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "${categoryName}",
-                  style: TextStyle(fontSize: 20),
+                Container(
+                  child: Text(
+                    "${categoryName}",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  decoration: BoxDecoration(
+                    color: tagColor,
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                  ),
+                  width: 130.0,
                 ),
               ],
             ),
@@ -233,18 +299,29 @@ ListTile ymdList(Record e, _selected) {
               children: [
                 Text(
                   "${title}",
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: AppColor.purple0,
+                      fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "${price}원",
-                  style: TextStyle(fontSize: 20, color: Colors.green),
+                  "-${price}원",
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold),
                 )
               ],
             ),
           ],
         ),
       ),
-      onTap: () {},
+      onTap: () {
+        print("text button is clicked");
+      },
+      onLongPress: () {
+        print("text button is long clicked");
+      },
     );
   } else {
     print("!!");
