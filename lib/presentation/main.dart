@@ -1,4 +1,5 @@
 import 'package:account_book/presentation/history/history_screen.dart';
+import 'package:account_book/presentation/setting/setting_screen.dart';
 import 'package:account_book/style.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class _MainPageState extends State<MainPage> {
     HistoryScreen(),
     HistoryScreen(),
     HistoryScreen(),
-    HistoryScreen(),
+    SettingScreen(),
   ];
 
   void _onItemTapped(int index) {
