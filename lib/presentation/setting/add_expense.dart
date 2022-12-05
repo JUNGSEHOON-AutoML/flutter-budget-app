@@ -1,5 +1,6 @@
 import 'package:account_book/domain/model/record.dart';
 import 'package:account_book/domain/use_case/properties_use_case/add_category_use_case.dart';
+import 'package:account_book/presentation/setting/setting_screen.dart';
 import 'package:account_book/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -943,12 +944,15 @@ class _MyHomePageState extends State<MyHomePage> {
                               '지출 카테고리가 추가되었습니다.',
                               backgroundColor: Colors.white,
                             );
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => SettingScreen()));
+                            final expense = new Category();
+                            expense.name = _expenseController.text;
+                            expense.color = _color;
+                            expense.type = RecordType.spend;
+                            addExpenseUseCase.invoke(expense);
                           }
-                          final expense = new Category();
-                          expense.name = _expenseController.text;
-                          expense.color = _color;
-                          expense.type = RecordType.spend;
-                          addExpenseUseCase.invoke(expense);
                         },
                         child: const Text('등록하기'),
                         style: ElevatedButton.styleFrom(
