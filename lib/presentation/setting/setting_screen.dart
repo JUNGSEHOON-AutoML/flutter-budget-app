@@ -49,7 +49,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 ListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: MyService.to.payments.length,
+                    itemCount: MyService.to.payments.length-1,
                     itemBuilder: (BuildContext context, int i) {
                       return ListTile(
                         title: TextButton(
@@ -59,7 +59,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           ),
                           child: Align(
                               alignment: Alignment.centerLeft,
-                              child: Text(MyService.to.payments[i]?.name ?? "",
+                              child: Text(MyService.to.payments[i+1]?.name ?? "",
                                   style: TextStyle(fontSize: 16))),
                         ),
                       );
