@@ -1,6 +1,8 @@
 import 'package:account_book/di/my_service.dart';
 import 'package:account_book/domain/model/record.dart';
+import 'package:account_book/domain/use_case/history_use_case/delete_records_use_case.dart';
 import 'package:account_book/domain/use_case/properties_use_case/get_categories_use_case.dart';
+import 'package:floor/floor.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -16,19 +18,27 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen> {
   final List<bool> _selected = <bool>[true, true];
+  final deleteRecordUseCase = Get.put(DeleteRecordUseCase());
+  int year = 2022;
+  int month = 11;
 
   @override
   Widget build(BuildContext context) {
     final test = Get.put(GetCategoriesUseCase());
     test.invoke();
-
-// "2022-11"
-    String nowYM = "2022" + "-" + "11";
+    String nowYM = "$year-$month";
+    // "2022-11"
+    if (month < 10) {
+      nowYM = "$year-0$month";
+    }
     int lastDate =
         int.parse(DateFormat('dd').format(DateTime(2022, 11 + 1, 0)));
     MyService.to.makeDummies();
 
     List groupList = [];
+    print(MyService.to.history["2022-11"]);
+    print(MyService.to.history["2022-11"]);
+    print(MyService.to.history["2022-11"]);
 
     const List<Widget> toggle = <Widget>[
       Text('수입'),
@@ -37,18 +47,23 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
     for (int k = lastDate; k >= 1; k--) {
       if (k < 10) {
-        List group = MyService.to.history[nowYM]!
-            .where((data) => data.date == nowYM + '-0' + k.toString())
-            .toList();
-        if (group.length > 0) {
-          groupList.add(group);
+        if (MyService.to.history[nowYM!] != null) {
+          List group = MyService.to.history[nowYM!]!
+              .where((data) => data.date == '$nowYM-0$k')
+              .toList();
+          if (group.isNotEmpty) {
+            groupList.add(group);
+          }
+
         }
       } else {
-        List group = MyService.to.history[nowYM]!
-            .where((data) => data.date == nowYM + '-' + k.toString())
-            .toList();
-        if (group.length > 0) {
-          groupList.add(group);
+        if (MyService.to.history[nowYM!] != null) {
+          List group = MyService.to.history[nowYM!]!
+              .where((data) => data.date == '$nowYM-$k')
+              .toList();
+          if (group.isNotEmpty) {
+            groupList.add(group);
+          }
         }
       }
     }
@@ -56,16 +71,39 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return Scaffold(
       appBar: AppBar(
           centerTitle: true,
-          title: const Text('2022년 11월'),
+          title: Text(year!.toString() + '년 ' + month!.toString() + '월',
+              style: const TextStyle(
+                fontSize: 21,
+                color: AppColor.purple1,
+                fontWeight: FontWeight.bold,
+              )),
           elevation: 0.0,
           leading: IconButton(
             icon: const Icon(Icons.chevron_left),
-            onPressed: () {},
+            onPressed: () {
+              setState(() {
+                if (month == 1) {
+                  month = 12;
+                  year -= 1;
+                } else {
+                  month -= 1;
+                }
+              });
+            },
           ),
           actions: [
             IconButton(
               icon: const Icon(Icons.chevron_right),
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  if (month == 12) {
+                    month = 1;
+                    year += 1;
+                  } else {
+                    month += 1;
+                  }
+                });
+              },
             )
           ]),
       body: Column(
@@ -99,7 +137,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   children: groupList
-                      .map((e) => dateListTileAllType(e, e![0].date, _selected))
+                      .map((e) => dateListTileAllType(
+                          e, e![0].date, _selected, deleteRecordUseCase))
                       .toList()),
             ],
           ),
@@ -115,7 +154,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 }
 
-Column dateListTileAllType(List<Record> k, String date, List<bool> _selected) {
+Column dateListTileAllType(List<Record> k, String date, List<bool> _selected,
+    DeleteRecordUseCase deleteRecordUseCase) {
   var d = DateTime.parse(date);
   String ee = DateFormat('EEEEE').format(d).toString();
   if (ee == "Monday") {
@@ -191,14 +231,18 @@ Column dateListTileAllType(List<Record> k, String date, List<bool> _selected) {
         ListView(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            children: k.map((e) => ymdList(e, _selected)).toList()),
+            children: k
+                .map((e) => ymdList(e, _selected, (recordId) {
+                      deleteRecordUseCase.invoke(recordId: recordId);
+                    }))
+                .toList()),
         Divider(color: AppColor.purple1, thickness: 1.2),
       ],
     );
   }
 }
 
-ListTile ymdList(Record e, _selected) {
+ListTile ymdList(Record e, _selected, onLongClickListener) {
   if (e.type == RecordType.spend && _selected[1] == true) {
     String cardName = e.payment!.name;
     String categoryName = e.category.name;
@@ -271,6 +315,7 @@ ListTile ymdList(Record e, _selected) {
       },
       onLongPress: () {
         print("text button is long clicked");
+        onLongClickListener(e.id);
       },
     );
   } else if (e.type == RecordType.income && _selected[0] == true) {
@@ -341,6 +386,7 @@ ListTile ymdList(Record e, _selected) {
       },
       onLongPress: () {
         print("text button is long clicked");
+        onLongClickListener(e.id);
       },
     );
   } else {
