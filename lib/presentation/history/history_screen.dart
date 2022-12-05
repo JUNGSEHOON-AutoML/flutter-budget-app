@@ -106,7 +106,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Get.toNamed("/addHistory");
+        },
         child: Icon(Icons.add),
       ),
     );
