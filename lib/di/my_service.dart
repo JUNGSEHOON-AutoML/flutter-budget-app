@@ -16,6 +16,9 @@ class MyService extends GetxService {
 
   final history = <String, List<Record>>{}.obs;
 
+  var currentYear = 2022;
+  var currentMonth = 12;
+
   final _colors = <RecordType, Map<int, Color>>{
     RecordType.spend: {-1: AppColor.unknown},
     RecordType.income: {-1: AppColor.unknown}

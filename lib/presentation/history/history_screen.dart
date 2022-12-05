@@ -19,17 +19,15 @@ class HistoryScreen extends StatefulWidget {
 class _HistoryScreenState extends State<HistoryScreen> {
   final List<bool> _selected = <bool>[true, true];
   final deleteRecordUseCase = Get.put(DeleteRecordUseCase());
-  int year = 2022;
-  int month = 11;
 
   @override
   Widget build(BuildContext context) {
     final test = Get.put(GetCategoriesUseCase());
     test.invoke();
-    String nowYM = "$year-$month";
+    String nowYM = "${MyService.to.currentYear}-${MyService.to.currentMonth}";
     // "2022-11"
-    if (month < 10) {
-      nowYM = "$year-0$month";
+    if (MyService.to.currentMonth < 10) {
+      nowYM = "${MyService.to.currentYear}-${MyService.to.currentMonth}";
     }
     int lastDate =
         int.parse(DateFormat('dd').format(DateTime(2022, 11 + 1, 0)));
@@ -54,7 +52,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
           if (group.isNotEmpty) {
             groupList.add(group);
           }
-
         }
       } else {
         if (MyService.to.history[nowYM!] != null) {
@@ -71,7 +68,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return Scaffold(
       appBar: AppBar(
           centerTitle: true,
-          title: Text(year!.toString() + '년 ' + month!.toString() + '월',
+          title: Text('${MyService.to.currentYear}년 ${MyService.to.currentMonth}월',
               style: const TextStyle(
                 fontSize: 21,
                 color: AppColor.purple1,
@@ -82,11 +79,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
             icon: const Icon(Icons.chevron_left),
             onPressed: () {
               setState(() {
-                if (month == 1) {
-                  month = 12;
-                  year -= 1;
+                if (MyService.to.currentMonth == 1) {
+                  MyService.to.currentMonth = 12;
+                  MyService.to.currentYear -= 1;
                 } else {
-                  month -= 1;
+                  MyService.to.currentMonth -= 1;
                 }
               });
             },
@@ -96,11 +93,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
               icon: const Icon(Icons.chevron_right),
               onPressed: () {
                 setState(() {
-                  if (month == 12) {
-                    month = 1;
-                    year += 1;
+                  if (MyService.to.currentMonth == 12) {
+                    MyService.to.currentMonth = 1;
+                    MyService.to.currentYear += 1;
                   } else {
-                    month += 1;
+                    MyService.to.currentMonth += 1;
                   }
                 });
               },
