@@ -20,5 +20,5 @@ class HistoryRepository {
       int? price,
       String? title}) {}
 
-  void deleteHistory({required String uid, required String recordId}) {}
+  void deleteHistories({required String uid, required List<String> recordIds}) {}
 }

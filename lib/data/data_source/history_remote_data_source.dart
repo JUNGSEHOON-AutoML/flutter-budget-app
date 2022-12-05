@@ -1,3 +1,4 @@
+import 'package:account_book/domain/model/record.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 
@@ -30,9 +31,14 @@ class HistoryDataSource extends GetxService {
     return pushRef.key;
   }
 
-  void deleteHistory({required String uid, required String recordId}) {
-    final ref = _database.ref("history/$uid/$recordId");
-    ref.set(null);
+  void deleteHistories({required String uid, required List<String> recordIds}) {
+    final Map<String, Record?> updates = {};
+
+    for (final recordId in recordIds) {
+      updates['/posts/$recordId'] = null;
+    }
+
+    FirebaseDatabase.instance.ref().update(updates);
   }
 
   Future<Stream<DatabaseEvent>> getHistory({required String uid}) async {

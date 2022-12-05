@@ -26,8 +26,8 @@ class HistoryRepositoryImpl extends GetxService implements HistoryRepository {
   }
 
   @override
-  void deleteHistory({required String uid, required String recordId}) {
-    return _datasourceImpl.deleteHistory(uid: uid, recordId: recordId);
+  void deleteHistories({required String uid, required List<String> recordIds}) {
+    return _datasourceImpl.deleteHistories(uid: uid, recordIds: recordIds);
   }
 
   @override
