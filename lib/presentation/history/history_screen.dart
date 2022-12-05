@@ -204,8 +204,17 @@ ListTile ymdList(Record e, _selected) {
     String price = e.price.toString();
     Color tagColor = e.category.color;
     return ListTile(
-      title: Padding(
+      title: Container(
         padding: const EdgeInsets.all(10.0),
+        decoration: const BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              // POINT
+              color: AppColor.brightpurple,
+              width: 1.5,
+            ),
+          ),
+        ),
         child: Column(
           children: [
             // Divider(color: AppColor.brightpurple, thickness: 1.2),
@@ -268,8 +277,17 @@ ListTile ymdList(Record e, _selected) {
     String price = e.price.toString();
     Color tagColor = e.category.color;
     return ListTile(
-      title: Padding(
+      title: Container(
         padding: const EdgeInsets.all(10.0),
+        decoration: const BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              // POINT
+              color: AppColor.brightpurple,
+              width: 1.5,
+            ),
+          ),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -305,7 +323,7 @@ ListTile ymdList(Record e, _selected) {
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "-${price}원",
+                  "${price}원",
                   style: TextStyle(
                       fontSize: 20,
                       color: Colors.green,
@@ -324,7 +342,6 @@ ListTile ymdList(Record e, _selected) {
       },
     );
   } else {
-    print("!!");
     return ListTile();
   }
 }
