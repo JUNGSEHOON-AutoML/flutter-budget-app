@@ -147,17 +147,6 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
           ),
         ),
-
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Color(0xff524D90),
-          type: BottomNavigationBarType.fixed,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.list_outlined,color: Colors.white38), label: '내역'),
-            BottomNavigationBarItem(icon: Icon(Icons.calendar_month,color: Colors.white38), label: '달력'),
-            BottomNavigationBarItem(icon: Icon(Icons.analytics_outlined,color: Colors.white38), label: '통계'),
-            BottomNavigationBarItem(icon: Icon(Icons.settings,color: Colors.white38), label: '설정')
-          ],
-        ),
       ),
     );
   }
