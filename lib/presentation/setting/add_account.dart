@@ -93,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         );
 
                       }
-                      final addpayment=new Payment();
+                      final addpayment=Payment();
                       addpayment.name=_paymentController.text;
                       addPaymentUsecase.invoke(addpayment);
                     },

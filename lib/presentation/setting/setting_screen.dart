@@ -1,8 +1,11 @@
+import 'package:account_book/domain/model/category.dart';
+import 'package:account_book/domain/model/payment.dart';
 import 'package:account_book/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import '../../domain/model/record.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({Key? key}) : super(key:key);
@@ -32,18 +35,20 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final _midController = TextEditingController();
-  final _finalController = TextEditingController();
-
+  final dummylist1=[];
+  final dummy1=Payment();
+  final dummy2=Category();
+  final dummy3=Category();
 
   @override
   void dispose() {
     _midController.dispose();
-    _finalController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    // dummy1.name='test';
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -64,19 +69,38 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   controller: _midController,
                   enabled: false,
-                  style: TextStyle(color: Colors.redAccent),
+                  style: TextStyle(fontSize: 18),
                 ),
 
-
+                ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: dummylist1.length ?? 0,
+                    itemBuilder: (BuildContext context, int i){
+                      return ListTile(
+                        title:TextButton(onPressed:(){},
+                            child:Align(alignment: Alignment.centerLeft,child:Text(dummylist1[i].name,style:TextStyle(fontSize:16))),
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.all(0),
+                          ),
+                        ),
+                      );
+                  }
+                ),
 
                 CupertinoButton(onPressed: (){
                   Get.toNamed("/addaccount");
+                  setState(() {
+                    // dummy1.name='결제수단';
+                    dummylist1.add(dummy1);
+                  });
                 },
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text('결제수단 추가하기                                              +',style: TextStyle(color: AppColor.purple1),
                   )
                   ),
+                  padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                 ),
                 Container(height:1.0, color: AppColor.purple1),
 
@@ -88,9 +112,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   controller: _midController,
                   enabled: false,
+                  style: TextStyle(fontSize: 18)
                 ),
           CupertinoButton(onPressed: (){
             Get.toNamed("/addexpense");
+            dummy2.name='지출1';
+            setState(() {
+
+            });
+            dummy2.color=AppColor.purple1;
+            dummy2.type=RecordType.spend;
           },
             child: Align(
                 alignment: Alignment.centerLeft,
@@ -98,6 +129,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: TextStyle(color: AppColor.purple1),
                 )
             ),
+            padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+
           ),
                 Container(height:1.0, color: AppColor.purple1),
 
@@ -107,9 +140,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   controller: _midController,
                   enabled: false,
+                    style: TextStyle(fontSize: 18)
                 ),
                 CupertinoButton(onPressed: (){
                   Get.toNamed("/addincome");
+                  dummy3.name='수입1';
+                  dummy3.color=AppColor.purple1;
+                  dummy3.type=RecordType.income;
                 },
                   child: Align(
                       alignment: Alignment.centerLeft,
@@ -117,6 +154,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: TextStyle(color: AppColor.purple1),
                       )
                   ),
+                  padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+
                 ),
                 Container(height:1.0, color: AppColor.purple1),
 
