@@ -22,9 +22,12 @@ class AppColor extends Color {
   static const pink3 = Color(0xffF396B8);
   static const pink4 = Color(0xffDC5D7B);
   static const pink5 = Color(0xffCB588F);
+  static const red1 = Color(0xffE75B3F);
 
+  static const purple0 = Color(0xff524D90);
   static const purple1 = Color(0xff625EBA);
   static const purple2 = Color(0xff817DCE);
+  static const brightpurple = Color(0xffA79FCB);
   static const purple3 = Color(0xff9B7DCE);
   static const purple4 = Color(0xffB391EB);
   static const purple5 = Color(0xffD092E2);

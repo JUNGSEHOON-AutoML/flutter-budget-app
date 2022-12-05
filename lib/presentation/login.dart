@@ -1,11 +1,12 @@
 import 'package:account_book/di/my_service.dart';
 import 'package:account_book/presentation/history/history_screen.dart';
 import 'package:account_book/presentation/login/login_screen.dart';
+import 'package:account_book/presentation/main.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'firebase_options.dart';
+import '../firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +35,7 @@ class AccountBookApp extends StatelessWidget {
       initialRoute: "/login",
       getPages: [
         GetPage(name: "/login", page: () => const LoginScreen()),
-        GetPage(name: "/history", page: () => const HistoryScreen())
+        GetPage(name: "/main", page: () => const MainPage())
       ],
     );
   }
