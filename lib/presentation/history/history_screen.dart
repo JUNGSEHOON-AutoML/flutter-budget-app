@@ -5,17 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../style.dart';
+
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({Key? key}) : super(key: key);
 
   @override
   State<HistoryScreen> createState() => _HistoryScreenState();
 }
-
-const List<Widget> toggle = <Widget>[
-  Text('수입'),
-  Text('지출'),
-];
 
 class _HistoryScreenState extends State<HistoryScreen> {
   final List<bool> _selected = <bool>[true, true];
@@ -25,13 +22,27 @@ class _HistoryScreenState extends State<HistoryScreen> {
     final test = Get.put(GetCategoriesUseCase());
     test.invoke();
 
-    // "2022-11"
+// "2022-11"
     String nowYM = "2022" + "-" + "11";
     int lastDate =
         int.parse(DateFormat('dd').format(DateTime(2022, 11 + 1, 0)));
     MyService.to.makeDummies();
 
     List groupList = [];
+
+    const List<Widget> toggle = <Widget>[
+      Text('수입'),
+      Text('지출'),
+    ];
+
+    // for (int n = 0; n < MyService.to.history[nowYM]!.length; n++) {
+    //   if (MyService.to.history[nowYM]![n].type == RecordType.spend) {
+    //     spend +=MyService.to.history[nowYM]![n].price;
+    //   } else if (MyService.to.history[nowYM]![n].type == RecordType.income) {
+    //     income += MyService.to.history[nowYM]![n].price;
+    //   }
+    // }
+
     for (int k = lastDate; k >= 1; k--) {
       if (k < 10) {
         List group = MyService.to.history[nowYM]!
@@ -69,19 +80,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
         children: [
           Column(
             children: [
-              SizedBox(height: 30),
+              SizedBox(height: 20),
               ToggleButtons(
                 onPressed: (int index) {
-                  // All buttons are selectable.
                   setState(() {
                     _selected[index] = !_selected[index];
                   });
                 },
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
-                selectedBorderColor: Colors.green[700],
-                selectedColor: Colors.black,
-                fillColor: Colors.green[200],
-                color: Colors.green[400],
+                selectedBorderColor: AppColor.purple1,
+                selectedColor: Colors.white,
+                fillColor: AppColor.purple1,
+                color: AppColor.purple1,
                 constraints: const BoxConstraints(
                   minHeight: 40.0,
                   minWidth: 190.0,
@@ -108,27 +118,49 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 }
 
-Column dateListTileAllType(List k, String date, List<bool> _selected) {
+Column dateListTileAllType(List<Record> k, String date, List<bool> _selected) {
   var d = DateTime.parse(date);
+  int dayIncome = 0;
+  int daySpend = 0;
 
   for (int i = 0; i < k.length; i++) {
+    if (k[i].type == RecordType.spend) {
+      daySpend += k[i].price;
+    } else if (k[i].type == RecordType.income) {
+      dayIncome += k[i].price;
+    }
+
     if (k[i].type == RecordType.spend && _selected[1] == false) {
       k.remove(k[i]);
-    }
-    if (k[i].type == RecordType.income && _selected[0] == false) {
+    } else if (k[i].type == RecordType.income && _selected[0] == false) {
       k.remove(k[i]);
     }
   }
+  print(dayIncome);
+  print(daySpend);
   if (k.length == 0) {
     return Column();
   } else {
     return Column(
       children: [
-        Text(DateFormat('MM월 dd일 EEEEE').format(d)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(DateFormat('MM월 dd일 EEEEE').format(d)),
+            Row(
+              children: [
+                Text('수입 ' + dayIncome.toString()),
+                SizedBox(width: 20),
+                Text('지출 ' + daySpend.toString()),
+              ],
+            ),
+          ],
+        ),
         ListView(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             children: k.map((e) => ymdList(e, _selected)).toList()),
+        Divider(color: AppColor.purple1, thickness: 1.2),
       ],
     );
   }
@@ -142,9 +174,10 @@ ListTile ymdList(Record e, _selected) {
     String price = e.price.toString();
     return ListTile(
       title: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
+            Divider(color: AppColor.brightpurple, thickness: 1.2),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -182,9 +215,10 @@ ListTile ymdList(Record e, _selected) {
     String price = e.price.toString();
     return ListTile(
       title: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
+            Divider(color: AppColor.brightpurple, thickness: 1.2),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
