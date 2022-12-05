@@ -32,7 +32,7 @@ class AccountBookApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: "/graph",
+      initialRoute: "/calendar",
       getPages: [
         GetPage(name: "/login", page: () => const LoginScreen()),
         GetPage(name: "/history", page: () => const HistoryScreen()),

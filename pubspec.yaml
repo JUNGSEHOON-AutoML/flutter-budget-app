@@ -44,6 +44,7 @@ dependencies:
   get: ^4.6.5
   firebase_database: ^10.0.5
   fl_chart: ^0.55.2
+  fluttertoast: ^8.1.1
 
 dev_dependencies:
   flutter_test:

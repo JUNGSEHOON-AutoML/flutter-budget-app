@@ -34,9 +34,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
     MyService.to.makeDummies();
 
     List groupList = [];
-    print(MyService.to.history["2022-11"]);
-    print(MyService.to.history["2022-11"]);
-    print(MyService.to.history["2022-11"]);
 
     const List<Widget> toggle = <Widget>[
       Text('수입'),
