@@ -73,8 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
               children:[
                 TextFormField(
                   decoration: const InputDecoration(
-                    prefix: Text('이름'),
-                    labelText: '입력하세요',
+                    labelText: '이름',
                   ),
                   validator: (value){
                     if(value==null || value.isEmpty){
