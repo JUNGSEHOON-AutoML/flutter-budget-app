@@ -1,12 +1,14 @@
 import 'package:account_book/di/my_service.dart';
 import 'package:account_book/domain/model/category.dart';
 import 'package:account_book/domain/model/payment.dart';
+import 'package:account_book/domain/model/record.dart';
 import 'package:account_book/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import '../../domain/model/record.dart';
+import 'package:flutter/rendering.dart';
+
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -18,6 +20,7 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   final _midController = TextEditingController();
 
+
   @override
   void dispose() {
     _midController.dispose();
@@ -26,6 +29,8 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // var spendList = MyService.to.categories?.cast<List>().where((e)=> e.RecordType ==spend);
+    var scroll = ScrollController();
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -47,6 +52,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   style: TextStyle(fontSize: 18),
                 ),
                 ListView.builder(
+                    controller: scroll,
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemCount: MyService.to.payments.length-1,
@@ -77,6 +83,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       )),
                 ),
                 Container(height: 1.0, color: AppColor.purple1),
+
                 TextFormField(
                     decoration: const InputDecoration(
                       labelText: '지출 카테고리',
@@ -85,6 +92,27 @@ class _SettingScreenState extends State<SettingScreen> {
                     controller: _midController,
                     enabled: false,
                     style: TextStyle(fontSize: 18)),
+
+                ListView.builder(
+                  controller: scroll,
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: MyService.to.categories.length-1,
+                    itemBuilder: (BuildContext context, int i) {
+                      return ListTile(
+                        title: TextButton(
+                          onPressed: () {},
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.all(0),
+                          ),
+                          child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(MyService.to.categories[i+1]?.name ?? "",
+                                  style: TextStyle(fontSize: 16))),
+                        ),
+                      );
+                    }),
+
                 CupertinoButton(
                   onPressed: () {
                     Get.toNamed("/addExpense");
@@ -105,6 +133,27 @@ class _SettingScreenState extends State<SettingScreen> {
                     controller: _midController,
                     enabled: false,
                     style: TextStyle(fontSize: 18)),
+
+                ListView.builder(
+                    controller: scroll,
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: MyService.to.categories.length-1,
+                    itemBuilder: (BuildContext context, int i) {
+                      return ListTile(
+                        title: TextButton(
+                          onPressed: () {},
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.all(0),
+                          ),
+                          child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(MyService.to.categories[i+1]?.name ?? "",
+                                  style: TextStyle(fontSize: 16))),
+                        ),
+                      );
+                    }),
+
                 CupertinoButton(
                   onPressed: () {
                     Get.toNamed("/addIncome");

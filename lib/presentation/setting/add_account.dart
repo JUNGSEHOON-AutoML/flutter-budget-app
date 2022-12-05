@@ -92,11 +92,12 @@ class _MyHomePageState extends State<MyHomePage> {
                           '결제수단이 추가되었습니다.',
                           backgroundColor: Colors.white,
                         );
+                        final addpayment=Payment();
+                        addpayment.name=_paymentController.text;
+                        addPaymentUsecase.invoke(addpayment);
+                        Get.back();
                       }
-                      final addpayment=Payment();
-                      addpayment.name=_paymentController.text;
-                      addPaymentUsecase.invoke(addpayment);
-                      Get.back(); //뒤로가기
+
                     },
                     child: const Text('등록하기'),
                     style: ElevatedButton.styleFrom(
