@@ -26,6 +26,7 @@ class LoginScreen extends GetView<MyService> {
                         getCategoriesUseCase.invoke();
                         getPaymentsUseCase.invoke();
                         getHistoryUseCase.invoke();
+                        MyService.to.makeDummies();
                         Get.offAndToNamed('/history');
                       },
                       onFailure: () => {print("Failed to login")});
