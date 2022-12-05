@@ -126,6 +126,7 @@ class _Calendar_MainState extends State<Calendar_Main> {
         this_date =
             filter_string_date(daysinmonth[i].toString().substring(8, 10));
         date_list.add(this_date);
+        //print(this_year.toString() + this_month.toString() + this_date);
         if (flag == 1 && this_date != "1") {
           count += 1;
         } else if (flag == 1 && this_date == "1") {
@@ -133,6 +134,9 @@ class _Calendar_MainState extends State<Calendar_Main> {
         }
       }
       start_count = count;
+      if (date_list.length == 42) {
+        start_count -= 7;
+      }
     });
 
     // local_data_filter_year();
