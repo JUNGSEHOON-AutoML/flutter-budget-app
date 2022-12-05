@@ -27,7 +27,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     String nowYM = "${MyService.to.currentYear}-${MyService.to.currentMonth}";
     // "2022-11"
     if (MyService.to.currentMonth < 10) {
-      nowYM = "${MyService.to.currentYear}-${MyService.to.currentMonth}";
+      nowYM = "${MyService.to.currentYear}-0${MyService.to.currentMonth}";
     }
     int lastDate =
         int.parse(DateFormat('dd').format(DateTime(2022, 11 + 1, 0)));
