@@ -1,5 +1,6 @@
 import 'package:account_book/domain/model/payment.dart';
 import 'package:account_book/domain/use_case/properties_use_case/add_payment_use_case.dart';
+import 'package:account_book/presentation/setting/setting_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -91,11 +92,11 @@ class _MyHomePageState extends State<MyHomePage> {
                           '결제수단이 추가되었습니다.',
                           backgroundColor: Colors.white,
                         );
-
                       }
                       final addpayment=Payment();
                       addpayment.name=_paymentController.text;
                       addPaymentUsecase.invoke(addpayment);
+                      Get.back(); //뒤로가기
                     },
                     child: const Text('등록하기'),
                     style: ElevatedButton.styleFrom(
