@@ -2,6 +2,7 @@ import 'package:account_book/di/my_service.dart';
 import 'package:account_book/presentation/history/history_screen.dart';
 import 'package:account_book/presentation/login/login_screen.dart';
 import 'package:account_book/presentation/main.dart';
+import 'package:account_book/presentation/main_controller.dart';
 import 'package:account_book/presentation/setting/add_account.dart';
 import 'package:account_book/presentation/setting/add_expense.dart';
 import 'package:account_book/presentation/setting/add_income.dart';
@@ -21,6 +22,7 @@ void main() async {
 
   Get.put(MyService());
   await MyService.init();
+  Get.put(MainService());
 
   runApp(const AccountBookApp());
 }
@@ -40,7 +42,6 @@ class AccountBookApp extends StatelessWidget {
       getPages: [
         GetPage(name: "/login", page: () => const LoginScreen()),
         GetPage(name: "/main", page: () => const MainPage()),
-        GetPage(name: "/setting", page: () => const SettingScreen()),
         GetPage(name: "/addAccount", page: () => const AddAccount()),
         GetPage(name: "/addIncome", page: () => const AddIncome()),
         GetPage(name: "/addExpense", page: () => const AddExpense()),
