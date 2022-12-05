@@ -1,6 +1,7 @@
 import 'package:account_book/domain/model/category.dart';
 import 'package:account_book/domain/model/record.dart';
 import 'package:account_book/domain/use_case/properties_use_case/add_category_use_case.dart';
+import 'package:account_book/presentation/setting/setting_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:account_book/style.dart';
 import 'package:flutter/material.dart';
@@ -346,12 +347,16 @@ class _MyHomePageState extends State<MyHomePage> {
                           '수입 카테고리가 추가되었습니다.',
                           backgroundColor: Colors.white,
                         );
+                        final income=new Category();
+                        income.name=_incomeController.text;
+                        income.color=_color;
+                        income.type=RecordType.income;
+                        addIncomeUsecase.invoke(income);
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                                builder: (context) => SettingScreen()));
                       }
-                      final income=new Category();
-                      income.name=_incomeController.text;
-                      income.color=_color;
-                      income.type=RecordType.income;
-                      addIncomeUsecase.invoke(income);
+
                     },
                     child: const Text('등록하기'),
                     style: ElevatedButton.styleFrom(
