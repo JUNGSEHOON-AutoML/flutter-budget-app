@@ -134,9 +134,6 @@ class _Calendar_MainState extends State<Calendar_Main> {
         }
       }
       start_count = count;
-      if (date_list.length == 42) {
-        start_count -= 7;
-      }
     });
 
     // local_data_filter_year();
