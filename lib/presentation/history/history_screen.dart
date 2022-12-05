@@ -1,6 +1,8 @@
 import 'package:account_book/di/my_service.dart';
 import 'package:account_book/domain/model/record.dart';
+import 'package:account_book/domain/use_case/history_use_case/delete_records_use_case.dart';
 import 'package:account_book/domain/use_case/properties_use_case/get_categories_use_case.dart';
+import 'package:floor/floor.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -16,6 +18,7 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen> {
   final List<bool> _selected = <bool>[true, true];
+  final deleteRecordUseCase = Get.put(DeleteRecordUseCase());
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +102,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   children: groupList
-                      .map((e) => dateListTileAllType(e, e![0].date, _selected))
+                      .map((e) => dateListTileAllType(e, e![0].date, _selected, deleteRecordUseCase))
                       .toList()),
             ],
           ),
@@ -113,7 +116,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 }
 
-Column dateListTileAllType(List<Record> k, String date, List<bool> _selected) {
+Column dateListTileAllType(List<Record> k, String date, List<bool> _selected, DeleteRecordUseCase deleteRecordUseCase) {
   var d = DateTime.parse(date);
   String ee = DateFormat('EEEEE').format(d).toString();
   if (ee == "Monday") {
@@ -189,14 +192,17 @@ Column dateListTileAllType(List<Record> k, String date, List<bool> _selected) {
         ListView(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            children: k.map((e) => ymdList(e, _selected)).toList()),
+            children: k.map((e) => ymdList(e, _selected, (recordId) {
+              deleteRecordUseCase.invoke(recordId: recordId);
+            })).toList()),
         Divider(color: AppColor.purple1, thickness: 1.2),
       ],
     );
   }
 }
 
-ListTile ymdList(Record e, _selected) {
+
+ListTile ymdList(Record e, _selected, onLongClickListener) {
   if (e.type == RecordType.spend && _selected[1] == true) {
     String cardName = e.payment!.name;
     String categoryName = e.category.name;
@@ -269,6 +275,7 @@ ListTile ymdList(Record e, _selected) {
       },
       onLongPress: () {
         print("text button is long clicked");
+        onLongClickListener(e.id);
       },
     );
   } else if (e.type == RecordType.income && _selected[0] == true) {
@@ -339,6 +346,7 @@ ListTile ymdList(Record e, _selected) {
       },
       onLongPress: () {
         print("text button is long clicked");
+        onLongClickListener(e.id);
       },
     );
   } else {
