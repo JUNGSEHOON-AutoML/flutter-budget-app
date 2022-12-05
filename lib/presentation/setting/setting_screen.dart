@@ -1,5 +1,8 @@
+import 'package:account_book/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({Key? key}) : super(key:key);
@@ -64,6 +67,20 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: TextStyle(color: Colors.redAccent),
                 ),
 
+
+
+                CupertinoButton(onPressed: (){
+                  Get.toNamed("/addaccount");
+                },
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text('결제수단 추가하기                                              +',style: TextStyle(color: AppColor.purple1),
+                  )
+                  ),
+                ),
+                Container(height:1.0, color: AppColor.purple1),
+
+
                 TextFormField(
                   decoration: const InputDecoration(
                     labelText: '지출 카테고리',
@@ -71,8 +88,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   controller: _midController,
                   enabled: false,
-                  style: TextStyle(color:Color(0xff524D90)),
                 ),
+          CupertinoButton(onPressed: (){
+            Get.toNamed("/addexpense");
+          },
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text('지출 카테고리 추가하기                                     +',
+                  style: TextStyle(color: AppColor.purple1),
+                )
+            ),
+          ),
+                Container(height:1.0, color: AppColor.purple1),
 
                 TextFormField(
                   decoration: const InputDecoration(
@@ -81,6 +108,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   controller: _midController,
                   enabled: false,
                 ),
+                CupertinoButton(onPressed: (){
+                  Get.toNamed("/addincome");
+                },
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text('수입 카테고리 추가하기                                     +',
+                        style: TextStyle(color: AppColor.purple1),
+                      )
+                  ),
+                ),
+                Container(height:1.0, color: AppColor.purple1),
+
                 const SizedBox(
                   height: 20,
                 ),

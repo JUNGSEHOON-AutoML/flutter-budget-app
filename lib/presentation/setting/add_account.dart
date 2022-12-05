@@ -1,5 +1,9 @@
+import 'package:account_book/domain/model/payment.dart';
+import 'package:account_book/domain/use_case/properties_use_case/add_payment_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class AddAccount extends StatelessWidget {
   const AddAccount({Key? key}) : super(key:key);
@@ -28,19 +32,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _midController = TextEditingController();
-  final _finalController = TextEditingController();
-
+  final _paymentController = TextEditingController();
+  final addPaymentUsecase=Get.put(AddPaymentUseCase());
+  final _accountKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    _midController.dispose();
-    _finalController.dispose();
+    _paymentController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -49,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
           title: const Text('결제수단 추가하기',style: TextStyle(color:Color(0xff524D90)),),
           leading: IconButton(
               onPressed: () {
-                // Navigator.pop(context); //뒤로가기
+                Get.back(); //뒤로가기
               },
               color: Color(0xff524D90),
               icon: Icon(Icons.arrow_back)),
@@ -57,30 +61,53 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Center(
-            child: ListView(
-              children:[
-            TextFormField(
+            child: Form(
+              key: _accountKey,
+              child:Column(
+            children:[
+              TextFormField(
               decoration: const InputDecoration(
-                border: OutlineInputBorder(),
                 labelText: '이름',
               ),
-              controller: _midController,
+              validator: (value){
+                if(value==null || value.isEmpty){
+                  return '결제수단을 입력하세요';
+                }
+                return null;
+              },
+              controller: _paymentController,
             ),
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 30, 0, 30),
                 ),
-                ElevatedButton(
-                    onPressed: (){},
+                SizedBox(
+                  height:50,
+                width:double.infinity,
+                child: ElevatedButton(
+                    onPressed: (){
+                      if(_accountKey.currentState!.validate()){
+                        Get.snackbar(
+                          '추가완료!',
+                          '결제수단이 추가되었습니다.',
+                          backgroundColor: Colors.white,
+                        );
+
+                      }
+                      final addpayment=new Payment();
+                      addpayment.name=_paymentController.text;
+                      addPaymentUsecase.invoke(addpayment);
+                    },
                     child: const Text('등록하기'),
                     style: ElevatedButton.styleFrom(
                       primary:Color(0xffF5B853),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0)
                       ),
-                      fixedSize: Size(100,50),
                     )
                 ),
-              ],
+          ),
+            ],
+            ),
             ),
         ),
         ),

@@ -1,8 +1,12 @@
+import 'package:account_book/domain/model/category.dart';
+import 'package:account_book/domain/use_case/properties_use_case/update_category_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:account_book/style.dart';
 import 'package:flutter/material.dart';
-import 'package:fast_color_picker/fast_color_picker.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
+import '../../domain/model/record.dart';
 import '../../style.dart';
 
 class ModifyIncome extends StatelessWidget {
@@ -32,8 +36,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _midController = TextEditingController();
-  final _finalController = TextEditingController();
+  final _updateIncomeController = TextEditingController();
+  final updateIncomeUseCase=Get.put(UpdateCategoryUseCase());
   Color _color=Colors.white;
   bool isClicked1=false;bool isClicked2=false;bool isClicked3=false;bool isClicked4=false;bool isClicked5=false;
   bool isClicked6=false;bool isClicked7=false;bool isClicked8=false;bool isClicked9=false;bool isClicked10=false;
@@ -41,8 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void dispose() {
-    _midController.dispose();
-    _finalController.dispose();
+    _updateIncomeController.dispose();
     super.dispose();
   }
 
@@ -71,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     prefix: Text('이름'),
                     labelText: '입력하세요',
                   ),
-                  controller: _midController,
+                  controller: _updateIncomeController,
                 ),
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
@@ -90,6 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   setState(() {
+                                    _color=AppColor.olive1;
                                     isClicked1 = true;
                                     isClicked2 = false;
                                     isClicked3 = false;
@@ -120,6 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   setState(() {
+                                    _color=AppColor.olive2;
                                     isClicked2=true;
                                     isClicked1=false;isClicked3=false;isClicked4=false;isClicked5=false;isClicked6=false;isClicked7=false;isClicked8=false;isClicked9=false;isClicked10=false;
                                   });
@@ -141,6 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   setState(() {
+                                    _color=AppColor.olive3;
                                     isClicked3=true;
                                     isClicked1=false;isClicked2=false;isClicked4=false;isClicked5=false;isClicked6=false;isClicked7=false;isClicked8=false;isClicked9=false;isClicked10=false;
 
@@ -163,6 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   setState(() {
+                                    _color=AppColor.olive4;
                                     isClicked4=true;
                                     isClicked2=false;isClicked3=false;isClicked1=false;isClicked5=false;isClicked6=false;isClicked7=false;isClicked8=false;isClicked9=false;isClicked10=false;
                                   });
@@ -185,6 +192,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   setState(() {
+                                    _color=AppColor.olive5;
                                     isClicked5=true;
                                     isClicked2=false;isClicked3=false;isClicked4=false;isClicked1=false;isClicked6=false;isClicked7=false;isClicked8=false;isClicked9=false;isClicked10=false;
                                   });
@@ -206,6 +214,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   setState(() {
+                                    _color=AppColor.yellow1;
                                     isClicked6=true;
                                     isClicked2=false;isClicked3=false;isClicked4=false;isClicked5=false;isClicked1=false;isClicked7=false;isClicked8=false;isClicked9=false;isClicked10=false;
                                   });
@@ -228,6 +237,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   setState(() {
+                                    _color=AppColor.yellow2;
                                     isClicked7=true;
                                     isClicked2=false;isClicked3=false;isClicked4=false;isClicked5=false;isClicked6=false;isClicked1=false;isClicked8=false;isClicked9=false;isClicked10=false;
                                   });
@@ -250,6 +260,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   setState(() {
+                                    _color=AppColor.yellow3;
                                     isClicked8=true;
                                     isClicked2=false;isClicked3=false;isClicked4=false;isClicked5=false;isClicked6=false;isClicked7=false;isClicked1=false;isClicked9=false;isClicked10=false;
                                   });
@@ -272,6 +283,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   setState(() {
+                                    _color=AppColor.yellow4;
                                     isClicked9=true;
                                     isClicked2=false;isClicked3=false;isClicked4=false;isClicked5=false;isClicked6=false;isClicked7=false;isClicked8=false;isClicked1=false;isClicked10=false;
                                   });
@@ -294,6 +306,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   setState(() {
+                                    _color=AppColor.yellow5;
                                     isClicked10=true;
                                     isClicked2=false;isClicked3=false;isClicked4=false;isClicked5=false;isClicked6=false;isClicked7=false;isClicked8=false;isClicked9=false;isClicked1=false;
                                   });
@@ -316,7 +329,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
 
                 ElevatedButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      final updateincome=new Category();
+                      updateincome.name=_updateIncomeController.text;
+                      updateincome.color=_color;
+                      updateincome.type=RecordType.income;
+                      updateIncomeUseCase.invoke(updateincome);
+                    },
                     child: const Text('등록하기'),
                     style: ElevatedButton.styleFrom(
                       primary:Color(0xffF5B853),

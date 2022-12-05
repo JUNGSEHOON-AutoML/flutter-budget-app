@@ -1,5 +1,10 @@
+import 'package:account_book/domain/use_case/properties_use_case/update_payment_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../../domain/model/payment.dart';
 
 class ModifyAccount extends StatelessWidget {
   const ModifyAccount({Key? key}) : super(key:key);
@@ -28,14 +33,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _midController = TextEditingController();
-  final _finalController = TextEditingController();
-
+  final _updatepaymentController = TextEditingController();
+  final updatePaymentUseCase=Get.put(UpdatePaymentUseCase());
 
   @override
   void dispose() {
-    _midController.dispose();
-    _finalController.dispose();
+    _updatepaymentController.dispose();
     super.dispose();
   }
 
@@ -64,13 +67,17 @@ class _MyHomePageState extends State<MyHomePage> {
                     border: OutlineInputBorder(),
                     labelText: '이름',
                   ),
-                  controller: _midController,
+                  controller: _updatepaymentController,
                 ),
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 30, 0, 30),
                 ),
                 ElevatedButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      final updatepayment=new Payment();
+                      updatepayment.name=_updatepaymentController.text;
+                      updatePaymentUseCase.invoke(updatepayment);
+                    },
                     child: const Text('등록하기'),
                     style: ElevatedButton.styleFrom(
                       primary:Color(0xffF5B853),

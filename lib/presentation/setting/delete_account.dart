@@ -1,5 +1,10 @@
+import 'package:account_book/domain/use_case/properties_use_case/delete_payment_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../../domain/model/payment.dart';
 
 class DeleteAccount extends StatelessWidget {
   const DeleteAccount({Key? key}) : super(key:key);
@@ -28,14 +33,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _midController = TextEditingController();
-  final _finalController = TextEditingController();
-
+  final _deletepayController = TextEditingController();
+  final deletePaymentUseCase=Get.put(DeletePaymentUseCase());
 
   @override
   void dispose() {
-    _midController.dispose();
-    _finalController.dispose();
+    _deletepayController.dispose();
     super.dispose();
   }
 
@@ -64,14 +67,18 @@ class _MyHomePageState extends State<MyHomePage> {
                     border: OutlineInputBorder(),
                     labelText: '이름',
                   ),
-                  controller: _midController,
+                  controller: _deletepayController,
                 ),
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 30, 0, 30),
                 ),
                 ElevatedButton(
-                    onPressed: (){},
-                    child: const Text('등록하기'),
+                    onPressed: (){
+                      final deletepayment=new Payment();
+                      deletepayment.name=_deletepayController.text;
+                      deletePaymentUseCase.invoke(deletepayment);
+                    },
+                    child: const Text('삭제하기'),
                     style: ElevatedButton.styleFrom(
                       primary:Color(0xffF5B853),
                       shape: RoundedRectangleBorder(
