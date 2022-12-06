@@ -166,6 +166,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Container(
                       margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                     ),
+                    _selected[0]? Container() :
                     DropdownButtonFormField2(
                       decoration: InputDecoration(
                         isDense: true,
@@ -267,18 +268,21 @@ class _MyHomePageState extends State<MyHomePage> {
                       width: double.infinity,
                       child: ElevatedButton(
                           onPressed: () {
+                            final newPayment=Payment();
+                            newPayment.id=1;
                             if (_historyKey.currentState!.validate()) {
                               Get.snackbar(
                                 '추가완료!',
                                 '내역이 추가되었습니다.',
                                 backgroundColor: Colors.white,
                               );
+
                               addRecordUseCase.invoke(
                                   category: _category,
                                   type: _selected[0]
                                       ? RecordType.income
                                       : RecordType.spend,
-                                  payment: _payment,
+                                  payment: _selected[0]?newPayment:_payment,
                                   price: int.parse(_moneyController.text),
                                   date: dateController.text,
                                   title: _historyController.text);
