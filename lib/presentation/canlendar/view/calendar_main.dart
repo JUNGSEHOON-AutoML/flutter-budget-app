@@ -9,14 +9,14 @@ import '../../../domain/use_case/properties_use_case/get_categories_use_case.dar
 import '../widget/day_widget.dart';
 import 'package:intl/intl.dart';
 
-class Calendar_Main extends StatefulWidget {
-  const Calendar_Main({Key? key}) : super(key: key);
+class CalendarMain extends StatefulWidget {
+  const CalendarMain({Key? key}) : super(key: key);
 
   @override
-  _Calendar_MainState createState() => _Calendar_MainState();
+  _CalendarMainState createState() => _CalendarMainState();
 }
 
-class _Calendar_MainState extends State<Calendar_Main> {
+class _CalendarMainState extends State<CalendarMain> {
   //해당 달에 포함되는 일 List
   List<String?> date_list = [];
   Future? myfuture;

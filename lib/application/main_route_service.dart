@@ -13,7 +13,7 @@ class MainRouteService extends GetxService {
   final pages = <String>['/history', '/calendar', '/statistic', '/settings'];
   final pageObjects = <Widget>[
     const HistoryScreen(),
-    const Calendar_Main(),
+    const CalendarMain(),
     const GraphScreen(),
     const SettingScreen()
   ];
