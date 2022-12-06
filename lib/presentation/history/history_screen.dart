@@ -1,8 +1,7 @@
-import 'package:account_book/di/my_service.dart';
+import 'package:account_book/application/my_service.dart';
 import 'package:account_book/domain/model/record.dart';
 import 'package:account_book/domain/use_case/history_use_case/delete_records_use_case.dart';
 import 'package:account_book/domain/use_case/properties_use_case/get_categories_use_case.dart';
-import 'package:floor/floor.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -19,6 +18,22 @@ class HistoryScreen extends StatefulWidget {
 class _HistoryScreenState extends State<HistoryScreen> {
   final List<bool> _selected = <bool>[true, true];
   final deleteRecordUseCase = Get.put(DeleteRecordUseCase());
+  final List<Widget> returnToggle = [
+    Row(
+      children: [
+        const Icon(Icons.check_box),
+        SizedBox(width: 10),
+        const Text('수입'),
+      ],
+    ),
+    Row(
+      children: [
+        const Icon(Icons.check_box),
+        SizedBox(width: 10),
+        const Text('지출'),
+      ],
+    )
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +45,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
       nowYM = "${MyService.to.currentYear}-0${MyService.to.currentMonth}";
     }
     int lastDate =
-    int.parse(DateFormat('dd').format(DateTime(2022, 11 + 1, 0)));
+        int.parse(DateFormat('dd').format(DateTime(2022, 11 + 1, 0)));
     MyService.to.makeDummies();
 
     List groupList = [];
-
-    const List<Widget> toggle = <Widget>[
-      Text('수입'),
-      Text('지출'),
-    ];
 
     for (int k = lastDate; k >= 1; k--) {
       if (k < 10) {
@@ -62,89 +72,140 @@ class _HistoryScreenState extends State<HistoryScreen> {
       }
     }
 
+    List toggle = [
+      [
+        Row(
+          children: [
+            const Icon(Icons.check_box_outline_blank),
+            SizedBox(width: 10),
+            const Text('수입'),
+          ],
+        ),
+        Row(
+          children: [
+            const Icon(Icons.check_box),
+            SizedBox(width: 10),
+            const Text('수입'),
+          ],
+        ),
+      ],
+      [
+        Row(
+          children: [
+            const Icon(Icons.check_box_outline_blank),
+            SizedBox(width: 10),
+            const Text('지출'),
+          ],
+        ),
+        Row(
+          children: [
+            const Icon(Icons.check_box),
+            SizedBox(width: 10),
+            const Text('지출'),
+          ],
+        )
+      ]
+    ];
+
     return Scaffold(
-      appBar: AppBar(
-          centerTitle: true,
-          title: Text('${MyService.to.currentYear}년 ${MyService.to.currentMonth}월',
-              style: const TextStyle(
-                fontSize: 21,
-                color: AppColor.purple1,
-                fontWeight: FontWeight.bold,
-              )),
-          elevation: 0.0,
-          leading: IconButton(
-            icon: const Icon(Icons.chevron_left),
-            onPressed: () {
-              setState(() {
-                if (MyService.to.currentMonth == 1) {
-                  MyService.to.currentMonth = 12;
-                  MyService.to.currentYear -= 1;
-                } else {
-                  MyService.to.currentMonth -= 1;
-                }
-              });
-            },
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.chevron_right),
+        appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+                '${MyService.to.currentYear}년 ${MyService.to.currentMonth}월',
+                style: const TextStyle(
+                  fontSize: 21,
+                  color: AppColor.purple1,
+                  fontWeight: FontWeight.bold,
+                )),
+            elevation: 0.0,
+            leading: IconButton(
+              icon: const Icon(Icons.chevron_left),
               onPressed: () {
                 setState(() {
-                  if (MyService.to.currentMonth == 12) {
-                    MyService.to.currentMonth = 1;
-                    MyService.to.currentYear += 1;
+                  if (MyService.to.currentMonth == 1) {
+                    MyService.to.currentMonth = 12;
+                    MyService.to.currentYear -= 1;
                   } else {
-                    MyService.to.currentMonth += 1;
+                    MyService.to.currentMonth -= 1;
                   }
                 });
               },
-            )
-          ]),
-      body: Column(
-        children: [
-          Column(
-            children: [
-              SizedBox(height: 20),
-              ToggleButtons(
-                onPressed: (int index) {
+            ),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.chevron_right),
+                onPressed: () {
                   setState(() {
-                    _selected[index] = !_selected[index];
+                    if (MyService.to.currentMonth == 12) {
+                      MyService.to.currentMonth = 1;
+                      MyService.to.currentYear += 1;
+                    } else {
+                      MyService.to.currentMonth += 1;
+                    }
                   });
                 },
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
-                selectedBorderColor: AppColor.purple1,
-                selectedColor: Colors.white,
-                fillColor: AppColor.purple1,
-                color: AppColor.purple1,
-                textStyle: const TextStyle(
-                  fontSize: 20,
+              )
+            ]),
+        body: Column(
+          children: [
+            Column(
+              children: [
+                SizedBox(height: 20),
+                ToggleButtons(
+                  onPressed: (int index) {
+                    setState(() {
+                      _selected[index] = !_selected[index];
+                    });
+                    if (_selected[index]) {
+                      setState(() {
+                        returnToggle[index] = toggle[index][1];
+                      });
+                    } else {
+                      setState(() {
+                        returnToggle[index] = toggle[index][0];
+                      });
+                    }
+                  },
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  selectedBorderColor: AppColor.purple1,
+                  selectedColor: Colors.white,
+                  fillColor: AppColor.purple1,
+                  color: AppColor.purple1,
+                  textStyle: const TextStyle(
+                    fontSize: 20,
+                  ),
+                  constraints: const BoxConstraints(
+                    minHeight: 40.0,
+                    minWidth: 180.0,
+                  ),
+                  isSelected: _selected,
+                  children: returnToggle,
                 ),
-                constraints: const BoxConstraints(
-                  minHeight: 40.0,
-                  minWidth: 180.0,
-                ),
-                isSelected: _selected,
-                children: toggle,
-              ),
-              SizedBox(height: 20),
-              ListView(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  children: groupList
-                      .map((e) => dateListTileAllType(
-                      e, e![0].date, _selected, deleteRecordUseCase))
-                      .toList()),
-            ],
+                SizedBox(height: 20),
+                ListView(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    children: groupList
+                        .map((e) => dateListTileAllType(
+                            e, e![0].date, _selected, deleteRecordUseCase))
+                        .toList()),
+              ],
+            ),
+          ],
+        ),
+        floatingActionButton: SizedBox(
+          width: 70,
+          height: 70,
+          child: FittedBox(
+            child: FloatingActionButton(
+              onPressed: () {
+                Get.toNamed("/addHistory");
+              },
+              child: Icon(Icons.add),
+              backgroundColor: AppColor.yellow1,
+            ),
           ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.toNamed("/addHistory");
-        },
-        child: Icon(Icons.add),
-      ),
-    );
+        ));
   }
 }
 
@@ -227,8 +288,8 @@ Column dateListTileAllType(List<Record> k, String date, List<bool> _selected,
             shrinkWrap: true,
             children: k
                 .map((e) => ymdList(e, _selected, (recordId) {
-              deleteRecordUseCase.invoke(recordId: recordId);
-            }))
+                      deleteRecordUseCase.invoke(recordId: recordId);
+                    }))
                 .toList()),
         Divider(color: AppColor.purple1, thickness: 1.2),
       ],
@@ -282,6 +343,7 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
                 ),
               ],
             ),
+            SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -353,6 +415,7 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
                 ),
               ],
             ),
+            SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

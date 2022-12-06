@@ -1,6 +1,6 @@
 import 'package:account_book/data/entity/CategoryEntity.dart';
 import 'package:account_book/data/entity/PaymentEntity.dart';
-import 'package:account_book/di/my_service.dart';
+import 'package:account_book/application/my_service.dart';
 import 'package:get/get.dart';
 
 class PropertiesLocalDataSource extends GetxService {

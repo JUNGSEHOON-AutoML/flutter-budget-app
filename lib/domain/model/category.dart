@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:account_book/data/entity/CategoryEntity.dart';
-import 'package:account_book/di/my_service.dart';
+import 'package:account_book/application/my_service.dart';
 import 'package:account_book/domain/model/record.dart';
 
 class Category {

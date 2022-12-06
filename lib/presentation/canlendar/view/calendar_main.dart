@@ -4,7 +4,7 @@ import 'package:date_utils/date_utils.dart' as dt;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../di/my_service.dart';
+import '../../../application/my_service.dart';
 import '../../../domain/use_case/properties_use_case/get_categories_use_case.dart';
 import '../widget/day_widget.dart';
 import 'package:intl/intl.dart';

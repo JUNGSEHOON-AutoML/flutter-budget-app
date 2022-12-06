@@ -1,5 +1,5 @@
 import 'package:account_book/data/repository_impl/history_repository_impl.dart';
-import 'package:account_book/di/my_service.dart';
+import 'package:account_book/application/my_service.dart';
 import 'package:account_book/domain/model/category.dart';
 import 'package:account_book/domain/model/payment.dart';
 import 'package:account_book/domain/model/record.dart';
