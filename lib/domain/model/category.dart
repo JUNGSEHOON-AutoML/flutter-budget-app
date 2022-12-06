@@ -11,7 +11,7 @@ class Category {
   var type = RecordType.income;
 
   CategoryEntity toEntity() {
-    return CategoryEntity(null, name, type.name,
+    return CategoryEntity(id, name, type.name,
         MyService.to.getIdByColor(type: type, color: color));
   }
 }

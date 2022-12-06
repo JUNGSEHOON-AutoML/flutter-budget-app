@@ -1,5 +1,7 @@
 import 'package:account_book/application/my_service.dart';
 import 'package:account_book/domain/model/record.dart';
+import 'package:account_book/domain/use_case/properties_use_case/delete_category_use_case.dart';
+import 'package:account_book/domain/use_case/properties_use_case/delete_payment_use_case.dart';
 import 'package:account_book/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +27,9 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // var spendList = MyService.to.categories?.cast<List>().where((e)=> e.RecordType ==spend);
     var scroll = ScrollController();
+    final deleteCategoryUseCase = Get.put(DeleteCategoryUseCase());
+    final deletePaymentUseCase = Get.put(DeletePaymentUseCase());
 
     return DefaultTabController(
       length: 3,
@@ -78,6 +81,16 @@ class _SettingScreenState extends State<SettingScreen> {
                                 child: Text(
                                     MyService.to.payments[i + 1]?.name ?? "",
                                     style: TextStyle(fontSize: 16))),
+                            onLongPress: () {
+                              deletePaymentUseCase
+                                  .invoke(MyService.to.payments[i + 1]!);
+                              Get.snackbar(
+                                '삭제 완료!',
+                                '결제수단이 삭제되었습니다.',
+                                backgroundColor: AppColor.red1,
+                                colorText: Colors.white,
+                              );
+                            },
                           ),
                         );
                       });
@@ -120,6 +133,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       itemCount: spendCategories.length,
                       itemBuilder: (BuildContext context, int i) {
                         return ListTile(
+                          onLongPress: () {},
                           title: TextButton(
                             onPressed: () {},
                             style: TextButton.styleFrom(
@@ -129,6 +143,15 @@ class _SettingScreenState extends State<SettingScreen> {
                                 alignment: Alignment.centerLeft,
                                 child: Text(spendCategories[i]?.name ?? "",
                                     style: TextStyle(fontSize: 16))),
+                            onLongPress: () {
+                              deleteCategoryUseCase.invoke(spendCategories[i]);
+                              Get.snackbar(
+                                '삭제 완료!',
+                                '카테고리가 삭제되었습니다.',
+                                backgroundColor: AppColor.red1,
+                                colorText: Colors.white,
+                              );
+                            },
                           ),
                         );
                       });
@@ -180,6 +203,15 @@ class _SettingScreenState extends State<SettingScreen> {
                                 alignment: Alignment.centerLeft,
                                 child: Text(incomeCategories[i]?.name ?? "",
                                     style: TextStyle(fontSize: 16))),
+                            onLongPress: () {
+                              deleteCategoryUseCase.invoke(incomeCategories[i]);
+                              Get.snackbar(
+                                '삭제 완료!',
+                                '카테고리가 삭제되었습니다.',
+                                backgroundColor: AppColor.red1,
+                                colorText: Colors.white,
+                              );
+                            },
                           ),
                         );
                       });
