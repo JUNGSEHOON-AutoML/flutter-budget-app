@@ -1,5 +1,6 @@
 import 'package:account_book/di/my_service.dart';
 import 'package:account_book/domain/model/payment.dart';
+import 'package:account_book/domain/use_case/history_use_case/add_record_use_case.dart';
 import 'package:account_book/domain/use_case/properties_use_case/add_payment_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,10 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
+import '../../domain/model/category.dart';
+import '../../domain/model/record.dart';
 import '../../style.dart';
+import '../main.dart';
 
 
 
@@ -17,6 +21,7 @@ class AddHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -41,10 +46,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _historyController = TextEditingController();
   final _moneyController = TextEditingController();
-  final addPaymentUsecase=Get.put(AddPaymentUseCase());
+  final addRecordUseCase = Get.put(AddRecordUseCase());
   final _historyKey = GlobalKey<FormState>();
   TextEditingController dateController = TextEditingController();
-  final List<bool> _selected = <bool>[true, true];
+  final List<bool> _selected = <bool>[true, false];
+  final _payment=Payment();
+  final _category=Category();
 
   String? _selectedValue;
 
@@ -54,6 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void dispose() {
     dateController.text="";
     _historyController.dispose();
+    _moneyController.dispose();
     super.dispose();
   }
 
@@ -63,6 +71,16 @@ class _MyHomePageState extends State<MyHomePage> {
       Text('수입'),
       Text('지출'),
     ];
+    final incomeCategories = [];
+    final spendCategories = [];
+
+    for (final key in MyService.to.categories.keys){
+      if (MyService.to.categories[key]?.type == RecordType.income){
+        incomeCategories.add(MyService.to.categories[key]!);
+      }else if (MyService.to.categories[key]?.type == RecordType.spend){
+        spendCategories.add(MyService.to.categories[key]!);
+      }
+    }
 
     return DefaultTabController(
       length: 3,
@@ -81,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: const EdgeInsets.all(16.0),
           child: Center(
             child: Form(
-              key: this._historyKey,
+              key: _historyKey,
               child: Padding(
               padding: EdgeInsets.all(10.0),
               child:Column(
@@ -90,7 +108,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ToggleButtons(
                   onPressed: (int index) {
                     setState(() {
-                      _selected[index] = !_selected[index];
+                      for(int i=0;i<_selected.length;i++){
+                        _selected[i]=i==index;
+                      }
                     });
                   },
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -109,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: toggle,
                 ),
 
-                TextField(
+                TextFormField(
                   controller: dateController,
                   decoration: const InputDecoration(
                     // icon: Icon(Icons.calendar_today),
@@ -141,7 +161,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   decoration: const InputDecoration(
                     labelText: '금액',
                   ),
-                  controller: _historyController,
+                  controller: _moneyController,
                   keyboardType: TextInputType.number,
                 ),
 
@@ -180,17 +200,19 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     onChanged: (value) {
                       setState(() {
-                        _selectedValue = value.toString();
+                        // _selectedValue = value.toString();
+                        _payment.name=_selectedValue!;
                       });
                     },
                     onSaved: (value) {
                       setState(() {
-                        _selectedValue = value.toString();
+                        // _selectedValue = value.toString();
+                        _payment.name=_selectedValue!;
                       });
                     },
 
                     items: MyService.to.payments.keys.skip(1).map((key) => DropdownMenuItem(
-                        value: MyService.to.payments[key]!.name,
+                        value: MyService.to.payments[key]!,
                         child: Text(
                           MyService.to.payments[key]!.name,
                         ))).toList(),
@@ -227,19 +249,35 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   onChanged: (value) {
                     setState(() {
-                      _selectedValue = value.toString();
+                      // _selectedValue = value;
+                      _category.name=_selectedValue!;
                     });
                   },
                   onSaved: (value) {
                     setState(() {
-                      _selectedValue = value.toString();
+                      // _selectedValue = value;
+                      _category.name=_selectedValue!;
                     });
                   },
 
-                  items: MyService.to.payments.keys.skip(1).map((key) => DropdownMenuItem(
-                      value: MyService.to.payments[key]!.name,
+                  // items:_selected[0]==true
+                  //     ?incomeCategories.map((key)=> DropdownMenuItem(
+                  //   value:incomeCategories[key]!.name,
+                  //   child:Text(
+                  //     incomeCategories[key]!.name,
+                  //   )
+                  // )).toList()
+                  // :spendCategories.map((key)=> DropdownMenuItem(
+                  //   value:spendCategories[key]!.name,
+                  //   child:Text(
+                  //     spendCategories[key]!.name,
+                  //   )
+                  // )).toList()
+
+                  items: MyService.to.categories.keys.skip(1).map((key) => DropdownMenuItem(
+                      value: MyService.to.categories[key]!,
                       child: Text(
-                        MyService.to.payments[key]!.name,
+                        MyService.to.categories[key]!.name,
                       ))).toList(),
 
                 ),
@@ -270,8 +308,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           // income.color=_color;
                           // income.type=RecordType.income;
                           // addIncomeUsecase.invoke(income);
-                          // Get.offAll(()=>MainPage());
-
+                          addRecordUseCase.invoke(category: _category, type: RecordType.spend, payment: _payment, price: int.parse(_moneyController.text), date: dateController.text, title: _historyController.text);
+                          Get.offAll(()=>MainPage());
                         }
 
                       },
