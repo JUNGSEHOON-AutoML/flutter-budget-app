@@ -39,185 +39,186 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-      final test = Get.put(GetCategoriesUseCase());
-      test.invoke();
-      String nowYM = "${MyService.to.currentYear}-${MyService.to.currentMonth}";
-      // "2022-11"
-      if (MyService.to.currentMonth < 10) {
-        nowYM = "${MyService.to.currentYear}-0${MyService.to.currentMonth}";
-      }
-      int lastDate =
-          int.parse(DateFormat('dd').format(DateTime(2022, 11 + 1, 0)));
+    String nowYM = "${MyService.to.currentYear}-${MyService.to.currentMonth}";
+    // "2022-11"
+    if (MyService.to.currentMonth < 10) {
+      nowYM = "${MyService.to.currentYear}-0${MyService.to.currentMonth}";
+    }
+    int lastDate =
+    int.parse(DateFormat('dd').format(DateTime(2022, 11 + 1, 0)));
 
-      List groupList = [];
+    List toggle = [
+      [
+        Row(
+          children: const [
+            Icon(Icons.check_box_outline_blank),
+            SizedBox(width: 10),
+            Text('수입'),
+          ],
+        ),
+        Row(
+          children: const [
+            Icon(Icons.check_box),
+            SizedBox(width: 10),
+            Text('수입'),
+          ],
+        ),
+      ],
+      [
+        Row(
+          children: const [
+            Icon(Icons.check_box_outline_blank),
+            SizedBox(width: 10),
+            Text('지출'),
+          ],
+        ),
+        Row(
+          children: const [
+            Icon(Icons.check_box),
+            SizedBox(width: 10),
+            Text('지출'),
+          ],
+        )
+      ]
+    ];
 
-      for (int k = lastDate; k >= 1; k--) {
-        if (k < 10) {
-          if (MyService.to.history[nowYM] != null) {
-            List group = MyService.to.history[nowYM]!
-                .where((data) => data.date == '$nowYM-0$k')
-                .toList();
-            if (group.isNotEmpty) {
-              groupList.add(group);
-            }
-          }
-        } else {
-          if (MyService.to.history[nowYM] != null) {
-            List group = MyService.to.history[nowYM]!
-                .where((data) => data.date == '$nowYM-$k')
-                .toList();
-            if (group.isNotEmpty) {
-              groupList.add(group);
-            }
-          }
-        }
-      }
-
-      List toggle = [
-        [
-          Row(
-            children: const [
-              Icon(Icons.check_box_outline_blank),
-              SizedBox(width: 10),
-              Text('수입'),
-            ],
-          ),
-          Row(
-            children: const [
-              Icon(Icons.check_box),
-              SizedBox(width: 10),
-              Text('수입'),
-            ],
-          ),
-        ],
-        [
-          Row(
-            children: const [
-              Icon(Icons.check_box_outline_blank),
-              SizedBox(width: 10),
-              Text('지출'),
-            ],
-          ),
-          Row(
-            children: const [
-              Icon(Icons.check_box),
-              SizedBox(width: 10),
-              Text('지출'),
-            ],
-          )
-        ]
-      ];
-
-      return Scaffold(
-          appBar: AppBar(
-              centerTitle: true,
-              backgroundColor: Colors.transparent,
-              bottom: PreferredSize(
-                  preferredSize: const Size.fromHeight(4.0),
-                  child: Container(
-                    color: AppColor.purple1,
-                    height: 1.0,
-                  )),
-              title: Text(
-                  '${MyService.to.currentYear}년 ${MyService.to.currentMonth}월',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    color: AppColor.purple1,
-                  )),
-              elevation: 0.0,
-              leading: IconButton(
+    return Scaffold(
+        appBar: AppBar(
+            centerTitle: true,
+            backgroundColor: Colors.transparent,
+            bottom: PreferredSize(
+                preferredSize: const Size.fromHeight(4.0),
+                child: Container(
+                  color: AppColor.purple1,
+                  height: 1.0,
+                )),
+            title: Text(
+                '${MyService.to.currentYear}년 ${MyService.to.currentMonth}월',
+                style: const TextStyle(
+                  fontSize: 18,
+                  color: AppColor.purple1,
+                )),
+            elevation: 0.0,
+            leading: IconButton(
+              icon: const Icon(
+                Icons.chevron_left,
+                color: AppColor.purple1,
+              ),
+              onPressed: () {
+                setState(() {
+                  if (MyService.to.currentMonth == 1) {
+                    MyService.to.currentMonth = 12;
+                    MyService.to.currentYear -= 1;
+                  } else {
+                    MyService.to.currentMonth -= 1;
+                  }
+                });
+              },
+            ),
+            actions: [
+              IconButton(
                 icon: const Icon(
-                  Icons.chevron_left,
+                  Icons.chevron_right,
                   color: AppColor.purple1,
                 ),
                 onPressed: () {
                   setState(() {
-                    if (MyService.to.currentMonth == 1) {
-                      MyService.to.currentMonth = 12;
-                      MyService.to.currentYear -= 1;
+                    if (MyService.to.currentMonth == 12) {
+                      MyService.to.currentMonth = 1;
+                      MyService.to.currentYear += 1;
                     } else {
-                      MyService.to.currentMonth -= 1;
+                      MyService.to.currentMonth += 1;
                     }
                   });
                 },
-              ),
-              actions: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.chevron_right,
-                    color: AppColor.purple1,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      if (MyService.to.currentMonth == 12) {
-                        MyService.to.currentMonth = 1;
-                        MyService.to.currentYear += 1;
-                      } else {
-                        MyService.to.currentMonth += 1;
-                      }
-                    });
-                  },
-                )
-              ]),
-          body: Column(
-            children: [
-              const SizedBox(height: 20),
-              ToggleButtons(
-                onPressed: (int index) {
+              )
+            ]),
+        body: Column(
+          children: [
+            const SizedBox(height: 20),
+            ToggleButtons(
+              onPressed: (int index) {
+                setState(() {
+                  _selected[index] = !_selected[index];
+                });
+                if (_selected[index]) {
                   setState(() {
-                    _selected[index] = !_selected[index];
+                    returnToggle[index] = toggle[index][1];
                   });
-                  if (_selected[index]) {
-                    setState(() {
-                      returnToggle[index] = toggle[index][1];
-                    });
-                  } else {
-                    setState(() {
-                      returnToggle[index] = toggle[index][0];
-                    });
-                  }
-                },
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
-                selectedBorderColor: AppColor.purple1,
-                selectedColor: Colors.white,
-                fillColor: AppColor.purple1,
-                color: AppColor.purple1,
-                textStyle: const TextStyle(
-                  fontSize: 20,
-                ),
-                constraints: const BoxConstraints(
-                  minHeight: 40.0,
-                  minWidth: 180.0,
-                ),
-                isSelected: _selected,
-                children: returnToggle,
+                } else {
+                  setState(() {
+                    returnToggle[index] = toggle[index][0];
+                  });
+                }
+              },
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+              selectedBorderColor: AppColor.purple1,
+              selectedColor: Colors.white,
+              fillColor: AppColor.purple1,
+              color: AppColor.purple1,
+              textStyle: const TextStyle(
+                fontSize: 20,
               ),
-              const SizedBox(height: 20),
-              Expanded(
+              constraints: const BoxConstraints(
+                minHeight: 40.0,
+                minWidth: 180.0,
+              ),
+              isSelected: _selected,
+              children: returnToggle,
+            ),
+            const SizedBox(height: 20),
+            Obx(() {
+              List groupList = [];
+
+              for (int k = lastDate; k >= 1; k--) {
+                if (k < 10) {
+                  if (MyService.to.history[nowYM] != null) {
+                    List group = MyService.to.history[nowYM]!
+                        .where((data) => data.date == '$nowYM-0$k')
+                        .toList();
+                    if (group.isNotEmpty) {
+                      groupList.add(group);
+                    }
+                  }
+                } else {
+                  if (MyService.to.history[nowYM] != null) {
+                    List group = MyService.to.history[nowYM]!
+                        .where((data) => data.date == '$nowYM-$k')
+                        .toList();
+                    if (group.isNotEmpty) {
+                      groupList.add(group);
+                    }
+                  }
+                }
+              }
+
+              return Expanded(
                 child: ListView(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     children: groupList
-                        .map((e) => dateListTileAllType(e, e![0].date,
+                        .map((e) =>
+                        dateListTileAllType(e, e![0].date,
                             _selected, deleteRecordUseCase, scroll))
                         .toList()),
-              ),
-            ],
-          ),
-          floatingActionButton: SizedBox(
-            width: 70,
-            height: 70,
-            child: FittedBox(
-              child: FloatingActionButton(
-                onPressed: () {
-                  Get.toNamed("/addHistory");
-                },
-                backgroundColor: AppColor.yellow1,
-                child: const Icon(Icons.add),
-              ),
+              );},
             ),
-          ));
-    }
+          ],
+        ),
+        floatingActionButton: SizedBox(
+          width: 70,
+          height: 70,
+          child: FittedBox(
+            child: FloatingActionButton(
+              onPressed: () {
+                Get.toNamed("/addHistory");
+              },
+              backgroundColor: AppColor.yellow1,
+              child: const Icon(Icons.add),
+            ),
+          ),
+        ));
+  }
 }
 
 Column dateListTileAllType(List<Record> k, String date, List<bool> selected,
@@ -299,15 +300,16 @@ Column dateListTileAllType(List<Record> k, String date, List<bool> selected,
             shrinkWrap: true,
             controller: scroll,
             children: k
-                .map((e) => ymdList(e, selected, (recordId) {
-                      deleteRecordUseCase.invoke(recordId: recordId);
-                      Get.snackbar(
-                        '삭제 완료!',
-                        '내역이 삭제되었습니다.',
-                        backgroundColor: AppColor.red1,
-                        colorText: Colors.white,
-                      );
-                    }))
+                .map((e) =>
+                ymdList(e, selected, (recordId) {
+                  deleteRecordUseCase.invoke(recordId: recordId);
+                  Get.snackbar(
+                    '삭제 완료!',
+                    '내역이 삭제되었습니다.',
+                    backgroundColor: AppColor.red1,
+                    colorText: Colors.white,
+                  );
+                }))
                 .toList()),
         const Divider(color: AppColor.purple1, thickness: 1.2),
       ],
