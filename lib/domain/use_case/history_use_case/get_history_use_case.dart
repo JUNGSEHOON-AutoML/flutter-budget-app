@@ -11,19 +11,19 @@ class GetHistoryUseCase extends GetxService {
 
   void invoke() async {
     final stream = _repository.getHistory(uid: MyService.to.me.uid);
-    stream.then((value) => value.listen((event) {
+    stream.then((value) =>
+        value.listen((event) {
           for (final child in event.snapshot.children) {
             final hashMap = child.value as LinkedHashMap<Object?, Object?>;
             final newRecord =
-                _rawDataToRecord(key: child.key!, hashMap: hashMap);
+            _rawDataToRecord(key: child.key!, hashMap: hashMap);
 
             final dateToken = newRecord.date.split("-");
             final dateKey = "${dateToken[0]}-${dateToken[1]}";
 
-            if (!MyService.to.history.containsKey(dateKey)) {
-              MyService.to.history[dateKey] = [];
-            }
-            MyService.to.history[dateKey]!.add(newRecord);
+            final List<Record> newList = [];
+            newList.add(newRecord);
+            MyService.to.history[dateKey] = newList;
           }
         }));
   }
