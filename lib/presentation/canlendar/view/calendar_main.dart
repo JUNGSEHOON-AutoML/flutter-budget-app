@@ -207,50 +207,33 @@ class _Calendar_MainState extends State<Calendar_Main> {
 
     return Scaffold(
         appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.grey.shade400,
-        ),
+            centerTitle: true,
+            title: Text(
+                '${MyService.to.currentYear}년 ${MyService.to.currentMonth}월',
+                style: const TextStyle(
+                  fontSize: 21,
+                  color: AppColor.purple1,
+                  fontWeight: FontWeight.bold,
+                )),
+            elevation: 0.0,
+            leading: IconButton(
+              icon: const Icon(Icons.chevron_left),
+              onPressed: () {
+                set_datesub_list();
+              },
+            ),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.chevron_right),
+                onPressed: () {
+                  set_dateplus_list();
+                },
+              )
+            ]),
         body: SingleChildScrollView(
             child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InkWell(
-                    onTap: () {
-                      set_datesub_list();
-                    },
-                    child: Icon(
-                      Icons.arrow_left,
-                      size: 50,
-                    )),
-                InkWell(
-                  onTap: () {},
-                  child: Center(
-                      child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "${MyService.to.currentYear} 년 ${MyService.to.currentMonth} 월",
-                        style: TextStyle(
-                            fontSize: 23, fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  )),
-                ),
-                InkWell(
-                    onTap: () {
-                      set_dateplus_list();
-                    },
-                    child: Icon(
-                      Icons.arrow_right,
-                      size: 50,
-                    )),
-              ],
-            ),
-            SizedBox(
-              height: size.height * 0.05,
-            ),
+            SizedBox(height: 20,),
             Container(
               width: size.width * 1,
               height: size.height * 0.8,
