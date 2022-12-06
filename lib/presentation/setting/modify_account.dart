@@ -1,4 +1,5 @@
 import 'package:account_book/domain/use_case/properties_use_case/update_payment_use_case.dart';
+import 'package:account_book/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,13 +50,26 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text('결제수단 수정하기',style: TextStyle(color:Color(0xff524D90)),),
+          backgroundColor: Colors.transparent,
+          bottom: PreferredSize(
+              child: Container(
+                color: AppColor.purple1,
+                height: 1.0,
+              ),
+              preferredSize: Size.fromHeight(4.0)),
+          title: Text('결제 수단 수정하기',
+              style: const TextStyle(
+                fontSize: 18,
+                color: AppColor.purple1,
+              )),
+          elevation: 0.0,
+          automaticallyImplyLeading: true,
           leading: IconButton(
-              onPressed: () {
-                // Navigator.pop(context); //뒤로가기
-              },
-              color: Color(0xff524D90),
-              icon: Icon(Icons.arrow_back)),
+            icon: Icon(Icons.arrow_back_ios, color: AppColor.purple1,),
+            onPressed: (){
+              Get.back();
+            },
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),

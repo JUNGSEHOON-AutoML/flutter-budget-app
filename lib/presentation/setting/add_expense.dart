@@ -73,18 +73,28 @@ class _MyHomePageState extends State<MyHomePage> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: AppBar(
+        appBar:AppBar(
           centerTitle: true,
-          title: const Text(
-            '지출 카테고리 추가',
-            style: TextStyle(color: Color(0xff524D90)),
-          ),
+          backgroundColor: Colors.transparent,
+          bottom: PreferredSize(
+              child: Container(
+                color: AppColor.purple1,
+                height: 1.0,
+              ),
+              preferredSize: Size.fromHeight(4.0)),
+          title: Text('지출 카테고리 추가',
+              style: const TextStyle(
+                fontSize: 18,
+                color: AppColor.purple1,
+              )),
+          elevation: 0.0,
+          automaticallyImplyLeading: true,
           leading: IconButton(
-              onPressed: () {
-                Get.back(); //뒤로가기
-              },
-              color: Color(0xff524D90),
-              icon: Icon(Icons.arrow_back)),
+            icon: Icon(Icons.arrow_back_ios, color: AppColor.purple1,),
+            onPressed: (){
+              Get.back();
+            },
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
