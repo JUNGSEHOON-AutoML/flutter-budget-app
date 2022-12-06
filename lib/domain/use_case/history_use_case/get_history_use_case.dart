@@ -14,7 +14,6 @@ class GetHistoryUseCase extends GetxService {
 
     stream.then((value) => value.listen((event) {
           final newMap = <String, List<Record>>{};
-          print("Log: GetHistoryUseCase invoked!");
           for (final child in event.snapshot.children) {
             final hashMap = child.value as LinkedHashMap<Object?, Object?>;
             final newRecord =
