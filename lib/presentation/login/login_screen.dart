@@ -22,7 +22,7 @@ class LoginScreen extends GetView<MyService> {
       const Text(
         "내돈어디가계",
         style: TextStyle(
-            fontSize: 45, color: AppColor.purple1, fontWeight: FontWeight.bold),
+            fontSize: 45, color: Color(0xff524D90), fontWeight: FontWeight.bold),
       ),
       const SizedBox(
         height: 260,
