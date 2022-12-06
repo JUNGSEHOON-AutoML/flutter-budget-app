@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:account_book/domain/model/category.dart';
 
+import '../main.dart';
+
 class AddExpense extends StatelessWidget {
   const AddExpense({Key? key}) : super(key: key);
 
@@ -944,9 +946,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               '지출 카테고리가 추가되었습니다.',
                               backgroundColor: Colors.white,
                             );
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) => SettingScreen()));
+                            Get.offAll(() => MainPage());
+
                             final expense = new Category();
                             expense.name = _expenseController.text;
                             expense.color = _color;

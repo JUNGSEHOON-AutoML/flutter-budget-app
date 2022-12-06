@@ -1,3 +1,4 @@
+import 'package:account_book/di/my_service.dart';
 import 'package:account_book/domain/model/payment.dart';
 import 'package:account_book/domain/use_case/properties_use_case/add_payment_use_case.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,13 +39,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _paymentController = TextEditingController();
+  final _historyController = TextEditingController();
+  final _moneyController = TextEditingController();
   final addPaymentUsecase=Get.put(AddPaymentUseCase());
-  final formKey = GlobalKey<FormState>();
+  final _historyKey = GlobalKey<FormState>();
   TextEditingController dateController = TextEditingController();
+  final List<bool> _selected = <bool>[true, true];
 
-
-  List<String> listOfValue = ['1', '2', '3', '4', '5'];
   String? _selectedValue;
 
 
@@ -52,12 +53,16 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void dispose() {
     dateController.text="";
-    _paymentController.dispose();
+    _historyController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    const List<Widget> toggle = <Widget>[
+      Text('수입'),
+      Text('지출'),
+    ];
 
     return DefaultTabController(
       length: 3,
@@ -76,11 +81,34 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: const EdgeInsets.all(16.0),
           child: Center(
             child: Form(
-              key: this.formKey,
+              key: this._historyKey,
               child: Padding(
               padding: EdgeInsets.all(10.0),
               child:Column(
               children:[
+
+                ToggleButtons(
+                  onPressed: (int index) {
+                    setState(() {
+                      _selected[index] = !_selected[index];
+                    });
+                  },
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  selectedBorderColor: AppColor.purple1,
+                  selectedColor: Colors.white,
+                  fillColor: AppColor.purple1,
+                  color: AppColor.purple1,
+                  textStyle: const TextStyle(
+                    fontSize: 20,
+                  ),
+                  constraints: const BoxConstraints(
+                    minHeight: 40.0,
+                    minWidth: 160.0,
+                  ),
+                  isSelected: _selected,
+                  children: toggle,
+                ),
+
                 TextField(
                   controller: dateController,
                   decoration: const InputDecoration(
@@ -113,79 +141,107 @@ class _MyHomePageState extends State<MyHomePage> {
                   decoration: const InputDecoration(
                     labelText: '금액',
                   ),
-                  controller: _paymentController,
+                  controller: _historyController,
                   keyboardType: TextInputType.number,
                 ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                ),
-
-
 
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
                 ),
 
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                ),
 
-                  DropdownButtonFormField(
+
+                  DropdownButtonFormField2(
+                    decoration: InputDecoration(
+                      isDense: true,
+                      contentPadding: EdgeInsets.zero,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
                     value: _selectedValue,
-                    hint: Text(
+                    hint: const Text(
                       '결제수단',
+                      style: TextStyle(fontSize:14),
                     ),
                     isExpanded: true,
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.black45,
+                    ),
+                    iconSize: 30,
+                    buttonHeight: 50,
+                    buttonPadding: const EdgeInsets.only(left: 0, right: 10),
+                    dropdownDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                     onChanged: (value) {
                       setState(() {
-                        _selectedValue = value;
+                        _selectedValue = value.toString();
                       });
                     },
                     onSaved: (value) {
                       setState(() {
-                        _selectedValue = value;
+                        _selectedValue = value.toString();
                       });
                     },
 
-                    items: listOfValue
-                        .map((String val) {
-                      return DropdownMenuItem(
-                        value: val,
+                    items: MyService.to.payments.keys.skip(1).map((key) => DropdownMenuItem(
+                        value: MyService.to.payments[key]!.name,
                         child: Text(
-                          val,
-                        ),
-                      );
-                    }).toList(),
-                  ),
+                          MyService.to.payments[key]!.name,
+                        ))).toList(),
 
+                  ),
 
                 Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
                 ),
 
-                DropdownButtonFormField(
+                DropdownButtonFormField2(
+                  decoration: InputDecoration(
+                    isDense: true,
+                    contentPadding: EdgeInsets.zero,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
                   value: _selectedValue,
-                  hint: Text(
+                  hint: const Text(
                     '분류',
+                    style: TextStyle(fontSize:14),
                   ),
                   isExpanded: true,
+                  icon: const Icon(
+                    Icons.arrow_drop_down,
+                    color: Colors.black45,
+                  ),
+                  iconSize: 30,
+                  buttonHeight: 50,
+                  buttonPadding: const EdgeInsets.only(left: 0, right: 10),
+                  dropdownDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                   onChanged: (value) {
                     setState(() {
-                      _selectedValue = value;
+                      _selectedValue = value.toString();
                     });
                   },
                   onSaved: (value) {
                     setState(() {
-                      _selectedValue = value;
+                      _selectedValue = value.toString();
                     });
                   },
 
-                  items: listOfValue
-                      .map((String val) {
-                    return DropdownMenuItem(
-                      value: val,
+                  items: MyService.to.payments.keys.skip(1).map((key) => DropdownMenuItem(
+                      value: MyService.to.payments[key]!.name,
                       child: Text(
-                        val,
-                      ),
-                    );
-                  }).toList(),
+                        MyService.to.payments[key]!.name,
+                      ))).toList(),
+
                 ),
                 
 
@@ -193,25 +249,41 @@ class _MyHomePageState extends State<MyHomePage> {
                   decoration: const InputDecoration(
                     labelText: '내용',
                   ),
-                  controller: _paymentController,
+                  controller: _historyController,
                 ),
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 30, 0, 30),
                 ),
-                ElevatedButton(
-                    onPressed: (){
-                      final addpayment=new Payment();
-                      addpayment.name=_paymentController.text;
-                      addPaymentUsecase.invoke(addpayment);
-                    },
-                    child: const Text('등록하기'),
-                    style: ElevatedButton.styleFrom(
-                      primary:Color(0xffF5B853),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0)
-                      ),
-                      fixedSize: Size(100,50),
-                    )
+                SizedBox(
+                  height:50,
+                  width:double.infinity,
+                  child: ElevatedButton(
+                      onPressed: (){
+                        if(_historyKey.currentState!.validate()){
+                          Get.snackbar(
+                            '추가완료!',
+                            '내역이 추가되었습니다.',
+                            backgroundColor: Colors.white,
+                          );
+                          // final income=new Category();
+                          // income.name=_historyController.text;
+                          // income.color=_color;
+                          // income.type=RecordType.income;
+                          // addIncomeUsecase.invoke(income);
+                          // Get.offAll(()=>MainPage());
+
+                        }
+
+                      },
+                      child: const Text('등록하기'),
+                      style: ElevatedButton.styleFrom(
+                        primary:Color(0xffF5B853),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0)
+                        ),
+                        fixedSize: Size(100,50),
+                      )
+                  ),
                 ),
               ],
               ),
