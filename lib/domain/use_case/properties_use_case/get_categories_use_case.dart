@@ -1,5 +1,5 @@
 import 'package:account_book/data/repository_impl/properties_local_repository_impl.dart';
-import 'package:account_book/di/my_service.dart';
+import 'package:account_book/application/my_service.dart';
 import 'package:get/get.dart';
 
 class GetCategoriesUseCase extends GetxController {

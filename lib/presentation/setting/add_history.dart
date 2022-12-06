@@ -1,5 +1,4 @@
-import 'package:account_book/di/my_service.dart';
-import 'package:account_book/domain/model/payment.dart';
+import 'package:account_book/application/my_service.dart';
 import 'package:account_book/domain/use_case/properties_use_case/add_payment_use_case.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

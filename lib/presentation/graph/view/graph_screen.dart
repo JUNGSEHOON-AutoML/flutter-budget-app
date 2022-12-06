@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:account_book/di/my_service.dart';
+import 'package:account_book/application/my_service.dart';
 import 'package:account_book/domain/model/record.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

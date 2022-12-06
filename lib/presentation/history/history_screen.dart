@@ -1,8 +1,7 @@
-import 'package:account_book/di/my_service.dart';
+import 'package:account_book/application/my_service.dart';
 import 'package:account_book/domain/model/record.dart';
 import 'package:account_book/domain/use_case/history_use_case/delete_records_use_case.dart';
 import 'package:account_book/domain/use_case/properties_use_case/get_categories_use_case.dart';
-import 'package:floor/floor.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';

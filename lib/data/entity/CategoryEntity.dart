@@ -1,4 +1,4 @@
-import 'package:account_book/di/my_service.dart';
+import 'package:account_book/application/my_service.dart';
 import 'package:account_book/domain/model/category.dart';
 import 'package:account_book/domain/model/record.dart';
 import 'package:floor/floor.dart';
