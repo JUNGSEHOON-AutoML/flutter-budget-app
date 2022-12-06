@@ -18,6 +18,22 @@ class HistoryScreen extends StatefulWidget {
 class _HistoryScreenState extends State<HistoryScreen> {
   final List<bool> _selected = <bool>[true, true];
   final deleteRecordUseCase = Get.put(DeleteRecordUseCase());
+  final List<Widget> returnToggle = [
+    Row(
+      children: [
+        const Icon(Icons.check_box),
+        SizedBox(width: 10),
+        const Text('수입'),
+      ],
+    ),
+    Row(
+      children: [
+        const Icon(Icons.check_box),
+        SizedBox(width: 10),
+        const Text('지출'),
+      ],
+    )
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +45,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
       nowYM = "${MyService.to.currentYear}-0${MyService.to.currentMonth}";
     }
     int lastDate =
-    int.parse(DateFormat('dd').format(DateTime(2022, 11 + 1, 0)));
+        int.parse(DateFormat('dd').format(DateTime(2022, 11 + 1, 0)));
     MyService.to.makeDummies();
 
     List groupList = [];
-
-    const List<Widget> toggle = <Widget>[
-      Text('수입'),
-      Text('지출'),
-    ];
 
     for (int k = lastDate; k >= 1; k--) {
       if (k < 10) {
@@ -61,15 +72,52 @@ class _HistoryScreenState extends State<HistoryScreen> {
       }
     }
 
+    List toggle = [
+      [
+        Row(
+          children: [
+            const Icon(Icons.check_box_outline_blank),
+            SizedBox(width: 10),
+            const Text('수입'),
+          ],
+        ),
+        Row(
+          children: [
+            const Icon(Icons.check_box),
+            SizedBox(width: 10),
+            const Text('수입'),
+          ],
+        ),
+      ],
+      [
+        Row(
+          children: [
+            const Icon(Icons.check_box_outline_blank),
+            SizedBox(width: 10),
+            const Text('지출'),
+          ],
+        ),
+        Row(
+          children: [
+            const Icon(Icons.check_box),
+            SizedBox(width: 10),
+            const Text('지출'),
+          ],
+        )
+      ]
+    ];
+
+
     return Scaffold(
       appBar: AppBar(
           centerTitle: true,
-          title: Text('${MyService.to.currentYear}년 ${MyService.to.currentMonth}월',
-              style: const TextStyle(
-                fontSize: 21,
-                color: AppColor.purple1,
-                fontWeight: FontWeight.bold,
-              )),
+          title:
+              Text('${MyService.to.currentYear}년 ${MyService.to.currentMonth}월',
+                  style: const TextStyle(
+                    fontSize: 21,
+                    color: AppColor.purple1,
+                    fontWeight: FontWeight.bold,
+                  )),
           elevation: 0.0,
           leading: IconButton(
             icon: const Icon(Icons.chevron_left),
@@ -109,6 +157,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   setState(() {
                     _selected[index] = !_selected[index];
                   });
+                  if (_selected[index]) {
+                    setState(() {
+                      returnToggle[index] = toggle[index][1];
+                    });
+                  } else {
+                    setState(() {
+                      returnToggle[index] = toggle[index][0];
+                    });
+                  }
                 },
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
                 selectedBorderColor: AppColor.purple1,
@@ -123,7 +180,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   minWidth: 180.0,
                 ),
                 isSelected: _selected,
-                children: toggle,
+                children: returnToggle,
               ),
               SizedBox(height: 20),
               ListView(
@@ -131,7 +188,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   shrinkWrap: true,
                   children: groupList
                       .map((e) => dateListTileAllType(
-                      e, e![0].date, _selected, deleteRecordUseCase))
+                          e, e![0].date, _selected, deleteRecordUseCase))
                       .toList()),
             ],
           ),
@@ -226,8 +283,8 @@ Column dateListTileAllType(List<Record> k, String date, List<bool> _selected,
             shrinkWrap: true,
             children: k
                 .map((e) => ymdList(e, _selected, (recordId) {
-              deleteRecordUseCase.invoke(recordId: recordId);
-            }))
+                      deleteRecordUseCase.invoke(recordId: recordId);
+                    }))
                 .toList()),
         Divider(color: AppColor.purple1, thickness: 1.2),
       ],
