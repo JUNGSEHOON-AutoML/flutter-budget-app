@@ -44,7 +44,7 @@ class MyService extends GetxService {
     unKnownCategory.id = -1;
     unKnownCategory.name = "Unknown";
 
-    categories[unKnownCategory.id] = unKnownCategory;
+    categories[unKnownCategory.id!] = unKnownCategory;
   }
 
   void _initColor() {
@@ -90,7 +90,7 @@ class MyService extends GetxService {
     unknownPayment.id = -1;
     unknownPayment.name = "Unknown";
 
-    payments[unknownPayment.id] = unknownPayment;
+    payments[unknownPayment.id!] = unknownPayment;
   }
 
   Color getColorById({required RecordType type, required int id}) {

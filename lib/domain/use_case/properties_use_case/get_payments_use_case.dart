@@ -12,7 +12,7 @@ class GetPaymentsUseCase extends GetxController {
       for (final entity in event) {
         if (entity != null) {
           final newPayment = entity.toModel();
-          newPayments[newPayment.id] = newPayment;
+          newPayments[newPayment.id!] = newPayment;
         }
       }
       MyService.to.payments.clear();

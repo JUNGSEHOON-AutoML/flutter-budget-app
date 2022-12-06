@@ -13,7 +13,7 @@ class GetCategoriesUseCase extends GetxController {
       for (final entity in event) {
         if (entity != null) {
           final newCategory = entity.toModel();
-          newCategories[newCategory.id] = newCategory;
+          newCategories[newCategory.id!] = newCategory;
         }
       }
 

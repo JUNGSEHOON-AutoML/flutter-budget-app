@@ -5,7 +5,7 @@ import 'package:account_book/application/my_service.dart';
 import 'package:account_book/domain/model/record.dart';
 
 class Category {
-  late final int id;
+  int? id;
   late final String name;
   late final Color color;
   var type = RecordType.income;

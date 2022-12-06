@@ -17,9 +17,9 @@ class AddRecordUseCase extends GetxService {
       required String title}) async {
     var newKey = await _repository.addHistory(
         uid: MyService.to.me.uid,
-        categoryId: category.id,
+        categoryId: category.id!,
         type: type.name,
-        paymentId: payment.id,
+        paymentId: payment.id!,
         price: price,
         date: date,
         title: title);
