@@ -99,7 +99,7 @@ class _MyHomePageState extends State<_MyHomePage> {
                             final addpayment = Payment();
                             addpayment.name = _paymentController.text;
                             addPaymentUsecase.invoke(addpayment);
-                            Get.offAll(() => MainPage());
+                            Get.back(closeOverlays: true);
                           }
                         },
                         child: const Text('등록하기'),

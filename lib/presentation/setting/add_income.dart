@@ -356,8 +356,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         income.color=_color;
                         income.type=RecordType.income;
                         addIncomeUsecase.invoke(income);
-                        Get.offAll(()=>MainPage());
-
+                        Get.back(closeOverlays: true);
                       }
 
                     },

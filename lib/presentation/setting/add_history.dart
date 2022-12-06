@@ -13,13 +13,12 @@ import '../../domain/model/record.dart';
 import '../../style.dart';
 import '../main.dart';
 
-
 class AddHistory extends StatelessWidget {
   const AddHistory({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MyHomePage();
+    return const MyHomePage();
   }
 }
 
@@ -41,7 +40,6 @@ class _MyHomePageState extends State<MyHomePage> {
   var _category;
 
   String? _selectedValue;
-
 
   @override
   void dispose() {
@@ -75,20 +73,23 @@ class _MyHomePageState extends State<MyHomePage> {
           centerTitle: true,
           backgroundColor: Colors.transparent,
           bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(4.0),
               child: Container(
                 color: AppColor.purple1,
                 height: 1.0,
-              ),
-              preferredSize: Size.fromHeight(4.0)),
-          title: Text('내역 추가하기',
-              style: const TextStyle(
+              )),
+          title: const Text('내역 추가하기',
+              style: TextStyle(
                 fontSize: 18,
                 color: AppColor.purple1,
               )),
           elevation: 0.0,
           automaticallyImplyLeading: true,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: AppColor.purple1,),
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: AppColor.purple1,
+            ),
             onPressed: () {
               Get.back();
             },
@@ -100,10 +101,9 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Form(
               key: _historyKey,
               child: Padding(
-                padding: EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
-
                     ToggleButtons(
                       onPressed: (int index) {
                         setState(() {
@@ -127,7 +127,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       isSelected: _selected,
                       children: toggle,
                     ),
-
                     TextFormField(
                       controller: dateController,
                       decoration: const InputDecoration(
@@ -139,27 +138,18 @@ class _MyHomePageState extends State<MyHomePage> {
                         DateTime? pickedDate = await showDatePicker(
                           context: context,
                           initialDate: DateTime.now(),
-                          //get today's date
                           firstDate: DateTime(2000),
-                          //DateTime.now() - not to allow to choose before today.
                           lastDate: DateTime.now(),
                         );
                         if (pickedDate != null) {
-                          print(
-                              pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
-                          String formattedDate = DateFormat('yyyy-MM-dd')
-                              .format(
-                              pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
-                          print(
-                              formattedDate); //formatted date output using intl package =>  2022-07-04
-                          //You can format date as per your need
-
+                          String formattedDate =
+                              DateFormat('yyyy-MM-dd').format(pickedDate);
                           setState(() {
                             dateController.text =
                                 formattedDate; //set foratted date to TextField value.
                           });
                         } else {
-                          print("Date is not selected");
+                          Get.snackbar("Error", "Date is not selected");
                         }
                       },
                     ),
@@ -170,16 +160,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       controller: _moneyController,
                       keyboardType: TextInputType.number,
                     ),
-
                     Container(
-                      margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                      margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                     ),
-
                     Container(
-                      margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                      margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                     ),
-
-
                     DropdownButtonFormField2(
                       decoration: InputDecoration(
                         isDense: true,
@@ -209,20 +195,18 @@ class _MyHomePageState extends State<MyHomePage> {
                           _payment = value! as Payment;
                         });
                       },
-
-                      items: MyService.to.payments.keys.skip(1).map((key) =>
-                          DropdownMenuItem<Payment>(
+                      items: MyService.to.payments.keys
+                          .skip(1)
+                          .map((key) => DropdownMenuItem<Payment>(
                               value: MyService.to.payments[key]!,
                               child: Text(
                                 MyService.to.payments[key]!.name,
-                              ))).toList(),
-
+                              )))
+                          .toList(),
                     ),
-
                     Container(
-                      margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                     ),
-
                     DropdownButtonFormField2(
                       decoration: InputDecoration(
                         isDense: true,
@@ -252,21 +236,23 @@ class _MyHomePageState extends State<MyHomePage> {
                           _category = value! as Category;
                         });
                       },
-                      items: MyService.to.categories.keys.skip(1).where((
-                          element) {
-                        return ((MyService.to.categories[element]?.type ==
-                            RecordType.income && _selected[0]) ||
-                            (MyService.to.categories[element]?.type ==
-                                RecordType.spend && _selected[1]));
-                      }).map((key) =>
-                          DropdownMenuItem<Category>(
+                      items: MyService.to.categories.keys
+                          .skip(1)
+                          .where((element) {
+                            return ((MyService.to.categories[element]?.type ==
+                                        RecordType.income &&
+                                    _selected[0]) ||
+                                (MyService.to.categories[element]?.type ==
+                                        RecordType.spend &&
+                                    _selected[1]));
+                          })
+                          .map((key) => DropdownMenuItem<Category>(
                               value: MyService.to.categories[key]!,
                               child: Text(
                                 MyService.to.categories[key]!.name,
-                              ))).toList(),
+                              )))
+                          .toList(),
                     ),
-
-
                     TextFormField(
                       decoration: const InputDecoration(
                         labelText: '내용',
@@ -274,7 +260,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       controller: _historyController,
                     ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(0, 30, 0, 30),
+                      margin: const EdgeInsets.fromLTRB(0, 30, 0, 30),
                     ),
                     SizedBox(
                       height: 50,
@@ -287,29 +273,25 @@ class _MyHomePageState extends State<MyHomePage> {
                                 '내역이 추가되었습니다.',
                                 backgroundColor: Colors.white,
                               );
-                              // final income=new Category();
-                              // income.name=_historyController.text;
-                              // income.color=_color;
-                              // income.type=RecordType.income;
-                              // addIncomeUsecase.invoke(income);
-                              addRecordUseCase.invoke(category: _category,
-                                  type: _selected[0] ? RecordType.income : RecordType.spend,
+                              addRecordUseCase.invoke(
+                                  category: _category,
+                                  type: _selected[0]
+                                      ? RecordType.income
+                                      : RecordType.spend,
                                   payment: _payment,
                                   price: int.parse(_moneyController.text),
                                   date: dateController.text,
                                   title: _historyController.text);
-                              Get.offAll(() => MainPage());
+                              Get.back(closeOverlays: true);
                             }
                           },
-                          child: const Text('등록하기'),
                           style: ElevatedButton.styleFrom(
-                            primary: Color(0xffF5B853),
+                            primary: const Color(0xffF5B853),
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0)
-                            ),
-                            fixedSize: Size(100, 50),
-                          )
-                      ),
+                                borderRadius: BorderRadius.circular(15.0)),
+                            fixedSize: const Size(100, 50),
+                          ),
+                          child: const Text('등록하기')),
                     ),
                   ],
                 ),
@@ -317,7 +299,6 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ),
-
       ),
     );
   }

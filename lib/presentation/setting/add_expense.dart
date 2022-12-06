@@ -946,13 +946,14 @@ class _MyHomePageState extends State<MyHomePage> {
                               '지출 카테고리가 추가되었습니다.',
                               backgroundColor: Colors.white,
                             );
-                            Get.offAll(() => MainPage());
 
                             final expense = new Category();
                             expense.name = _expenseController.text;
                             expense.color = _color;
                             expense.type = RecordType.spend;
                             addExpenseUseCase.invoke(expense);
+
+                            Get.back(closeOverlays: true);
                           }
                         },
                         child: const Text('등록하기'),
