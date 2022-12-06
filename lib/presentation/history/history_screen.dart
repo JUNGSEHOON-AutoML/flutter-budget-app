@@ -343,6 +343,7 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
                 ),
               ],
             ),
+            SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -414,6 +415,7 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
                 ),
               ],
             ),
+            SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
