@@ -15,17 +15,7 @@ class AddIncome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-        ),
-        primarySwatch: Colors.indigo,
-        fontFamily: 'Cabin',
-      ),
-      home: const MyHomePage(),
-    );
+    return MyHomePage();
   }
 }
 

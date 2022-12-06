@@ -13,28 +13,18 @@ class AddAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-        ),
-        primarySwatch: Colors.indigo,
-        fontFamily: 'Cabin',
-      ),
-      home: const MyHomePage(),
-    );
+    return const _MyHomePage();
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class _MyHomePage extends StatefulWidget {
+  const _MyHomePage({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<_MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<_MyHomePage> {
   final _paymentController = TextEditingController();
   final addPaymentUsecase = Get.put(AddPaymentUseCase());
   final _accountKey = GlobalKey<FormState>();
