@@ -204,25 +204,32 @@ class _Calendar_MainState extends State<Calendar_Main> {
     }
 
     return Scaffold(
-        appBar: AppBar(
+        appBar:
+        AppBar(
             centerTitle: true,
+            backgroundColor: Colors.transparent,
+            bottom: PreferredSize(
+                child: Container(
+                  color: AppColor.purple1,
+                  height: 1.0,
+                ),
+                preferredSize: Size.fromHeight(4.0)),
             title: Text(
                 '${MyService.to.currentYear}년 ${MyService.to.currentMonth}월',
                 style: const TextStyle(
-                  fontSize: 21,
+                  fontSize: 18,
                   color: AppColor.purple1,
-                  fontWeight: FontWeight.bold,
                 )),
             elevation: 0.0,
             leading: IconButton(
-              icon: const Icon(Icons.chevron_left),
+              icon: const Icon(Icons.chevron_left, color: AppColor.purple1,),
               onPressed: () {
                 set_datesub_list();
               },
             ),
             actions: [
               IconButton(
-                icon: const Icon(Icons.chevron_right),
+                icon: const Icon(Icons.chevron_right, color: AppColor.purple1,),
                 onPressed: () {
                   set_dateplus_list();
                 },

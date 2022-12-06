@@ -33,16 +33,22 @@ class _GraphScreenState extends State<GraphScreen> {
       return Scaffold(
         appBar: AppBar(
             centerTitle: true,
+            backgroundColor: Colors.transparent,
+            bottom: PreferredSize(
+                child: Container(
+                  color: AppColor.purple1,
+                  height: 1.0,
+                ),
+                preferredSize: Size.fromHeight(4.0)),
             title: Text(
                 '${MyService.to.currentYear}년 ${MyService.to.currentMonth}월',
                 style: const TextStyle(
-                  fontSize: 21,
+                  fontSize: 18,
                   color: AppColor.purple1,
-                  fontWeight: FontWeight.bold,
                 )),
             elevation: 0.0,
             leading: IconButton(
-              icon: const Icon(Icons.chevron_left),
+              icon: const Icon(Icons.chevron_left, color: AppColor.purple1,),
               onPressed: () {
                 setState(() {
                   if (MyService.to.currentMonth == 1) {
@@ -56,7 +62,7 @@ class _GraphScreenState extends State<GraphScreen> {
             ),
             actions: [
               IconButton(
-                icon: const Icon(Icons.chevron_right),
+                icon: const Icon(Icons.chevron_right, color: AppColor.purple1,),
                 onPressed: () {
                   setState(() {
                     if (MyService.to.currentMonth == 12) {
@@ -93,16 +99,22 @@ class _GraphScreenState extends State<GraphScreen> {
       return Scaffold(
         appBar: AppBar(
             centerTitle: true,
+            backgroundColor: Colors.transparent,
+            bottom: PreferredSize(
+                child: Container(
+                  color: AppColor.purple1,
+                  height: 1.0,
+                ),
+                preferredSize: Size.fromHeight(4.0)),
             title: Text(
                 '${MyService.to.currentYear}년 ${MyService.to.currentMonth}월',
                 style: const TextStyle(
-                  fontSize: 21,
+                  fontSize: 18,
                   color: AppColor.purple1,
-                  fontWeight: FontWeight.bold,
                 )),
             elevation: 0.0,
             leading: IconButton(
-              icon: const Icon(Icons.chevron_left),
+              icon: const Icon(Icons.chevron_left, color: AppColor.purple1,),
               onPressed: () {
                 setState(() {
                   if (MyService.to.currentMonth == 1) {
@@ -116,7 +128,7 @@ class _GraphScreenState extends State<GraphScreen> {
             ),
             actions: [
               IconButton(
-                icon: const Icon(Icons.chevron_right),
+                icon: const Icon(Icons.chevron_right, color: AppColor.purple1,),
                 onPressed: () {
                   setState(() {
                     if (MyService.to.currentMonth == 12) {
@@ -136,18 +148,24 @@ class _GraphScreenState extends State<GraphScreen> {
     } else {
       Size size = MediaQuery.of(context).size;
       return Scaffold(
-        appBar: AppBar(
+        appBar:AppBar(
             centerTitle: true,
+            backgroundColor: Colors.transparent,
+            bottom: PreferredSize(
+                child: Container(
+                  color: AppColor.purple1,
+                  height: 1.0,
+                ),
+                preferredSize: Size.fromHeight(4.0)),
             title: Text(
                 '${MyService.to.currentYear}년 ${MyService.to.currentMonth}월',
                 style: const TextStyle(
-                  fontSize: 21,
+                  fontSize: 18,
                   color: AppColor.purple1,
-                  fontWeight: FontWeight.bold,
                 )),
             elevation: 0.0,
             leading: IconButton(
-              icon: const Icon(Icons.chevron_left),
+              icon: const Icon(Icons.chevron_left, color: AppColor.purple1,),
               onPressed: () {
                 setState(() {
                   if (MyService.to.currentMonth == 1) {
@@ -161,7 +179,7 @@ class _GraphScreenState extends State<GraphScreen> {
             ),
             actions: [
               IconButton(
-                icon: const Icon(Icons.chevron_right),
+                icon: const Icon(Icons.chevron_right, color: AppColor.purple1,),
                 onPressed: () {
                   setState(() {
                     if (MyService.to.currentMonth == 12) {
