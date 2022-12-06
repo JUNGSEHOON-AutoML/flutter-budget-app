@@ -45,7 +45,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       nowYM = "${MyService.to.currentYear}-0${MyService.to.currentMonth}";
     }
     int lastDate =
-    int.parse(DateFormat('dd').format(DateTime(2022, 11 + 1, 0)));
+        int.parse(DateFormat('dd').format(DateTime(2022, 11 + 1, 0)));
 
     List toggle = [
       [
@@ -168,40 +168,40 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
             const SizedBox(height: 20),
             Obx(() {
-              List groupList = [];
+                List groupList = [];
 
-              for (int k = lastDate; k >= 1; k--) {
-                if (k < 10) {
-                  if (MyService.to.history[nowYM] != null) {
-                    List group = MyService.to.history[nowYM]!
-                        .where((data) => data.date == '$nowYM-0$k')
-                        .toList();
-                    if (group.isNotEmpty) {
-                      groupList.add(group);
+                for (int k = lastDate; k >= 1; k--) {
+                  if (k < 10) {
+                    if (MyService.to.history[nowYM] != null) {
+                      List group = MyService.to.history[nowYM]!
+                          .where((data) => data.date == '$nowYM-0$k')
+                          .toList();
+                      if (group.isNotEmpty) {
+                        groupList.add(group);
+                      }
                     }
-                  }
-                } else {
-                  if (MyService.to.history[nowYM] != null) {
-                    List group = MyService.to.history[nowYM]!
-                        .where((data) => data.date == '$nowYM-$k')
-                        .toList();
-                    if (group.isNotEmpty) {
-                      groupList.add(group);
+                  } else {
+                    if (MyService.to.history[nowYM] != null) {
+                      List group = MyService.to.history[nowYM]!
+                          .where((data) => data.date == '$nowYM-$k')
+                          .toList();
+                      if (group.isNotEmpty) {
+                        groupList.add(group);
+                      }
                     }
                   }
                 }
-              }
 
-              return Expanded(
-                child: ListView(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    children: groupList
-                        .map((e) =>
-                        dateListTileAllType(e, e![0].date,
-                            _selected, deleteRecordUseCase, scroll))
-                        .toList()),
-              );},
+                return Expanded(
+                  child: ListView(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      children: groupList
+                          .map((e) => dateListTileAllType(e, e![0].date,
+                              _selected, deleteRecordUseCase, scroll))
+                          .toList()),
+                );
+              },
             ),
           ],
         ),
@@ -300,16 +300,15 @@ Column dateListTileAllType(List<Record> k, String date, List<bool> selected,
             shrinkWrap: true,
             controller: scroll,
             children: k
-                .map((e) =>
-                ymdList(e, selected, (recordId) {
-                  deleteRecordUseCase.invoke(recordId: recordId);
-                  Get.snackbar(
-                    '삭제 완료!',
-                    '내역이 삭제되었습니다.',
-                    backgroundColor: AppColor.red1,
-                    colorText: Colors.white,
-                  );
-                }))
+                .map((e) => ymdList(e, selected, (recordId) {
+                      deleteRecordUseCase.invoke(recordId: recordId);
+                      Get.snackbar(
+                        '삭제 완료!',
+                        '내역이 삭제되었습니다.',
+                        backgroundColor: AppColor.red1,
+                        colorText: Colors.white,
+                      );
+                    }))
                 .toList()),
         const Divider(color: AppColor.purple1, thickness: 1.2),
       ],

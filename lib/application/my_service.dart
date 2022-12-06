@@ -14,7 +14,7 @@ class MyService extends GetxService {
   late final User me;
   late final AppDatabase localDatabase;
 
-  final history = <String, List<Record>>{}.obs;
+  var history = <String, List<Record>>{}.obs;
 
   var currentYear = 2022;
   var currentMonth = 12;
