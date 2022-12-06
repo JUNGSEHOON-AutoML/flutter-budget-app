@@ -25,6 +25,14 @@ class _GraphScreenState extends State<GraphScreen> {
         .to.history["${MyService.to.currentYear}-${MyService.to.currentMonth}"];
     final dataMap = <String, double>{};
 
+    if (data == null){
+      return Scaffold(
+        body: Center(
+          child: Text("Empty graph"),
+        ),
+      );
+    }
+
     for (final record in data!) {
       final category = record.category;
 
