@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../main.dart';
+
 class AddAccount extends StatelessWidget {
   const AddAccount({Key? key}) : super(key:key);
 
@@ -95,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         final addpayment=Payment();
                         addpayment.name=_paymentController.text;
                         addPaymentUsecase.invoke(addpayment);
-                        Get.back();
+                        Get.offAll(()=>MainPage());
                       }
 
                     },

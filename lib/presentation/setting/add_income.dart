@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import '../../style.dart';
+import '../main.dart';
 
 class AddIncome extends StatelessWidget {
   const AddIncome({Key? key}) : super(key:key);
@@ -352,9 +353,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         income.color=_color;
                         income.type=RecordType.income;
                         addIncomeUsecase.invoke(income);
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                                builder: (context) => SettingScreen()));
+                        Get.offAll(()=>MainPage());
+
                       }
 
                     },
