@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:flutter/rendering.dart';
 
-
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
 
@@ -17,7 +16,6 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen> {
   final _midController = TextEditingController();
-
 
   @override
   void dispose() {
@@ -29,36 +27,26 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget build(BuildContext context) {
     // var spendList = MyService.to.categories?.cast<List>().where((e)=> e.RecordType ==spend);
     var scroll = ScrollController();
-    final incomeCategories = [];
-    final spendCategories = [];
 
-    for (final key in MyService.to.categories.keys){
-      if (MyService.to.categories[key]?.type == RecordType.income){
-        incomeCategories.add(MyService.to.categories[key]!);
-      }else if (MyService.to.categories[key]?.type == RecordType.spend){
-        spendCategories.add(MyService.to.categories[key]!);
-      }
-    }
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-          bottom: PreferredSize(
-              child: Container(
-                color: AppColor.purple1,
-                height: 1.0,
-              ),
-              preferredSize: Size.fromHeight(4.0)),
-          title: Text('설정',
-              style: const TextStyle(
-                fontSize: 18,
-                color: AppColor.purple1,
-              )),
-          elevation: 0.0,
-          leading: null
-        ),
+            centerTitle: true,
+            backgroundColor: Colors.transparent,
+            bottom: PreferredSize(
+                child: Container(
+                  color: AppColor.purple1,
+                  height: 1.0,
+                ),
+                preferredSize: Size.fromHeight(4.0)),
+            title: Text('설정',
+                style: const TextStyle(
+                  fontSize: 18,
+                  color: AppColor.purple1,
+                )),
+            elevation: 0.0,
+            leading: null),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Center(
@@ -72,25 +60,28 @@ class _SettingScreenState extends State<SettingScreen> {
                   enabled: false,
                   style: TextStyle(fontSize: 18),
                 ),
-                ListView.builder(
-                    controller: scroll,
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: MyService.to.payments.length-1,
-                    itemBuilder: (BuildContext context, int i) {
-                      return ListTile(
-                        title: TextButton(
-                          onPressed: () {},
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.all(0),
+                Obx(() {
+                  return ListView.builder(
+                      controller: scroll,
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: MyService.to.payments.length - 1,
+                      itemBuilder: (BuildContext context, int i) {
+                        return ListTile(
+                          title: TextButton(
+                            onPressed: () {},
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.all(0),
+                            ),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                    MyService.to.payments[i + 1]?.name ?? "",
+                                    style: TextStyle(fontSize: 16))),
                           ),
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(MyService.to.payments[i+1]?.name ?? "",
-                                  style: TextStyle(fontSize: 16))),
-                        ),
-                      );
-                    }),
+                        );
+                      });
+                }),
                 CupertinoButton(
                   onPressed: () {
                     Get.toNamed("/addAccount");
@@ -104,7 +95,6 @@ class _SettingScreenState extends State<SettingScreen> {
                       )),
                 ),
                 Container(height: 1.0, color: AppColor.purple1),
-
                 TextFormField(
                     decoration: const InputDecoration(
                       labelText: '지출 카테고리',
@@ -113,27 +103,36 @@ class _SettingScreenState extends State<SettingScreen> {
                     controller: _midController,
                     enabled: false,
                     style: TextStyle(fontSize: 18)),
+                Obx(() {
+                  final spendCategories = [];
 
-                ListView.builder(
-                    controller: scroll,
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: spendCategories.length,
-                    itemBuilder: (BuildContext context, int i) {
-                      return ListTile(
-                        title: TextButton(
-                          onPressed: () {},
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.all(0),
+                  for (final key in MyService.to.categories.keys) {
+                    if (MyService.to.categories[key]?.type ==
+                        RecordType.spend) {
+                      spendCategories.add(MyService.to.categories[key]!);
+                    }
+                  }
+
+                  return ListView.builder(
+                      controller: scroll,
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: spendCategories.length,
+                      itemBuilder: (BuildContext context, int i) {
+                        return ListTile(
+                          title: TextButton(
+                            onPressed: () {},
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.all(0),
+                            ),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(spendCategories[i]?.name ?? "",
+                                    style: TextStyle(fontSize: 16))),
                           ),
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(spendCategories[i]?.name ?? "",
-                                  style: TextStyle(fontSize: 16))),
-                        ),
-                      );
-                    }),
-
+                        );
+                      });
+                }),
                 CupertinoButton(
                   onPressed: () {
                     Get.toNamed("/addExpense");
@@ -154,27 +153,37 @@ class _SettingScreenState extends State<SettingScreen> {
                     controller: _midController,
                     enabled: false,
                     style: TextStyle(fontSize: 18)),
+                Obx(() {
+                  final incomeCategories = [];
 
-                ListView.builder(
-                    controller: scroll,
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: incomeCategories.length-1,
-                    itemBuilder: (BuildContext context, int i) {
-                      return ListTile(
-                        title: TextButton(
-                          onPressed: () {},
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.all(0),
+                  for (final key in MyService.to.categories.keys) {
+                    if (MyService.to.categories[key]?.type ==
+                            RecordType.income &&
+                        MyService.to.categories[key]?.id != -1) {
+                      incomeCategories.add(MyService.to.categories[key]!);
+                    }
+                  }
+
+                  return ListView.builder(
+                      controller: scroll,
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: incomeCategories.length,
+                      itemBuilder: (BuildContext context, int i) {
+                        return ListTile(
+                          title: TextButton(
+                            onPressed: () {},
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.all(0),
+                            ),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(incomeCategories[i]?.name ?? "",
+                                    style: TextStyle(fontSize: 16))),
                           ),
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(incomeCategories[i+1]?.name ?? "",
-                                  style: TextStyle(fontSize: 16))),
-                        ),
-                      );
-                    }),
-
+                        );
+                      });
+                }),
                 CupertinoButton(
                   onPressed: () {
                     Get.toNamed("/addIncome");

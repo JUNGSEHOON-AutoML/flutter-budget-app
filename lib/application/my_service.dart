@@ -29,9 +29,9 @@ class MyService extends GetxService {
 
   static Future<void> init() async {
     await MyService.to._initLocalDB();
-    MyService.to._initCategory();
+    MyService.to.initCategory();
     MyService.to._initColor();
-    MyService.to._initPayment();
+    MyService.to.initPayment();
   }
 
   Future<void> _initLocalDB() async {
@@ -39,7 +39,7 @@ class MyService extends GetxService {
     await $FloorAppDatabase.databaseBuilder('app_database.db').build();
   }
 
-  void _initCategory() {
+  void initCategory() {
     final unKnownCategory = Category();
     unKnownCategory.id = -1;
     unKnownCategory.name = "Unknown";
@@ -85,7 +85,7 @@ class MyService extends GetxService {
     });
   }
 
-  void _initPayment() {
+  void initPayment() {
     final unknownPayment = Payment();
     unknownPayment.id = -1;
     unknownPayment.name = "Unknown";
