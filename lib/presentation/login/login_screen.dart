@@ -18,45 +18,53 @@ class LoginScreen extends GetView<MyService> {
 
     return Scaffold(
         body: Center(
-            child: MaterialButton(
-                onPressed: () {
-                  const GoogleAuthHelper().loginAsGoogle(
-                      context: context,
-                      onSuccess: () {
-                        getCategoriesUseCase.invoke();
-                        getPaymentsUseCase.invoke();
-                        getHistoryUseCase.invoke();
-                        MyService.to.makeDummies();
-                        Get.offAndToNamed('/main');
-                      },
-                      onFailure: () => {print("Failed to login")});
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+      const Text(
+        "내돈어디가계",
+        style: TextStyle(
+            fontSize: 45, color: AppColor.purple1, fontWeight: FontWeight.bold),
+      ),
+      const SizedBox(
+        height: 260,
+      ),
+      MaterialButton(
+          onPressed: () {
+            const GoogleAuthHelper().loginAsGoogle(
+                context: context,
+                onSuccess: () {
+                  getCategoriesUseCase.invoke();
+                  getPaymentsUseCase.invoke();
+                  getHistoryUseCase.invoke();
+                  Get.offAndToNamed('/main');
                 },
-                child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset(
-                        "assets/image/bg_btn_google_login.png",
-                        height: 50,
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      const Text(
-                        "Login as google",
-                        style:
-                            TextStyle(fontSize: 20, color: AppColor.googleBlue),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  )
-                ]))
-            // This trailing comma makes auto-formatting nicer for build methods.
-            ));
+                onFailure: () =>
+                    {Get.snackbar("Login failed!", "Can't login.")});
+          },
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset(
+                  "assets/image/bg_btn_google_login.png",
+                  height: 30,
+                ),
+                const SizedBox(
+                  width: 15,
+                ),
+                const Text(
+                  "Login as google",
+                  style: TextStyle(fontSize: 20, color: AppColor.googleBlue),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 10,
+            )
+          ]))
+      // This trailing comma makes auto-formatting nicer for build methods.
+    ])));
   }
 }

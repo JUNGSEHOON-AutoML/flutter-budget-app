@@ -22,61 +22,38 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   final List<Widget> returnToggle = [
     Row(
+
       children: [
-        const Icon(Icons.check_box, size: 5,),
+        const Icon(Icons.check_box, size: 15,),
         const SizedBox(width: 10),
         const Text('수입'),
+
+      
       ],
     ),
     Row(
-      children: [
-        const Icon(Icons.check_box),
-        const SizedBox(width: 10),
-        const Text('지출'),
+      children: const [
+        Icon(Icons.check_box),
+        SizedBox(width: 10),
+        Text('지출'),
       ],
     )
   ];
 
   @override
   Widget build(BuildContext context) {
-    final test = Get.put(GetCategoriesUseCase());
-    test.invoke();
     String nowYM = "${MyService.to.currentYear}-${MyService.to.currentMonth}";
     // "2022-11"
     if (MyService.to.currentMonth < 10) {
       nowYM = "${MyService.to.currentYear}-0${MyService.to.currentMonth}";
     }
     int lastDate =
-        int.parse(DateFormat('dd').format(DateTime(2022, 11 + 1, 0)));
-    MyService.to.makeDummies();
-
-    List groupList = [];
-
-    for (int k = lastDate; k >= 1; k--) {
-      if (k < 10) {
-        if (MyService.to.history[nowYM!] != null) {
-          List group = MyService.to.history[nowYM!]!
-              .where((data) => data.date == '$nowYM-0$k')
-              .toList();
-          if (group.isNotEmpty) {
-            groupList.add(group);
-          }
-        }
-      } else {
-        if (MyService.to.history[nowYM!] != null) {
-          List group = MyService.to.history[nowYM!]!
-              .where((data) => data.date == '$nowYM-$k')
-              .toList();
-          if (group.isNotEmpty) {
-            groupList.add(group);
-          }
-        }
-      }
-    }
+    int.parse(DateFormat('dd').format(DateTime(2022, 11 + 1, 0)));
 
     List toggle = [
       [
         Row(
+
           children: [
             const Icon(Icons.check_box_outline_blank, size: 15,),
             const SizedBox(width: 10),
@@ -93,10 +70,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
       ],
       [
         Row(
+
           children: [
             const Icon(Icons.check_box_outline_blank, size:15),
             const SizedBox(width: 10),
             const Text('지출'),
+
           ],
         ),
         Row(
@@ -160,15 +139,19 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 },
               )
             ]),
-        body: Container(
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              ToggleButtons(
-                onPressed: (int index) {
+        body: Column(
+          children: [
+            const SizedBox(height: 20),
+            ToggleButtons(
+              onPressed: (int index) {
+                setState(() {
+                  _selected[index] = !_selected[index];
+                });
+                if (_selected[index]) {
                   setState(() {
-                    _selected[index] = !_selected[index];
+                    returnToggle[index] = toggle[index][1];
                   });
+
                   if (_selected[index]) {
                     setState(() {
                       returnToggle[index] = toggle[index][1];
@@ -193,20 +176,53 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ),
                 isSelected: _selected,
                 children: returnToggle,
+
               ),
-              const SizedBox(height: 20),
-              Expanded(
+              constraints: const BoxConstraints(
+                minHeight: 40.0,
+                minWidth: 180.0,
+              ),
+              isSelected: _selected,
+              children: returnToggle,
+            ),
+            const SizedBox(height: 20),
+            Obx(() {
+              List groupList = [];
+
+              for (int k = lastDate; k >= 1; k--) {
+                if (k < 10) {
+                  if (MyService.to.history[nowYM] != null) {
+                    List group = MyService.to.history[nowYM]!
+                        .where((data) => data.date == '$nowYM-0$k')
+                        .toList();
+                    if (group.isNotEmpty) {
+                      groupList.add(group);
+                    }
+                  }
+                } else {
+                  if (MyService.to.history[nowYM] != null) {
+                    List group = MyService.to.history[nowYM]!
+                        .where((data) => data.date == '$nowYM-$k')
+                        .toList();
+                    if (group.isNotEmpty) {
+                      groupList.add(group);
+                    }
+                  }
+                }
+              }
+
+              return Expanded(
                 child: ListView(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-
                     children: groupList
-                        .map((e) => dateListTileAllType(
-                            e, e![0].date, _selected, deleteRecordUseCase, scroll))
+                        .map((e) =>
+                        dateListTileAllType(e, e![0].date,
+                            _selected, deleteRecordUseCase, scroll))
                         .toList()),
-              ),
-            ],
-          ),
+              );},
+            ),
+          ],
         ),
         floatingActionButton: SizedBox(
           width: 70,
@@ -216,15 +232,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
               onPressed: () {
                 Get.toNamed("/addHistory");
               },
-              child: const Icon(Icons.add),
               backgroundColor: AppColor.yellow1,
+              child: const Icon(Icons.add),
             ),
           ),
         ));
   }
 }
 
-Column dateListTileAllType(List<Record> k, String date, List<bool> _selected,
+Column dateListTileAllType(List<Record> k, String date, List<bool> selected,
     DeleteRecordUseCase deleteRecordUseCase, ScrollController scroll) {
   var d = DateTime.parse(date);
   String ee = DateFormat('EEEEE').format(d).toString();
@@ -253,14 +269,14 @@ Column dateListTileAllType(List<Record> k, String date, List<bool> _selected,
       dayIncome += k[i].price;
     }
 
-    if (k[i].type == RecordType.spend && _selected[1] == false) {
+    if (k[i].type == RecordType.spend && selected[1] == false) {
       k.remove(k[i]);
-    } else if (k[i].type == RecordType.income && _selected[0] == false) {
+    } else if (k[i].type == RecordType.income && selected[0] == false) {
       k.remove(k[i]);
     }
   }
 
-  if (k.length == 0) {
+  if (k.isEmpty) {
     return Column();
   } else {
     return Column(
@@ -282,14 +298,14 @@ Column dateListTileAllType(List<Record> k, String date, List<bool> _selected,
               Row(
                 children: [
                   Text(
-                    '수입 ' + dayIncome.toString(),
+                    '수입 $dayIncome',
                     style: const TextStyle(
                       fontSize: 12,
                       color: AppColor.brightpurple,
                     ),
                   ),
                   const SizedBox(width: 20),
-                  Text('지출 ' + daySpend.toString(),
+                  Text('지출 $daySpend',
                       style: const TextStyle(
                         fontSize: 12,
                         color: AppColor.brightpurple,
@@ -305,15 +321,16 @@ Column dateListTileAllType(List<Record> k, String date, List<bool> _selected,
             shrinkWrap: true,
             controller: scroll,
             children: k
-                .map((e) => ymdList(e, _selected, (recordId) {
-                      deleteRecordUseCase.invoke(recordId: recordId);
-                      Get.snackbar(
-                        '삭제 완료!',
-                        '내역이 삭제되었습니다.',
-                        backgroundColor: AppColor.red1,
-                        colorText: Colors.white,
-                      );
-                    }))
+                .map((e) =>
+                ymdList(e, selected, (recordId) {
+                  deleteRecordUseCase.invoke(recordId: recordId);
+                  Get.snackbar(
+                    '삭제 완료!',
+                    '내역이 삭제되었습니다.',
+                    backgroundColor: AppColor.red1,
+                    colorText: Colors.white,
+                  );
+                }))
                 .toList()),
         const Divider(color: AppColor.purple1, thickness: 1.2),
         Container(
@@ -324,8 +341,8 @@ Column dateListTileAllType(List<Record> k, String date, List<bool> _selected,
   }
 }
 
-ListTile ymdList(Record e, _selected, onLongClickListener) {
-  if (e.type == RecordType.spend && _selected[1] == true) {
+ListTile ymdList(Record e, selected, onLongClickListener) {
+  if (e.type == RecordType.spend && selected[1] == true) {
     String cardName = e.payment!.name;
     String categoryName = e.category.name;
     String title = e.title;
@@ -350,14 +367,20 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
+                  decoration: BoxDecoration(
+                    color: tagColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+                  ),
+                  width: 130.0,
                   child: Text(
-                    "${categoryName}",
+                    categoryName,
                     style: const TextStyle(
                       fontSize: 10,
                       color: Colors.white,
                     ),
                     textAlign: TextAlign.center,
                   ),
+
                   decoration: BoxDecoration(
                     color: tagColor,
                     borderRadius: const BorderRadius.all(Radius.circular(15.0)),
@@ -376,14 +399,14 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "${title}",
+                  title,
                   style: const TextStyle(
                       fontSize: 16,
                       color: AppColor.purple0,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "-${price}원",
+                  "-$price원",
                   style: const TextStyle(
                       fontSize: 16,
                       color: AppColor.red1,
@@ -394,15 +417,11 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
           ],
         ),
       ),
-      onTap: () {
-        print("text button is clicked");
-      },
       onLongPress: () {
-        print("text button is long clicked");
         onLongClickListener(e.id);
       },
     );
-  } else if (e.type == RecordType.income && _selected[0] == true) {
+  } else if (e.type == RecordType.income && selected[0] == true) {
     String categoryName = e.category.name;
     String title = e.title;
     String price = e.price.toString();
@@ -427,8 +446,13 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
+                  decoration: BoxDecoration(
+                    color: tagColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(15.0)),
+                  ),
+                  width: 130.0,
                   child: Text(
-                    "${categoryName}",
+                    categoryName,
                     style: const TextStyle(
                       fontSize: 10,
                       color: Colors.white,
@@ -441,6 +465,7 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
                   ),
                   width: 80.0,
                   padding: EdgeInsets.fromLTRB(8, 4, 8, 4),
+
                 ),
               ],
             ),
@@ -449,14 +474,14 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "${title}",
+                  title,
                   style: const TextStyle(
                       fontSize: 16,
                       color: AppColor.purple0,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "${price}원",
+                  "$price원",
                   style: const TextStyle(
                       fontSize: 16,
                       color: Colors.green,
@@ -467,11 +492,7 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
           ],
         ),
       ),
-      onTap: () {
-        print("text button is clicked");
-      },
       onLongPress: () {
-        print("text button is long clicked");
         onLongClickListener(e.id);
       },
     );
