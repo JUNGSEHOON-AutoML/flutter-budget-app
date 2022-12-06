@@ -87,7 +87,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(MyService.to.payments[i+1]?.name ?? "",
-                                  style: TextStyle(fontSize: 16))),
+                                  style: TextStyle(fontSize: 16, color: Color(0xff524D90)))),
                         ),
                       );
                     }),
@@ -100,7 +100,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         '결제수단 추가하기                                              +',
-                        style: TextStyle(color: AppColor.purple1),
+                        style: TextStyle(color: Color(0xff524D90)),
                       )),
                 ),
                 Container(height: 1.0, color: AppColor.purple1),
@@ -129,7 +129,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(spendCategories[i]?.name ?? "",
-                                  style: TextStyle(fontSize: 16))),
+                                  style: TextStyle(fontSize: 16, color: Color(0xff524D90)))),
                         ),
                       );
                     }),
@@ -143,7 +143,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         '지출 카테고리 추가하기                                     +',
-                        style: TextStyle(color: AppColor.purple1),
+                        style: TextStyle(color: Color(0xff524D90)),
                       )),
                 ),
                 Container(height: 1.0, color: AppColor.purple1),
@@ -170,7 +170,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(incomeCategories[i+1]?.name ?? "",
-                                  style: TextStyle(fontSize: 16))),
+                                  style: TextStyle(fontSize: 16,color: Color(0xff524D90)))),
                         ),
                       );
                     }),
@@ -184,7 +184,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         '수입 카테고리 추가하기                                     +',
-                        style: TextStyle(color: AppColor.purple1),
+                        style: TextStyle(color: Color(0xff524D90)),
                       )),
                 ),
                 Container(height: 1.0, color: AppColor.purple1),
