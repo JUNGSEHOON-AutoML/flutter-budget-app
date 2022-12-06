@@ -1,5 +1,5 @@
 import 'package:account_book/presentation/history/history_screen.dart';
-import 'package:account_book/presentation/main_controller.dart';
+import 'package:account_book/application/main_route_service.dart';
 import 'package:account_book/presentation/setting/setting_screen.dart';
 import 'package:account_book/style.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final mainController = MainService.to;
+  final mainController = MainRouteService.to;
 
   @override
   Widget build(BuildContext context) {

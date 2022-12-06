@@ -5,8 +5,8 @@ import 'package:account_book/presentation/setting/setting_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-class MainService extends GetxService {
-  static MainService get to => Get.find();
+class MainRouteService extends GetxService {
+  static MainRouteService get to => Get.find();
 
   var currentIndex = 0.obs;
 

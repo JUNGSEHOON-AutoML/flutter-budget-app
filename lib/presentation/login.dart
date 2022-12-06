@@ -1,7 +1,7 @@
 import 'package:account_book/application/my_service.dart';
 import 'package:account_book/presentation/login/login_screen.dart';
 import 'package:account_book/presentation/main.dart';
-import 'package:account_book/presentation/main_controller.dart';
+import 'package:account_book/application/main_route_service.dart';
 import 'package:account_book/presentation/setting/add_account.dart';
 import 'package:account_book/presentation/setting/add_expense.dart';
 import 'package:account_book/presentation/setting/add_income.dart';
@@ -20,7 +20,7 @@ void main() async {
 
   Get.put(MyService());
   await MyService.init();
-  Get.put(MainService());
+  Get.put(MainRouteService());
 
   runApp(const AccountBookApp());
 }
