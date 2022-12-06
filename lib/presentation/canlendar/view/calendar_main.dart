@@ -146,9 +146,6 @@ class _CalendarMainState extends State<CalendarMain> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
-    final test = Get.put(GetCategoriesUseCase());
-    test.invoke();
     String nowYM = "${MyService.to.currentYear}-${MyService.to.currentMonth}";
     // "2022-11"
     if (MyService.to.currentMonth < 10) {
