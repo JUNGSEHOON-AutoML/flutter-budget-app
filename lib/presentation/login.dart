@@ -4,6 +4,7 @@ import 'package:account_book/presentation/main.dart';
 import 'package:account_book/application/main_route_service.dart';
 import 'package:account_book/presentation/setting/add_account.dart';
 import 'package:account_book/presentation/setting/add_expense.dart';
+import 'package:account_book/presentation/setting/add_history.dart';
 import 'package:account_book/presentation/setting/add_income.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,7 @@ class AccountBookApp extends StatelessWidget {
         GetPage(name: "/addAccount", page: () => const AddAccount()),
         GetPage(name: "/addIncome", page: () => const AddIncome()),
         GetPage(name: "/addExpense", page: () => const AddExpense()),
+        GetPage(name: "/addHistory", page: () => const AddHistory())
       ],
     );
   }
