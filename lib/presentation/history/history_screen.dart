@@ -359,7 +359,7 @@ ListTile ymdList(Record e, selected, onLongClickListener) {
                     color: tagColor,
                     borderRadius: const BorderRadius.all(Radius.circular(15.0)),
                   ),
-                  width: 130.0,
+                  width: 100.0,
                   child: Text(
                     categoryName,
                     style: const TextStyle(
@@ -433,7 +433,7 @@ ListTile ymdList(Record e, selected, onLongClickListener) {
                     color: tagColor,
                     borderRadius: const BorderRadius.all(Radius.circular(15.0)),
                   ),
-                  width: 130.0,
+                  width: 100.0,
                   child: Text(
                     categoryName,
                     style: const TextStyle(
