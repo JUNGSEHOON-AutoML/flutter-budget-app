@@ -26,10 +26,6 @@ Widget Day_Widget(Size size, day, data){
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
-                child: Text(
-                  "${data[0]}",
-                  style: TextStyle(fontSize: 8, color: AppColor.blue4),
-                ),
               ),
               Text(
                 "${data[1]}",
@@ -38,6 +34,10 @@ Widget Day_Widget(Size size, day, data){
               Text(
                 "${data[2]}",
                 style: TextStyle(fontSize: 8, color: AppColor.red1),
+              ),
+              Text(
+                "${data[0]}",
+                style: TextStyle(fontSize: 8, color: AppColor.blue4),
               ),
             ],
           )
