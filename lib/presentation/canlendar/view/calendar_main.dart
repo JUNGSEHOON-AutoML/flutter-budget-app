@@ -4,7 +4,7 @@ import 'package:date_utils/date_utils.dart' as dt;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../di/my_service.dart';
+import '../../../application/my_service.dart';
 import '../../../domain/use_case/properties_use_case/get_categories_use_case.dart';
 import '../widget/day_widget.dart';
 import 'package:intl/intl.dart';
@@ -131,7 +131,6 @@ class _Calendar_MainState extends State<Calendar_Main> {
         this_date =
             filter_string_date(daysinmonth[i].toString().substring(8, 10));
         date_list.add(this_date);
-        //print(this_year.toString() + this_month.toString() + this_date);
         if (flag == 1 && this_date != "1") {
           count += 1;
         } else if (flag == 1 && this_date == "1") {
@@ -158,7 +157,6 @@ class _Calendar_MainState extends State<Calendar_Main> {
     int lastDate =
         int.parse(DateFormat('dd').format(DateTime(2022, 11 + 1, 0)));
     MyService.to.makeDummies();
-    print(start_count);
 
     List groupList = [];
     for (int k = lastDate; k >= 1; k--) {
@@ -272,7 +270,6 @@ class _Calendar_MainState extends State<Calendar_Main> {
                       ),
                       InkWell(
                         onTap: () {
-                          print(date_list[6]);
                         },
                         child: Text(
                           "토",

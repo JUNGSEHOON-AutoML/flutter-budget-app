@@ -1,4 +1,4 @@
-import 'package:account_book/di/my_service.dart';
+import 'package:account_book/application/my_service.dart';
 import 'package:account_book/domain/use_case/history_use_case/get_history_use_case.dart';
 import 'package:account_book/domain/use_case/properties_use_case/get_categories_use_case.dart';
 import 'package:account_book/domain/use_case/properties_use_case/get_payments_use_case.dart';
