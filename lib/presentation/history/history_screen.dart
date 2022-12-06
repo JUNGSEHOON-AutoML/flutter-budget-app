@@ -107,100 +107,105 @@ class _HistoryScreenState extends State<HistoryScreen> {
       ]
     ];
 
-
     return Scaffold(
-      appBar: AppBar(
-          centerTitle: true,
-          title:
-              Text('${MyService.to.currentYear}년 ${MyService.to.currentMonth}월',
-                  style: const TextStyle(
-                    fontSize: 21,
-                    color: AppColor.purple1,
-                    fontWeight: FontWeight.bold,
-                  )),
-          elevation: 0.0,
-          leading: IconButton(
-            icon: const Icon(Icons.chevron_left),
-            onPressed: () {
-              setState(() {
-                if (MyService.to.currentMonth == 1) {
-                  MyService.to.currentMonth = 12;
-                  MyService.to.currentYear -= 1;
-                } else {
-                  MyService.to.currentMonth -= 1;
-                }
-              });
-            },
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.chevron_right),
+        appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+                '${MyService.to.currentYear}년 ${MyService.to.currentMonth}월',
+                style: const TextStyle(
+                  fontSize: 21,
+                  color: AppColor.purple1,
+                  fontWeight: FontWeight.bold,
+                )),
+            elevation: 0.0,
+            leading: IconButton(
+              icon: const Icon(Icons.chevron_left),
               onPressed: () {
                 setState(() {
-                  if (MyService.to.currentMonth == 12) {
-                    MyService.to.currentMonth = 1;
-                    MyService.to.currentYear += 1;
+                  if (MyService.to.currentMonth == 1) {
+                    MyService.to.currentMonth = 12;
+                    MyService.to.currentYear -= 1;
                   } else {
-                    MyService.to.currentMonth += 1;
+                    MyService.to.currentMonth -= 1;
                   }
                 });
               },
-            )
-          ]),
-      body: Column(
-        children: [
-          Column(
-            children: [
-              SizedBox(height: 20),
-              ToggleButtons(
-                onPressed: (int index) {
+            ),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.chevron_right),
+                onPressed: () {
                   setState(() {
-                    _selected[index] = !_selected[index];
+                    if (MyService.to.currentMonth == 12) {
+                      MyService.to.currentMonth = 1;
+                      MyService.to.currentYear += 1;
+                    } else {
+                      MyService.to.currentMonth += 1;
+                    }
                   });
-                  if (_selected[index]) {
-                    setState(() {
-                      returnToggle[index] = toggle[index][1];
-                    });
-                  } else {
-                    setState(() {
-                      returnToggle[index] = toggle[index][0];
-                    });
-                  }
                 },
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
-                selectedBorderColor: AppColor.purple1,
-                selectedColor: Colors.white,
-                fillColor: AppColor.purple1,
-                color: AppColor.purple1,
-                textStyle: const TextStyle(
-                  fontSize: 20,
+              )
+            ]),
+        body: Column(
+          children: [
+            Column(
+              children: [
+                SizedBox(height: 20),
+                ToggleButtons(
+                  onPressed: (int index) {
+                    setState(() {
+                      _selected[index] = !_selected[index];
+                    });
+                    if (_selected[index]) {
+                      setState(() {
+                        returnToggle[index] = toggle[index][1];
+                      });
+                    } else {
+                      setState(() {
+                        returnToggle[index] = toggle[index][0];
+                      });
+                    }
+                  },
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  selectedBorderColor: AppColor.purple1,
+                  selectedColor: Colors.white,
+                  fillColor: AppColor.purple1,
+                  color: AppColor.purple1,
+                  textStyle: const TextStyle(
+                    fontSize: 20,
+                  ),
+                  constraints: const BoxConstraints(
+                    minHeight: 40.0,
+                    minWidth: 180.0,
+                  ),
+                  isSelected: _selected,
+                  children: returnToggle,
                 ),
-                constraints: const BoxConstraints(
-                  minHeight: 40.0,
-                  minWidth: 180.0,
-                ),
-                isSelected: _selected,
-                children: returnToggle,
-              ),
-              SizedBox(height: 20),
-              ListView(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  children: groupList
-                      .map((e) => dateListTileAllType(
-                          e, e![0].date, _selected, deleteRecordUseCase))
-                      .toList()),
-            ],
+                SizedBox(height: 20),
+                ListView(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    children: groupList
+                        .map((e) => dateListTileAllType(
+                            e, e![0].date, _selected, deleteRecordUseCase))
+                        .toList()),
+              ],
+            ),
+          ],
+        ),
+        floatingActionButton: SizedBox(
+          width: 70,
+          height: 70,
+          child: FittedBox(
+            child: FloatingActionButton(
+              onPressed: () {
+                Get.toNamed("/addHistory");
+              },
+              child: Icon(Icons.add),
+              backgroundColor: AppColor.yellow1,
+            ),
           ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Get.toNamed("/addHistory");
-        },
-        child: Icon(Icons.add),
-      ),
-    );
+        ));
   }
 }
 
