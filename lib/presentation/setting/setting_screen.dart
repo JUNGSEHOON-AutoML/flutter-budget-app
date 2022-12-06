@@ -28,6 +28,16 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget build(BuildContext context) {
     // var spendList = MyService.to.categories?.cast<List>().where((e)=> e.RecordType ==spend);
     var scroll = ScrollController();
+    final incomeCategories = [];
+    final spendCategories = [];
+
+    for (final key in MyService.to.categories.keys){
+      if (MyService.to.categories[key]?.type == RecordType.income){
+        incomeCategories.add(MyService.to.categories[key]!);
+      }else if (MyService.to.categories[key]?.type == RecordType.spend){
+        spendCategories.add(MyService.to.categories[key]!);
+      }
+    }
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -94,7 +104,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   controller: scroll,
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: MyService.to.categories.length-1,
+                    itemCount: spendCategories.length,
                     itemBuilder: (BuildContext context, int i) {
                       return ListTile(
                         title: TextButton(
@@ -104,7 +114,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           ),
                           child: Align(
                               alignment: Alignment.centerLeft,
-                              child: Text(MyService.to.categories[i+1]?.name ?? "",
+                              child: Text(spendCategories[i]?.name ?? "",
                                   style: TextStyle(fontSize: 16))),
                         ),
                       );
@@ -135,7 +145,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     controller: scroll,
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: MyService.to.categories.length-1,
+                    itemCount: incomeCategories.length-1,
                     itemBuilder: (BuildContext context, int i) {
                       return ListTile(
                         title: TextButton(
@@ -145,7 +155,7 @@ class _SettingScreenState extends State<SettingScreen> {
                           ),
                           child: Align(
                               alignment: Alignment.centerLeft,
-                              child: Text(MyService.to.categories[i+1]?.name ?? "",
+                              child: Text(incomeCategories[i+1]?.name ?? "",
                                   style: TextStyle(fontSize: 16))),
                         ),
                       );
