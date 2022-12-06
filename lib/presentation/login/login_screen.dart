@@ -26,10 +26,11 @@ class LoginScreen extends GetView<MyService> {
                         getCategoriesUseCase.invoke();
                         getPaymentsUseCase.invoke();
                         getHistoryUseCase.invoke();
-                        MyService.to.makeDummies();
                         Get.offAndToNamed('/main');
                       },
-                      onFailure: () => {print("Failed to login")});
+                      onFailure: () => {
+                        Get.snackbar("Login failed!", "Can't login.")
+                      });
                 },
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
                   const SizedBox(

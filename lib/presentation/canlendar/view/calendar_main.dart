@@ -156,7 +156,6 @@ class _CalendarMainState extends State<CalendarMain> {
     }
     int lastDate =
         int.parse(DateFormat('dd').format(DateTime(2022, 11 + 1, 0)));
-    MyService.to.makeDummies();
 
     List groupList = [];
     for (int k = lastDate; k >= 1; k--) {

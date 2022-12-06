@@ -48,7 +48,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
       }
       int lastDate =
           int.parse(DateFormat('dd').format(DateTime(2022, 11 + 1, 0)));
-      MyService.to.makeDummies();
 
       List groupList = [];
 
