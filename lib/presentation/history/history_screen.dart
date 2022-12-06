@@ -18,18 +18,20 @@ class HistoryScreen extends StatefulWidget {
 class _HistoryScreenState extends State<HistoryScreen> {
   final List<bool> _selected = <bool>[true, true];
   final deleteRecordUseCase = Get.put(DeleteRecordUseCase());
+  var scroll = ScrollController();
+
   final List<Widget> returnToggle = [
     Row(
       children: [
         const Icon(Icons.check_box),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         const Text('수입'),
       ],
     ),
     Row(
       children: [
         const Icon(Icons.check_box),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         const Text('지출'),
       ],
     )
@@ -77,14 +79,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
         Row(
           children: [
             const Icon(Icons.check_box_outline_blank),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             const Text('수입'),
           ],
         ),
         Row(
           children: [
             const Icon(Icons.check_box),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             const Text('수입'),
           ],
         ),
@@ -93,15 +95,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
         Row(
           children: [
             const Icon(Icons.check_box_outline_blank),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             const Text('지출'),
           ],
         ),
         Row(
-          children: [
-            const Icon(Icons.check_box),
+          children: const [
+            Icon(Icons.check_box),
             SizedBox(width: 10),
-            const Text('지출'),
+            Text('지출'),
           ],
         )
       ]
@@ -112,11 +114,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
             centerTitle: true,
             backgroundColor: Colors.transparent,
             bottom: PreferredSize(
+                preferredSize: const Size.fromHeight(4.0),
                 child: Container(
                   color: AppColor.purple1,
                   height: 1.0,
-                ),
-                preferredSize: Size.fromHeight(4.0)),
+                )),
             title: Text(
                 '${MyService.to.currentYear}년 ${MyService.to.currentMonth}월',
                 style: const TextStyle(
@@ -125,7 +127,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 )),
             elevation: 0.0,
             leading: IconButton(
-              icon: const Icon(Icons.chevron_left, color: AppColor.purple1,),
+              icon: const Icon(
+                Icons.chevron_left,
+                color: AppColor.purple1,
+              ),
               onPressed: () {
                 setState(() {
                   if (MyService.to.currentMonth == 1) {
@@ -139,7 +144,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
             actions: [
               IconButton(
-                icon: const Icon(Icons.chevron_right, color: AppColor.purple1,),
+                icon: const Icon(
+                  Icons.chevron_right,
+                  color: AppColor.purple1,
+                ),
                 onPressed: () {
                   setState(() {
                     if (MyService.to.currentMonth == 12) {
@@ -152,52 +160,53 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 },
               )
             ]),
-        body: Column(
-          children: [
-            Column(
-              children: [
-                SizedBox(height: 20),
-                ToggleButtons(
-                  onPressed: (int index) {
+        body: Container(
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              ToggleButtons(
+                onPressed: (int index) {
+                  setState(() {
+                    _selected[index] = !_selected[index];
+                  });
+                  if (_selected[index]) {
                     setState(() {
-                      _selected[index] = !_selected[index];
+                      returnToggle[index] = toggle[index][1];
                     });
-                    if (_selected[index]) {
-                      setState(() {
-                        returnToggle[index] = toggle[index][1];
-                      });
-                    } else {
-                      setState(() {
-                        returnToggle[index] = toggle[index][0];
-                      });
-                    }
-                  },
-                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                  selectedBorderColor: AppColor.purple1,
-                  selectedColor: Colors.white,
-                  fillColor: AppColor.purple1,
-                  color: AppColor.purple1,
-                  textStyle: const TextStyle(
-                    fontSize: 20,
-                  ),
-                  constraints: const BoxConstraints(
-                    minHeight: 40.0,
-                    minWidth: 180.0,
-                  ),
-                  isSelected: _selected,
-                  children: returnToggle,
+                  } else {
+                    setState(() {
+                      returnToggle[index] = toggle[index][0];
+                    });
+                  }
+                },
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                selectedBorderColor: AppColor.purple1,
+                selectedColor: Colors.white,
+                fillColor: AppColor.purple1,
+                color: AppColor.purple1,
+                textStyle: const TextStyle(
+                  fontSize: 20,
                 ),
-                SizedBox(height: 20),
-                ListView(
+                constraints: const BoxConstraints(
+                  minHeight: 40.0,
+                  minWidth: 180.0,
+                ),
+                isSelected: _selected,
+                children: returnToggle,
+              ),
+              const SizedBox(height: 20),
+              Expanded(
+                child: ListView(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
+
                     children: groupList
                         .map((e) => dateListTileAllType(
-                            e, e![0].date, _selected, deleteRecordUseCase))
+                            e, e![0].date, _selected, deleteRecordUseCase, scroll))
                         .toList()),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
         floatingActionButton: SizedBox(
           width: 70,
@@ -207,7 +216,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               onPressed: () {
                 Get.toNamed("/addHistory");
               },
-              child: Icon(Icons.add),
+              child: const Icon(Icons.add),
               backgroundColor: AppColor.yellow1,
             ),
           ),
@@ -216,7 +225,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
 }
 
 Column dateListTileAllType(List<Record> k, String date, List<bool> _selected,
-    DeleteRecordUseCase deleteRecordUseCase) {
+    DeleteRecordUseCase deleteRecordUseCase, ScrollController scroll) {
   var d = DateTime.parse(date);
   String ee = DateFormat('EEEEE').format(d).toString();
   if (ee == "Monday") {
@@ -263,7 +272,7 @@ Column dateListTileAllType(List<Record> k, String date, List<bool> _selected,
             children: [
               Text(
                 DateFormat('MM월 dd일  ').format(d) + ee,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                   color: AppColor.brightpurple,
                   fontWeight: FontWeight.bold,
@@ -273,14 +282,14 @@ Column dateListTileAllType(List<Record> k, String date, List<bool> _selected,
                 children: [
                   Text(
                     '수입 ' + dayIncome.toString(),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       color: AppColor.brightpurple,
                     ),
                   ),
-                  SizedBox(width: 20),
+                  const SizedBox(width: 20),
                   Text('지출 ' + daySpend.toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         color: AppColor.brightpurple,
                       )),
@@ -292,6 +301,7 @@ Column dateListTileAllType(List<Record> k, String date, List<bool> _selected,
         ListView(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
+            controller: scroll,
             children: k
                 .map((e) => ymdList(e, _selected, (recordId) {
                       deleteRecordUseCase.invoke(recordId: recordId);
@@ -303,7 +313,7 @@ Column dateListTileAllType(List<Record> k, String date, List<bool> _selected,
                       );
                     }))
                 .toList()),
-        Divider(color: AppColor.purple1, thickness: 1.2),
+        const Divider(color: AppColor.purple1, thickness: 1.2),
       ],
     );
   }
@@ -337,7 +347,7 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
                 Container(
                   child: Text(
                     "${categoryName}",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 17,
                       color: Colors.white,
                     ),
@@ -345,30 +355,30 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
                   ),
                   decoration: BoxDecoration(
                     color: tagColor,
-                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    borderRadius: const BorderRadius.all(Radius.circular(15.0)),
                   ),
                   width: 130.0,
                 ),
                 Text(
                   "${cardName}",
-                  style: TextStyle(fontSize: 17, color: AppColor.purple0),
+                  style: const TextStyle(fontSize: 17, color: AppColor.purple0),
                 ),
               ],
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "${title}",
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 20,
                       color: AppColor.purple0,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
                   "-${price}원",
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 20,
                       color: AppColor.red1,
                       fontWeight: FontWeight.bold),
@@ -413,7 +423,7 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
                 Container(
                   child: Text(
                     "${categoryName}",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 17,
                       color: Colors.white,
                     ),
@@ -421,26 +431,26 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
                   ),
                   decoration: BoxDecoration(
                     color: tagColor,
-                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    borderRadius: const BorderRadius.all(Radius.circular(15.0)),
                   ),
                   width: 130.0,
                 ),
               ],
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "${title}",
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 20,
                       color: AppColor.purple0,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
                   "${price}원",
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 20,
                       color: Colors.green,
                       fontWeight: FontWeight.bold),
@@ -459,6 +469,6 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
       },
     );
   } else {
-    return ListTile();
+    return const ListTile();
   }
 }
