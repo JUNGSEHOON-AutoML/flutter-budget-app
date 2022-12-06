@@ -33,7 +33,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     ),
     Row(
       children: const [
-        Icon(Icons.check_box),
+        Icon(Icons.check_box, size:15),
         SizedBox(width: 10),
         Text('지출'),
       ],
@@ -147,10 +147,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 setState(() {
                   _selected[index] = !_selected[index];
                 });
-                if (_selected[index]) {
-                  setState(() {
-                    returnToggle[index] = toggle[index][1];
-                  });
 
                   if (_selected[index]) {
                     setState(() {
@@ -161,7 +157,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       returnToggle[index] = toggle[index][0];
                     });
                   }
-                },
+              },
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
                 selectedBorderColor: AppColor.purple1,
                 selectedColor: Colors.white,
@@ -176,15 +172,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ),
                 isSelected: _selected,
                 children: returnToggle,
+              ),
 
-              ),
-              constraints: const BoxConstraints(
-                minHeight: 40.0,
-                minWidth: 180.0,
-              ),
-              isSelected: _selected,
-              children: returnToggle,
-            ),
             const SizedBox(height: 20),
             Obx(() {
                 List groupList = [];
@@ -380,11 +369,6 @@ ListTile ymdList(Record e, selected, onLongClickListener) {
                     textAlign: TextAlign.center,
                   ),
 
-                  decoration: BoxDecoration(
-                    color: tagColor,
-                    borderRadius: const BorderRadius.all(Radius.circular(15.0)),
-                  ),
-                  width: 80.0,
                   padding: EdgeInsets.fromLTRB(8, 4, 8, 4),
                 ),
                 Text(
@@ -458,11 +442,7 @@ ListTile ymdList(Record e, selected, onLongClickListener) {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  decoration: BoxDecoration(
-                    color: tagColor,
-                    borderRadius: const BorderRadius.all(Radius.circular(15.0)),
-                  ),
-                  width: 80.0,
+                  
                   padding: EdgeInsets.fromLTRB(8, 4, 8, 4),
 
                 ),
