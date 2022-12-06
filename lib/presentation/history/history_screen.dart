@@ -39,7 +39,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
       final test = Get.put(GetCategoriesUseCase());
       test.invoke();
       String nowYM = "${MyService.to.currentYear}-${MyService.to.currentMonth}";
@@ -221,8 +220,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               ),
             ),
           ));
-    });
-  }
+    }
 }
 
 Column dateListTileAllType(List<Record> k, String date, List<bool> _selected,
