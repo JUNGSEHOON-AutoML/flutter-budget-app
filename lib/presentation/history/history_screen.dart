@@ -23,7 +23,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   final List<Widget> returnToggle = [
     Row(
       children: [
-        const Icon(Icons.check_box),
+        const Icon(Icons.check_box, size: 5,),
         const SizedBox(width: 10),
         const Text('수입'),
       ],
@@ -78,14 +78,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
       [
         Row(
           children: [
-            const Icon(Icons.check_box_outline_blank),
+            const Icon(Icons.check_box_outline_blank, size: 15,),
             const SizedBox(width: 10),
             const Text('수입'),
           ],
         ),
         Row(
           children: [
-            const Icon(Icons.check_box),
+            const Icon(Icons.check_box, size:15,),
             const SizedBox(width: 10),
             const Text('수입'),
           ],
@@ -94,14 +94,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
       [
         Row(
           children: [
-            const Icon(Icons.check_box_outline_blank),
+            const Icon(Icons.check_box_outline_blank, size:15),
             const SizedBox(width: 10),
             const Text('지출'),
           ],
         ),
         Row(
           children: const [
-            Icon(Icons.check_box),
+            Icon(Icons.check_box, size:15),
             SizedBox(width: 10),
             Text('지출'),
           ],
@@ -185,10 +185,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 fillColor: AppColor.purple1,
                 color: AppColor.purple1,
                 textStyle: const TextStyle(
-                  fontSize: 20,
+                  fontSize: 14,
                 ),
                 constraints: const BoxConstraints(
-                  minHeight: 40.0,
+                  minHeight: 34.0,
                   minWidth: 180.0,
                 ),
                 isSelected: _selected,
@@ -266,37 +266,39 @@ Column dateListTileAllType(List<Record> k, String date, List<bool> _selected,
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 25, right: 25),
+          padding: const EdgeInsets.only(left: 25, right: 25,top:0,bottom:0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 DateFormat('MM월 dd일  ').format(d) + ee,
                 style: const TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   color: AppColor.brightpurple,
-                  fontWeight: FontWeight.bold,
                 ),
               ),
+
+
               Row(
                 children: [
                   Text(
                     '수입 ' + dayIncome.toString(),
                     style: const TextStyle(
-                      fontSize: 14,
+                      fontSize: 12,
                       color: AppColor.brightpurple,
                     ),
                   ),
                   const SizedBox(width: 20),
                   Text('지출 ' + daySpend.toString(),
                       style: const TextStyle(
-                        fontSize: 14,
+                        fontSize: 12,
                         color: AppColor.brightpurple,
                       )),
                 ],
               ),
             ],
           ),
+
         ),
         ListView(
             scrollDirection: Axis.vertical,
@@ -314,6 +316,9 @@ Column dateListTileAllType(List<Record> k, String date, List<bool> _selected,
                     }))
                 .toList()),
         const Divider(color: AppColor.purple1, thickness: 1.2),
+        Container(
+          margin: EdgeInsets.fromLTRB(0, 0, 0, 12),
+        ),
       ],
     );
   }
@@ -328,7 +333,7 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
     Color tagColor = e.category.color;
     return ListTile(
       title: Container(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.fromLTRB(0,16,0,0),
         decoration: const BoxDecoration(
           border: Border(
             top: BorderSide(
@@ -348,7 +353,7 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
                   child: Text(
                     "${categoryName}",
                     style: const TextStyle(
-                      fontSize: 17,
+                      fontSize: 10,
                       color: Colors.white,
                     ),
                     textAlign: TextAlign.center,
@@ -357,29 +362,30 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
                     color: tagColor,
                     borderRadius: const BorderRadius.all(Radius.circular(15.0)),
                   ),
-                  width: 130.0,
+                  width: 80.0,
+                  padding: EdgeInsets.fromLTRB(8, 4, 8, 4),
                 ),
                 Text(
                   "${cardName}",
-                  style: const TextStyle(fontSize: 17, color: AppColor.purple0),
+                  style: const TextStyle(fontSize: 12, color: AppColor.purple0),
                 ),
               ],
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "${title}",
                   style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 16,
                       color: AppColor.purple0,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
                   "-${price}원",
                   style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 16,
                       color: AppColor.red1,
                       fontWeight: FontWeight.bold),
                 )
@@ -403,7 +409,7 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
     Color tagColor = e.category.color;
     return ListTile(
       title: Container(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.fromLTRB(0,16,0,0),
         decoration: const BoxDecoration(
           border: Border(
             top: BorderSide(
@@ -424,7 +430,7 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
                   child: Text(
                     "${categoryName}",
                     style: const TextStyle(
-                      fontSize: 17,
+                      fontSize: 10,
                       color: Colors.white,
                     ),
                     textAlign: TextAlign.center,
@@ -433,25 +439,26 @@ ListTile ymdList(Record e, _selected, onLongClickListener) {
                     color: tagColor,
                     borderRadius: const BorderRadius.all(Radius.circular(15.0)),
                   ),
-                  width: 130.0,
+                  width: 80.0,
+                  padding: EdgeInsets.fromLTRB(8, 4, 8, 4),
                 ),
               ],
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 12),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "${title}",
                   style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 16,
                       color: AppColor.purple0,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
                   "${price}원",
                   style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 16,
                       color: Colors.green,
                       fontWeight: FontWeight.bold),
                 )
