@@ -30,10 +30,6 @@ class _Calendar_MainState extends State<Calendar_Main> {
   var monthSpend;
   var monthSum;
 
-  //현재 화면 달,년도
-  var this_month;
-  var this_year;
-
   @override
   void initState() {
     date_list = [];
@@ -41,16 +37,10 @@ class _Calendar_MainState extends State<Calendar_Main> {
     monthIncome = 0;
     monthSum = 0;
     monthSpend = 0;
-    get_datetime();
+    now = DateTime(MyService.to.currentYear, MyService.to.currentMonth);
+    daysinmonth = dt.DateUtils.daysInMonth(now!);
     get_date_list();
     super.initState();
-  }
-
-  get_datetime() {
-    now = DateTime.now();
-    daysinmonth = dt.DateUtils.daysInMonth(now!);
-    this_month = now!.month;
-    this_year = now!.year;
   }
 
   filter_string_date(String date) {
@@ -68,8 +58,6 @@ class _Calendar_MainState extends State<Calendar_Main> {
       var this_date;
       this_date =
           filter_string_date(daysinmonth[i].toString().substring(8, 10));
-      print(
-          this_year.toString() + this_month.toString() + this_date.toString());
       date_list.add(this_date);
       if (flag == 1 && this_date != "1") {
         count += 1;
@@ -89,13 +77,14 @@ class _Calendar_MainState extends State<Calendar_Main> {
     monthSum = 0;
     monthSpend = 0;
     setState(() {
-      if (this_month - 1 == 0) {
-        this_year = this_year - 1;
-        this_month = 12;
+      if (MyService.to.currentMonth - 1 == 0) {
+        MyService.to.currentYear -= 1;
+        MyService.to.currentMonth = 12;
       } else {
-        this_month -= 1;
+        MyService.to.currentMonth -= 1;
       }
-      DateTime date_time = DateTime(this_year, this_month);
+      DateTime date_time =
+          DateTime(MyService.to.currentYear, MyService.to.currentMonth);
       daysinmonth = dt.DateUtils.daysInMonth(date_time);
       date_list = [];
       int flag = 1;
@@ -125,14 +114,15 @@ class _Calendar_MainState extends State<Calendar_Main> {
     monthSum = 0;
     monthSpend = 0;
     setState(() {
-      if (this_month + 1 == 13) {
-        this_year = this_year + 1;
-        this_month = 1;
+      if (MyService.to.currentMonth + 1 == 13) {
+        MyService.to.currentYear += 1;
+        MyService.to.currentMonth = 1;
       } else {
-        this_month += 1;
+        MyService.to.currentMonth += 1;
       }
 
-      DateTime date_time = DateTime(this_year, this_month);
+      DateTime date_time =
+          DateTime(MyService.to.currentYear, MyService.to.currentMonth);
       daysinmonth = dt.DateUtils.daysInMonth(date_time);
       date_list = [];
       int flag = 1;
@@ -194,14 +184,9 @@ class _Calendar_MainState extends State<Calendar_Main> {
     }
 
     for (int g = 0; g < groupList.length; g++) {
-      print(groupList[g][0].date);
       var d = DateTime.parse(groupList[g][0].date);
       int day = int.parse(DateFormat('dd').format(d));
-      print(day);
-      print(groupList[g][0].type == RecordType.spend);
-      print(groupList[g][0].type == RecordType.income);
       int index = day + int.parse(start_count.toString()) - 1;
-      print(index);
       if (data_list[index].length == 0) {
         data_list[index] = [0, 0, 0];
       }
@@ -219,7 +204,6 @@ class _Calendar_MainState extends State<Calendar_Main> {
 
       // RecordType.spend
     }
-    print(monthSum.toString() + monthIncome.toString() + monthSpend.toString());
 
     return Scaffold(
         appBar: AppBar(
@@ -235,14 +219,6 @@ class _Calendar_MainState extends State<Calendar_Main> {
                 InkWell(
                     onTap: () {
                       set_datesub_list();
-                      setState(() {
-                        if (MyService.to.currentMonth == 1) {
-                          MyService.to.currentMonth = 12;
-                          MyService.to.currentYear -= 1;
-                        } else {
-                          MyService.to.currentMonth -= 1;
-                        }
-                      });
                     },
                     child: Icon(
                       Icons.arrow_left,
@@ -255,7 +231,7 @@ class _Calendar_MainState extends State<Calendar_Main> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "$this_year 년 $this_month 월",
+                        "${MyService.to.currentYear} 년 ${MyService.to.currentMonth} 월",
                         style: TextStyle(
                             fontSize: 23, fontWeight: FontWeight.bold),
                       )
@@ -265,14 +241,6 @@ class _Calendar_MainState extends State<Calendar_Main> {
                 InkWell(
                     onTap: () {
                       set_dateplus_list();
-                      setState(() {
-                        if (MyService.to.currentMonth == 12) {
-                          MyService.to.currentMonth = 1;
-                          MyService.to.currentYear += 1;
-                        } else {
-                          MyService.to.currentMonth += 1;
-                        }
-                      });
                     },
                     child: Icon(
                       Icons.arrow_right,
@@ -447,17 +415,23 @@ class _Calendar_MainState extends State<Calendar_Main> {
                           Text(
                             "수입:${monthIncome}",
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold, color: AppColor.purple1),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: AppColor.purple1),
                           ),
                           Text(
                             "지출:${monthSpend}",
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold, color: AppColor.red1),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: AppColor.red1),
                           ),
                           Text(
                             "총합:${monthSum}",
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold, color: AppColor.blue4),
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: AppColor.blue4),
                           ),
                         ],
                       ))
