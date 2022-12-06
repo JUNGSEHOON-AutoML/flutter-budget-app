@@ -289,6 +289,12 @@ Column dateListTileAllType(List<Record> k, String date, List<bool> _selected,
             children: k
                 .map((e) => ymdList(e, _selected, (recordId) {
                       deleteRecordUseCase.invoke(recordId: recordId);
+                      Get.snackbar(
+                        '삭제 완료!',
+                        '내역이 삭제되었습니다.',
+                        backgroundColor: AppColor.red1,
+                        colorText: Colors.white,
+                      );
                     }))
                 .toList()),
         Divider(color: AppColor.purple1, thickness: 1.2),
