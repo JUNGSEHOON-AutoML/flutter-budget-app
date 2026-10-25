@@ -1,23 +1,25 @@
 import 'dart:ui';
 
+import 'package:account_book/data/data_source/web_preview_store.dart';
 import 'package:account_book/data/database/local_database.dart';
 import 'package:account_book/domain/model/category.dart';
 import 'package:account_book/domain/model/payment.dart';
 import 'package:account_book/domain/model/record.dart';
 import 'package:account_book/style.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:get/get.dart';
 
 class MyService extends GetxService {
   static MyService get to => Get.find();
 
-  late final User me;
+  // 로그인한 사용자의 uid (웹 미리보기에서는 'guest')
+  late String uid;
   late final AppDatabase localDatabase;
 
   var history = <String, List<Record>>{}.obs;
 
-  var currentYear = 2022;
-  var currentMonth = 12;
+  var currentYear = DateTime.now().year;
+  var currentMonth = DateTime.now().month;
 
   final _colors = <RecordType, Map<int, Color>>{
     RecordType.spend: {-1: AppColor.unknown},
@@ -35,6 +37,10 @@ class MyService extends GetxService {
   }
 
   Future<void> _initLocalDB() async {
+    if (kIsWeb) {
+      await WebPreviewStore.instance.init();
+      return;
+    }
     localDatabase =
     await $FloorAppDatabase.databaseBuilder('app_database.db').build();
   }

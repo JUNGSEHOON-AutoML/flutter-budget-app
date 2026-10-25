@@ -105,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 },
                                 child: null,
                                 style: ElevatedButton.styleFrom(
-                                  primary:AppColor.blue1,
+                                  backgroundColor:AppColor.blue1,
                                 ),
                               ),
                             ),
@@ -128,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 },
                                 child: null,
                                 style: ElevatedButton.styleFrom(
-                                  primary:AppColor.blue2,
+                                  backgroundColor:AppColor.blue2,
                                   fixedSize: Size(1,1),
                                 ),
                               ),
@@ -151,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 },
                                 child: null,
                                 style: ElevatedButton.styleFrom(
-                                  primary:AppColor.blue3,
+                                  backgroundColor:AppColor.blue3,
                                   fixedSize: Size(1,1),
                                 ),
                               ),
@@ -174,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 },
                                 child: null,
                                 style: ElevatedButton.styleFrom(
-                                  primary:AppColor.blue4,
+                                  backgroundColor:AppColor.blue4,
                                   fixedSize: Size(1,1),
                                 ),
                               ),
@@ -198,7 +198,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 },
                                 child: null,
                                 style: ElevatedButton.styleFrom(
-                                  primary:AppColor.blue5,
+                                  backgroundColor:AppColor.blue5,
                                   fixedSize: Size(1,1),
                                 ),
                               ),
@@ -221,7 +221,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 },
                                 child: null,
                                 style: ElevatedButton.styleFrom(
-                                  primary:AppColor.green1,
+                                  backgroundColor:AppColor.green1,
                                   fixedSize: Size(1,1),
                                 ),
                               ),
@@ -245,7 +245,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 },
                                 child: null,
                                 style: ElevatedButton.styleFrom(
-                                  primary:AppColor.green2,
+                                  backgroundColor:AppColor.green2,
                                   fixedSize: Size(1,1),
                                 ),
                               ),
@@ -269,7 +269,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 },
                                 child: null,
                                 style: ElevatedButton.styleFrom(
-                                  primary:AppColor.green3,
+                                  backgroundColor:AppColor.green3,
                                   fixedSize: Size(1,1),
                                 ),
                               ),
@@ -293,7 +293,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 },
                                 child: null,
                                 style: ElevatedButton.styleFrom(
-                                  primary:AppColor.green4,
+                                  backgroundColor:AppColor.green4,
                                   fixedSize: Size(1,1),
                                 ),
                               ),
@@ -317,7 +317,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 },
                                 child: null,
                                 style: ElevatedButton.styleFrom(
-                                  primary:AppColor.green5,
+                                  backgroundColor:AppColor.green5,
                                   fixedSize: Size(1,1),
                                 ),
                               ),
@@ -348,7 +348,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 },
                                 child: null,
                                 style: ElevatedButton.styleFrom(
-                                  primary:AppColor.purple1,
+                                  backgroundColor:AppColor.purple1,
                                 ),
                               ),
                             ),
@@ -372,7 +372,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 },
                                 child: null,
                                 style: ElevatedButton.styleFrom(
-                                  primary:AppColor.purple2,
+                                  backgroundColor:AppColor.purple2,
                                   fixedSize: Size(1,1),
                                 ),
                               ),
@@ -395,7 +395,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 },
                                 child: null,
                                 style: ElevatedButton.styleFrom(
-                                  primary:AppColor.purple3,
+                                  backgroundColor:AppColor.purple3,
                                   fixedSize: Size(1,1),
                                 ),
                               ),
@@ -418,7 +418,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 },
                                 child: null,
                                 style: ElevatedButton.styleFrom(
-                                  primary:AppColor.purple4,
+                                  backgroundColor:AppColor.purple4,
                                   fixedSize: Size(1,1),
                                 ),
                               ),
@@ -442,7 +442,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 },
                                 child: null,
                                 style: ElevatedButton.styleFrom(
-                                  primary:AppColor.purple5,
+                                  backgroundColor:AppColor.purple5,
                                   fixedSize: Size(1,1),
                                 ),
                               ),
@@ -465,7 +465,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 },
                                 child: null,
                                 style: ElevatedButton.styleFrom(
-                                  primary:AppColor.pink1,
+                                  backgroundColor:AppColor.pink1,
                                   fixedSize: Size(1,1),
                                 ),
                               ),
@@ -489,7 +489,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 },
                                 child: null,
                                 style: ElevatedButton.styleFrom(
-                                  primary:AppColor.pink2,
+                                  backgroundColor:AppColor.pink2,
                                   fixedSize: Size(1,1),
                                 ),
                               ),
@@ -513,7 +513,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 },
                                 child: null,
                                 style: ElevatedButton.styleFrom(
-                                  primary:AppColor.pink3,
+                                  backgroundColor:AppColor.pink3,
                                   fixedSize: Size(1,1),
                                 ),
                               ),
@@ -537,7 +537,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 },
                                 child: null,
                                 style: ElevatedButton.styleFrom(
-                                  primary:AppColor.pink4,
+                                  backgroundColor:AppColor.pink4,
                                   fixedSize: Size(1,1),
                                 ),
                               ),
@@ -561,7 +561,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 },
                                 child: null,
                                 style: ElevatedButton.styleFrom(
-                                  primary:AppColor.pink5,
+                                  backgroundColor:AppColor.pink5,
                                   fixedSize: Size(1,1),
                                 ),
                               ),
@@ -586,7 +586,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     },
                     child: const Text('등록하기'),
                     style: ElevatedButton.styleFrom(
-                      primary:Color(0xffF5B853),
+                      backgroundColor:Color(0xffF5B853),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0)
                       ),

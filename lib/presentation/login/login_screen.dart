@@ -4,6 +4,7 @@ import 'package:account_book/domain/use_case/properties_use_case/get_categories_
 import 'package:account_book/domain/use_case/properties_use_case/get_payments_use_case.dart';
 import 'package:account_book/presentation/login/google_auth_helper.dart';
 import 'package:account_book/style.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,6 +30,15 @@ class LoginScreen extends GetView<MyService> {
       ),
       MaterialButton(
           onPressed: () {
+            // 웹 미리보기에서는 Google 로그인 대신 게스트로 시작한다.
+            if (kIsWeb) {
+              MyService.to.uid = 'guest';
+              getCategoriesUseCase.invoke();
+              getPaymentsUseCase.invoke();
+              getHistoryUseCase.invoke();
+              Get.offAndToNamed('/main');
+              return;
+            }
             const GoogleAuthHelper().loginAsGoogle(
                 context: context,
                 onSuccess: () {
@@ -55,7 +65,7 @@ class LoginScreen extends GetView<MyService> {
                   width: 15,
                 ),
                 const Text(
-                  "Login as google",
+                  kIsWeb ? "Start as guest" : "Login as google",
                   style: TextStyle(fontSize: 20, color: AppColor.googleBlue),
                 )
               ],

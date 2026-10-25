@@ -6,6 +6,6 @@ class DeleteRecordUseCase extends GetxService {
   final _repository = Get.put(HistoryRepositoryImpl());
 
   void invoke({required String recordId}) {
-    _repository.deleteHistory(uid: MyService.to.me.uid, recordId: recordId);
+    _repository.deleteHistory(uid: MyService.to.uid, recordId: recordId);
   }
 }

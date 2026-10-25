@@ -29,7 +29,7 @@ class GoogleAuthHelper {
           await FirebaseAuth.instance.signInWithCredential(credential);
 
       if (resultCredential.user != null) {
-        MyService.to.me = resultCredential.user!;
+        MyService.to.uid = resultCredential.user!.uid;
         onSuccess();
       } else {
         onFailure();

@@ -1,10 +1,15 @@
+import 'package:account_book/data/data_source/web_preview_store.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:get/get.dart';
 
 enum DbColumn { uid, recordId, categoryId, type, paymentId, price, title, date }
 
 class HistoryDataSource extends GetxService {
-  final _database = FirebaseDatabase.instance;
+  // 웹 미리보기에서는 Firebase 대신 브라우저 저장소를 사용한다.
+  final _web = WebPreviewStore.instance;
+
+  FirebaseDatabase get _database => FirebaseDatabase.instance;
 
   Future<String?> addHistory(
       {required String uid,
@@ -14,10 +19,7 @@ class HistoryDataSource extends GetxService {
       required int price,
       required String date,
       required String title}) async {
-    final ref = _database.ref("history/$uid");
-    final pushRef = ref.push();
-
-    await pushRef.set({
+    final row = <String, Object>{
       DbColumn.uid.name: uid,
       DbColumn.categoryId.name: categoryId,
       DbColumn.type.name: type,
@@ -25,20 +27,43 @@ class HistoryDataSource extends GetxService {
       DbColumn.date.name: date,
       DbColumn.price.name: price,
       DbColumn.title.name: title
-    });
+    };
+
+    if (kIsWeb) {
+      return _web.addHistory(row);
+    }
+
+    final ref = _database.ref("history/$uid");
+    final pushRef = ref.push();
+
+    await pushRef.set(row);
 
     return pushRef.key;
   }
 
   void deleteHistory({required String uid, required String recordId}) {
+    if (kIsWeb) {
+      _web.deleteHistory(recordId);
+      return;
+    }
+
     final ref = _database.ref("history/$uid/$recordId");
     ref.set(null);
   }
 
-  Future<Stream<DatabaseEvent>> getHistory({required String uid}) async {
+  // key: recordId, value: 내역 데이터 (date 순으로 정렬)
+  Future<Stream<List<MapEntry<String, Map<Object?, Object?>>>>> getHistory(
+      {required String uid}) async {
+    if (kIsWeb) {
+      return _web.getHistory();
+    }
+
     final ref = _database.ref("history/$uid").orderByChild(DbColumn.date.name);
 
-    return ref.onValue;
+    return ref.onValue.map((event) => event.snapshot.children
+        .map((child) => MapEntry(
+            child.key!, child.value as Map<Object?, Object?>))
+        .toList());
   }
 
   void updateHistory(
@@ -74,6 +99,11 @@ class HistoryDataSource extends GetxService {
 
     if (date != null) {
       map[DbColumn.date.name] = date;
+    }
+
+    if (kIsWeb) {
+      _web.updateHistory(recordId, map);
+      return;
     }
 
     final ref = _database.ref("history/$uid/$recordId");

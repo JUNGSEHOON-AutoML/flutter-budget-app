@@ -7,6 +7,7 @@ import 'package:account_book/presentation/setting/add_expense.dart';
 import 'package:account_book/presentation/setting/add_history.dart';
 import 'package:account_book/presentation/setting/add_income.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,9 +16,12 @@ import '../firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // 웹 미리보기에서는 Firebase 웹 설정이 없으므로 초기화하지 않는다.
+  if (!kIsWeb) {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
 
   Get.put(MyService());
   await MyService.init();

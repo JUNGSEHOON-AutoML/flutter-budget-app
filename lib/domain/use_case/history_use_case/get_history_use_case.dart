@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:account_book/data/data_source/history_remote_data_source.dart';
 import 'package:account_book/data/repository_impl/history_repository_impl.dart';
 import 'package:account_book/application/my_service.dart';
@@ -10,14 +8,13 @@ class GetHistoryUseCase extends GetxService {
   final _repository = Get.put(HistoryRepositoryImpl());
 
   void invoke() async {
-    final stream = _repository.getHistory(uid: MyService.to.me.uid);
+    final stream = _repository.getHistory(uid: MyService.to.uid);
 
     stream.then((value) => value.listen((event) {
           final newMap = <String, List<Record>>{};
-          for (final child in event.snapshot.children) {
-            final hashMap = child.value as LinkedHashMap<Object?, Object?>;
+          for (final child in event) {
             final newRecord =
-                _rawDataToRecord(key: child.key!, hashMap: hashMap);
+                _rawDataToRecord(key: child.key, hashMap: child.value);
 
             final dateToken = newRecord.date.split("-");
             final dateKey = "${dateToken[0]}-${dateToken[1]}";
@@ -33,7 +30,7 @@ class GetHistoryUseCase extends GetxService {
   }
 
   Record _rawDataToRecord(
-      {required String key, required LinkedHashMap hashMap}) {
+      {required String key, required Map hashMap}) {
     final newRecord = Record();
 
     newRecord.id = key;

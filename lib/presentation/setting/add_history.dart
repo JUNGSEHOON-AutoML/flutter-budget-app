@@ -181,15 +181,21 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: TextStyle(fontSize: 14),
                       ),
                       isExpanded: true,
-                      icon: const Icon(
-                        Icons.arrow_drop_down,
-                        color: Colors.black45,
+                      iconStyleData: const IconStyleData(
+                        icon: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.black45,
+                        ),
+                        iconSize: 30,
                       ),
-                      iconSize: 30,
-                      buttonHeight: 50,
-                      buttonPadding: const EdgeInsets.only(left: 0, right: 10),
-                      dropdownDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
+                      buttonStyleData: const ButtonStyleData(
+                        height: 50,
+                        padding: EdgeInsets.only(left: 0, right: 10),
+                      ),
+                      dropdownStyleData: DropdownStyleData(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
                       ),
                       onChanged: (value) {
                         setState(() {
@@ -222,15 +228,21 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: TextStyle(fontSize: 14),
                       ),
                       isExpanded: true,
-                      icon: const Icon(
-                        Icons.arrow_drop_down,
-                        color: Colors.black45,
+                      iconStyleData: const IconStyleData(
+                        icon: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.black45,
+                        ),
+                        iconSize: 30,
                       ),
-                      iconSize: 30,
-                      buttonHeight: 50,
-                      buttonPadding: const EdgeInsets.only(left: 0, right: 10),
-                      dropdownDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
+                      buttonStyleData: const ButtonStyleData(
+                        height: 50,
+                        padding: EdgeInsets.only(left: 0, right: 10),
+                      ),
+                      dropdownStyleData: DropdownStyleData(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
                       ),
                       onChanged: (value) {
                         setState(() {
@@ -290,7 +302,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: const Color(0xffF5B853),
+                            backgroundColor: const Color(0xffF5B853),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15.0)),
                             fixedSize: const Size(100, 50),

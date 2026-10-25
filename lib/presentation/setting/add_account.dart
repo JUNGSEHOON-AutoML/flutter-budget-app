@@ -104,7 +104,7 @@ class _MyHomePageState extends State<_MyHomePage> {
                         },
                         child: const Text('등록하기'),
                         style: ElevatedButton.styleFrom(
-                          primary: Color(0xffF5B853),
+                          backgroundColor: Color(0xffF5B853),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0)),
                         )),

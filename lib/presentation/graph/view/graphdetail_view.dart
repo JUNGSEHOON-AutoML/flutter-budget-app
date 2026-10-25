@@ -159,7 +159,7 @@ class _GraphDetail_ViewState extends State<GraphDetail_View> {
     }
 
     return SideTitleWidget(
-      axisSide: meta.axisSide,
+      meta: meta,
       child: text,
     );
   }

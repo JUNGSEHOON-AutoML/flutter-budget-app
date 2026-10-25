@@ -14,7 +14,7 @@ class UpdateRecordUseCase extends GetxService {
       int? price,
       String? title}) {
     _repository.updateHistory(
-        uid: MyService.to.me.uid,
+        uid: MyService.to.uid,
         recordId: recordId,
         categoryId: categoryId,
         type: type,
